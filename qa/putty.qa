@@ -10,6 +10,7 @@ sleep		1
 hover		Sikuli	icon	#key#=./img/HCI/login.png
 type		Sikuli	text	#value#=panda109
 type		Sikuli	enter
+hover		Sikuli	icon	#key#=./img/HCI/password.png
 type		Sikuli	text	#value#=1q2w3e4r
 type		Sikuli	enter
 sleep		10

@@ -1,0 +1,83 @@
+ini				rat_sv_us_admin.ini
+ini				rat_cv_as_nin_internal.ini
+ini				application_configuration.ini
+ini				application_pool.ini
+ini				application_volume.ini
+ini				compute_instance.ini
+
+init			ie								Chrome
+
+start
+set				ie.rat_sv_us					textbox_username						#key#=$signin_username$
+set				ie.rat_sv_us					textbox_passwd							#key#=$signin_passwd$
+click			ie.rat_sv_us					button_submit
+sleep			1
+click			ie.cluster_view_control			link_clusterview
+sleep			1
+click			ie.cluster_view_control			link_user_cluster						#key#=$cluster_name$
+
+#=======Create Application=============
+sleep			1
+click			ie.cluster_view_control			link_component_applications
+sleep			1
+click			ie.cluster_applications			icon_create_application
+sleep			1
+set				ie.cluster_applications			textbox_create_application_name			#key#=$app_name$
+select			ie.cluster_applications			list_create_application_type			#key#=$app_type_vstor$
+click			ie.cluster_applications			button_create_application_submit
+sleep			10
+$status$=get	ie.cluster_applications			status_create_application_submit		#key#=$app_name$,#key1#=$app_type_vstor$
+verify			Tool							dir										#value#=True,#key#=$status$,#criteria#==
+
+#=========Create Application Pool======
+sleep			1
+click			ie.cluster_view_control			link_user_application					#key#=$app_name$
+sleep			1
+click			ie.cluster_view_control			link_component_application_pool
+sleep			1
+click			ie.application_pool				icon_create_app_pool
+sleep			1
+set				ie.application_pool				textbox_create_app_pool_name			#key#=$pool_name$
+set				ie.application_pool				textbox_create_app_pool_description		#key#=create applicaion pool
+set				ie.application_pool				textbox_create_app_pool_capacity		#key#=$pool_capacity$
+click			ie.application_pool				button_create_app_pool_submit
+sleep			5
+$status$=get	ie.application_pool				status_create_app_pool_submit			#key#=$pool_name$,#key1#=$pool_capacity$
+verify			Tool							dir										#value#=True,#key#=$status$,#criteria#==
+
+#=========Create Datastore=========
+sleep			1
+click			ie.cluster_view_control			table_app_pool_name						#key#=$pool_name$
+sleep			1
+click			ie.application_pool				icon_create_datastore
+sleep			1
+set				ie.application_pool				textbox_create_datastore_name			#key#=$datastore_name$
+click			ie.application_pool				lable_create_datastore_type_system
+set				ie.application_pool				textbox_create_datastore_capacity		#key#=$datastore_capacity$
+sleep			1
+click			ie.application_pool				button_create_datastore_submit
+#sleep			15
+#click			ie.application_pool				button_create_datastore_yes
+sleep			10
+$status$=get	ie.application_pool				status_create_datastore_submit			#key#=$datastore_name$,#key1#=$datastore_capacity$
+verify			Tool							dir										#value#=True,#key#=$status$,#criteria#==
+
+#========Launch Instance===========		
+sleep			1	
+click			ie.cluster_view_control			link_component_instances
+sleep			1
+click			ie.application_instances		icon_launch_instance
+sleep			1
+set				ie.application_instances		textbox_instance_name					#key#=$instance_name$
+select			ie.application_instances		list_instance_flavor					#key#=$flavor_size$
+set				ie.application_instances		textbox_instance_count					#key#=$instance_count$
+select			ie.application_instances		list_instance_boot_source				#key#=$source_from_image$
+select			ie.application_instances		list_image_name							#key#=$image_name$
+click			ie.application_instances		link_networking
+select			ie.application_instances		list_network							#key#=$internal_network$
+click			ie.application_instances		button_launch_instance_submit
+sleep			10
+$status$=get	ie.application_instances		status_launch_instance_submit			#key#=$instance_name$,#key1#=$image_name$
+verify			Tool							dir										#value#=True,#key#=$status$,#criteria#==
+
+end

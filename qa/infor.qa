@@ -1,0 +1,13 @@
+#ini			system.ini
+#ini			test.ini
+
+init			ie							Chrome	
+
+start
+
+set			ie.Google		textbox_search		#key#=admin
+click		ie.Google		button_submit
+
+sleep		2
+
+end

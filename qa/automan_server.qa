@@ -1,0 +1,19 @@
+ini		automan_server.ini
+#debug	on
+start
+
+# case 1
+#$result$=get		Automan_server		result		#ip#=$host_ip$,#port#=$port_number$,#action#=$request$
+#sleep	1
+#verify				Automan_server		result		#name#=result,#value#=$result$,#key#=$request$,#criteria#==
+
+# case2
+#$result$=get		Automan_server		result		#ip#=$host_ip$,#port#=$port_number$,#action#=$request1$
+#sleep	1
+#verify				Automan_server		result		#name#=result,#value#=$result$,#key#=$request1$,#criteria#==
+
+
+# case 3
+$result$=get		Automan_server		result		#ip#=$host_ip$,#port#=$port_number$,#action#=$request3$
+sleep	1
+#verify				Automan_server		result		#name#=result,#value#=$result$,#key#=$request$,#criteria#==

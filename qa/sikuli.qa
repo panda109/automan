@@ -1,0 +1,5 @@
+start
+#click	Sikuli	icon	#key#=./img/HCI/test.png
+get		Tool	test
+send	Fb		message	#user#=yr6703@gmail.com,#password#=Panda109!!,#message#=testcasename
+end

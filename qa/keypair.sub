@@ -1,0 +1,6 @@
+ini			rat_cv_cs_ckp_admin_create_keypair.ini
+ini			rat_sv_us_admin.ini
+ini			rat_cv_cs_ckp_admin_delete_keypair.ini
+ini			rat_cv_cs_ckp_admin_import_keypair.ini
+ini			application_configuration.ini
+ini			cluster_deployment.ini

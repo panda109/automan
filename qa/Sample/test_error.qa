@@ -1,0 +1,7 @@
+#include		sub.qa
+ini			test.ini
+init		ie		
+start
+set			ie.Google		textbox_search				$test1$ $test2$
+click		ie.Google		button_error
+end

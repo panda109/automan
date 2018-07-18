@@ -1,0 +1,13 @@
+#include		sub.qa
+ini			test.ini
+
+#init		ie		
+
+start
+
+#set			ie.Netgear7532		textbox_username		#value#=admin
+#click		ie.Netgear7532		button_login
+
+sleep		30
+
+end

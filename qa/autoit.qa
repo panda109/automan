@@ -1,0 +1,10 @@
+start
+#click	Sikuli	icon	#key#=./img/HCI/test.png
+dosrun	Autoit	app		#name#=start /b cmd /c D:\putty.exe
+sleep	1
+click	Autoit	control	#title#=PuTTY Configuration,#value#=[CLASS:Button; INSTANCE:3]
+sleep	1
+click	Autoit	control	#title#=About PuTTY,#value#=[CLASS:Button; INSTANCE:1]
+sleep	1
+close	Autoit	app	
+end

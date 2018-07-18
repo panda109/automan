@@ -1,0 +1,16 @@
+#include		sub.qa
+ini			test.ini
+
+start
+
+#set			Tool		dir				#value#=10
+#set			Tool		dir				10
+#verify		Tool		dir				#name# = test , #value# = test , #key# = , #criteria# = =
+#first run use 100 , 2nd run use 200 in params , replace $$ with each
+each		start		300,200,100
+verify		Tool		dir				#name# = test , #value# = 100 , #key# = , #criteria# = =
+#verify		Tool		dir				#name# = test , #value# = $$ , #key# = , #criteria# = !
+each		end
+#verify		Tool		dir				#name# = test , #value# = test , #key# = , #criteria# = =
+
+end

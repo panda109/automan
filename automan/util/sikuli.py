@@ -21,10 +21,16 @@ class Sikuli(object):
         self.screen = Screen()
 
     def icon_hover(self, name):
+        x =  self.screen.exists(name['key'])
+        if x != "None":
             self.screen.hover(name['key'])
-
+        else:
+            raise
+        
     def icon_wait(self, name):
-            self.screen.wait(name['key'],name['value'])
+        x = self.screen.wait(name['key'],name['value'])
+        if x == "None":
+            raise
 
     def icon_click(self, name):
         x =  self.screen.exists(name['key'])

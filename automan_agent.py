@@ -23,10 +23,11 @@ class Automan_agent(object):
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         #sock.bind((Host,Port))
         #sock.bind(('10.90.1.132', 54321))
-        sock.bind(('127.0.0.1', 10000))
+        myip=([l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0])
+        sock.bind((myip, 10000))
         sock.listen(5)
-        print "Socket create succeed!!"
-        print "Server is Listening"
+        #print "Socket create succeed!!"
+        print ("Server is Listening :ip %s port %s" % (myip,"10000"))
         while True:
             (csock, adr) = sock.accept()
             print "Client Info: ", csock, adr 
@@ -43,7 +44,8 @@ class Automan_agent(object):
         else:
             print "Client send: " + msg    
             result = automan.call_function(msg)
-            client.sendall(msg)
+            client.sendall(result)
+            
         client.close()
     
     #add abby code
@@ -55,7 +57,7 @@ class Automan_agent(object):
         ob = eval(items[1]+'()')
         defname = items[2] + '("' + parameter + '")'
         def_result = eval('ob.'+ defname)
-        print def_result
+        print "Return result : ",def_result
         return def_result
 
 

@@ -39,8 +39,8 @@ class Function_class(object):
         #print dict_patameter
         return dict_patameter
 
-    def hostname_verify(self,parameter):
-        #dict_patameter = functions.cut_parameter(parameter)
+    def hostname_get(self,parameter):
+        dict_patameter = functions.cut_parameter(parameter)
         #print dict_patameter
         result = socket.gethostname()
         return result

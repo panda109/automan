@@ -1,0 +1,4 @@
+debug			on
+start
+$reresult$=get	Automan_server	result	#ip#=192.168.245.1,#port#=10000,#action#=$request$
+end

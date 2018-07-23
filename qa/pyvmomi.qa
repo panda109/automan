@@ -1,0 +1,4 @@
+debug			off
+start
+check			Pyvmomi		instance	#ip#=172.27.128.29,#port#=443,#user#=root,#password=infortrend1!,#vmname#=jenkins
+end

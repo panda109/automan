@@ -21,29 +21,44 @@ class Sikuli(object):
         self.screen = Screen()
 
     def icon_hover(self, name):
-        x =  self.screen.exists(name['key'])
-        if x != "None":
-            self.screen.hover(name['key'])
-        else:
+        try:
+            x =  self.screen.exists(name['key'])
+            if x != "None":
+                self.screen.hover(name['key'])
+            else:
+                raise
+        except:
             raise
         
     def icon_wait(self, name):
-        x = self.screen.wait(name['key'],name['value'])
-        if x == "None":
+        try:
+            x = self.screen.wait(name['key'],name['value'])
+            if x == "None":
+                raise
+        except:
             raise
-
+        
     def icon_click(self, name):
-        x =  self.screen.exists(name['key'])
-        if x != "None":
-            self.screen.click(name['key'])
-        else:
+        try:
+            x =  self.screen.exists(name['key'])
+            if x != "None":
+                self.screen.click(name['key'])
+            else:
+                raise
+        except:
             raise
-         
+            
     def text_type(self,text):
-        self.screen.type(text['value'])
-
+        try:
+            self.screen.type(text['value'])
+        except:
+            raise
+        
     def enter_type(self):
-        self.screen.type("\n")
+        try:
+            self.screen.type("\n")
+        except:
+            raise
                 
     def __del__(self):
         shutdownJVM()

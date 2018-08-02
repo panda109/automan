@@ -1,4 +1,4 @@
-debug			on
+debug			off
 start
-$reresult$=get	Automan_server	result	#ip#=192.168.245.1,#port#=10000,#action#=$request$
+$reresult$=get	Automan_server	result	#ip#=172.27.16.81,#port#=10000,#action#=$request$
 end

@@ -18,5 +18,5 @@ sleep		10
 close		Autoit	app
 sleep		1
 click		Autoit	control	#title#=PuTTY Exit Confirmation,#value#=[CLASS:Button; INSTANCE:1]
-send		Fb				message	#user#=yr6703@gmail.com,#password#=Panda109!!,#message#=putty test finished
+send		Fb		message	#user#=yr6703@gmail.com,#password#=Panda109!!,#message#=putty test finished
 end

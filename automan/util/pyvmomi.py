@@ -21,10 +21,11 @@ class Pyvmomi(object):
         self.ci = connect.SmartConnect(host=dict['ip'],user=dict['user'],pwd=dict['password'],port=int(dict['port']),sslContext=self.context)
         datacenter = self.ci.content.rootFolder.childEntity[0]
         vms = datacenter.vmFolder.childEntity
+        self.tagvm = 0
         for i in vms:
             if (i.name == dict['vmname']):
-                return PASS
-        raise error.nonamevalue()
-        
+                self.tagvm = 1
+        if (self.tagvm == 0):
+            raise error.nonamevalue()
     def __del__(self):
         connect.Disconnect(self.ci)

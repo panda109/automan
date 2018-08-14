@@ -1,4 +1,4 @@
 debug			off
 start
-check			Pyvmomi		instance	#ip#=172.27.128.43,#port#=443,#user#=root,#password=infortrend1!,#vmname#=vCenter1
+check			Pyvmomi		instance	#ip#=172.27.128.98,#port#=443,#user#=root,#password=infortrend1!,#vmname#=vCenter1
 end

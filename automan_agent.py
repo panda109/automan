@@ -29,9 +29,17 @@ class Automan_agent(object):
         #print "Socket create succeed!!"
         print ("Server is Listening :ip %s port %s" % (myip,"10000"))
         while True:
+            print "Waiting for new connection !!!"
             (csock, adr) = sock.accept()
             print "Client Info: ", csock, adr 
-            start_new_thread(automan.threadwork, (csock,))
+            #start_new_thread(automan.threadwork, (csock,))
+            msg = csock.recv(1024)
+            if not msg:
+                pass
+            else:
+                print "Client send: " + msg    
+                result = automan.call_function(msg)
+                csock.sendall(result)
         sock.close()
                 
     def threadwork(self, client):

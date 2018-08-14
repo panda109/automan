@@ -5,8 +5,8 @@ dosrun		Autoit	app		#name#=start /b cmd /c D:\putty.exe
 click		Sikuli	icon	#key#=./img/HCI/ip.png
 type		Sikuli	text	#value#=$ipaddress$
 sleep		1
-#click		Autoit	control	#title#=PuTTY Configuration,#value#=[CLASS:Button; INSTANCE:1]
-click		Sikuli	icon	#key#=./img/HCI/open.png
+click		Autoit	control	#title#=PuTTY Configuration,#value#=[CLASS:Button; INSTANCE:1]
+#click		Sikuli	icon	#key#=./img/HCI/open.png
 sleep		1
 hover		Sikuli	icon	#key#=./img/HCI/login.png
 type		Sikuli	text	#value#=$username$

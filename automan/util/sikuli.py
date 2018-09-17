@@ -8,6 +8,7 @@ Requirement: pip install -U pyautoit
 '''
 from jpype import *
 from pickle import NONE
+import automan.tool.error as error
 
 class Sikuli(object):
     def __init__(self):
@@ -26,17 +27,17 @@ class Sikuli(object):
             if x != "None":
                 self.screen.hover(name['key'])
             else:
-                raise
+                raise error.notfind()
         except:
-            raise
+            raise error.notfind()
         
     def icon_wait(self, name):
         try:
             x = self.screen.wait(name['key'],name['value'])
             if x == "None":
-                raise
+                raise error.notfind()
         except:
-            raise
+            raise error.notfind()
         
     def icon_click(self, name):
         try:
@@ -44,21 +45,21 @@ class Sikuli(object):
             if x != "None":
                 self.screen.click(name['key'])
             else:
-                raise
-        except:
-            raise
+                raise error.notfind()
+        except :
+            raise error.notfind()
             
     def text_type(self,text):
         try:
             self.screen.type(text['value'])
         except:
-            raise
+            raise error.notfind()
         
     def enter_type(self):
         try:
             self.screen.type("\n")
         except:
-            raise
+            raise error.notfind()
                 
     def __del__(self):
         shutdownJVM()

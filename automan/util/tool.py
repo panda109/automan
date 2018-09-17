@@ -21,7 +21,10 @@ class Tool(object):
         return 100
     
     def test_get(self):
-        return 100
+        raise error.notfind()
+
+    def testerror_get(self):
+        raise error.notfind()
     
     def dir_set(self,value_dict):
         pass

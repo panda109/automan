@@ -19,3 +19,5 @@ class nonamevalue(Exception): pass
 class equalerror(Exception): pass
 
 class notequalerror(Exception): pass
+
+class notfind(Exception): pass

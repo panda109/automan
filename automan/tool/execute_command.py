@@ -80,6 +80,9 @@ class Execute_command(object):
         except error.notequalerror:
             print "FAIL !! value is equal or exist"
             result = 1
+        except error.notfind:
+            print "FAIL !! not find"
+            result = 1    
         #except:
         #    result = 1
         return result

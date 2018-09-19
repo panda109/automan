@@ -101,7 +101,8 @@ class Parse_file(object):
     def get_ini(self,filename):
         system={}
         try:
-            for line in open(filename):
+            lines = os.path.join(".//ini//", filename)
+            for line in open(lines):
                 system[str(line).strip().split('=')[0]] = str(line).strip().split('=')[1]
             return system
         except:

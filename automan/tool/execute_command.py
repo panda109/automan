@@ -4,6 +4,7 @@ Created on 2010/12/10
 @author: panda.huang
 '''
 import time
+import os
 from automan.tool.parse_file import Parse_file
 from automan.tool.userclass import Userclass
 from automan.tool.modify_command import Modify_command
@@ -45,7 +46,7 @@ class Execute_command(object):
                         pass
             elif list(command).__len__() == 3:
                 if command[1] == 'ini':                   
-                   self.currentlyini.update(Parse_file().get_ini('.\\ini\\'+str(command[2])))
+                   self.currentlyini.update(Parse_file().get_ini(str(command[2])))
                 elif command[1] == 'sleep':
                     time.sleep(int(command[2]))
                 elif command[1] == 'debug' and command[2] == 'on':
@@ -54,9 +55,9 @@ class Execute_command(object):
                     self.currentlyini.update({'debug':'off'})
             elif list(command).__len__() == 4:
                 if command[1] == 'init' and command[2] == 'ie' and command[3].lower() == "chrome":
-                   self.ie = Ie(systemini['ie'],command[3].lower()).ie
+                   self.ie = Ie(systemini['chrome'],command[3].lower()).ie
                 elif command[1] == 'init' and command[2] == 'ie' and command[3].lower() == "firefox":
-                    self.ie = Ie(systemini['ie'],command[3].lower()).ie
+                    self.ie = Ie(systemini['firefox'],command[3].lower()).ie
                 elif command[1] == 'init' and command[2] == 'ie' and command[3].lower() == "ie":
                     self.ie = Ie(systemini['ie'],command[3].lower()).ie
                 else:

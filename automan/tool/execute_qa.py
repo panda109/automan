@@ -34,7 +34,7 @@ class Execute_qa(object):
             self.nowcase = qa_list[index]
             print 'The '+str(index+1)+'th testcase\'s name is : '+qa_list[index]+'\n'
             self.commands = Parse_file().parse_qa(qa_list[index])
-            self.systemini = Parse_file().get_ini('./ini/system.ini')
+            self.systemini = Parse_file().get_ini('system.ini')
             self.commandline(self.commands)
             self.log.parse_case_log(index)
             self.log.result = []

@@ -1,0 +1,26 @@
+ini		demo.ini
+
+#get	Tool					testerror
+#click	Sikuli					icon				#key#=./img/HCI/ip.png
+init	ie						Chrome	
+start
+set		ie.eonone_login			textbox_username	#key#=$username$
+set		ie.eonone_login			textbox_password	#key#=$password$
+click	ie.eonone_login			button_login
+sleep	2
+click	ie.eonone_overview		sharefolder
+sleep	2
+click	ie.eonone_sharefolder	new_folder
+
+sleep	2
+click	ie.eonone_sharefolder	checkbox_smbandcifs
+sleep	2
+set		ie.eonone_sharefolder	foldername			#key#=testname
+sleep	2
+clear	ie.eonone_sharefolder	sharefoldername
+set		ie.eonone_sharefolder	sharefoldername		#key#=testsharename
+#sleep	2
+#set		ie.eonone_sharefolder	location			#key#=testsharename
+
+send	Fb						message				#user#=yr6703@gmail.com,#password#=Panda109!!,#message#=demo finish!!
+end

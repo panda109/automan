@@ -32,16 +32,16 @@ class Execute_command(object):
             print systemini
             print self.currentlyini
         #need to be merge into userclass
-        if len(command) >= 3 and str(command[2]) == 'ie':
-            from automan.ui.ie import Ie
-        if len(command) >= 4 and str(command[2]) != 'ie':
+        if len(command) >= 3 and str(command[2]) == 'browser':
+            from automan.ui.browser import Browser
+        if len(command) >= 4 and str(command[2]) != 'browser':
             self.userclass.check_class(command[2])
         try:
             if list(command).__len__() == 2:
                 if command[1] == 'end':
                     try:
-                        if self.ie:
-                            self.ie.quit()
+                        if self.browser:
+                            self.browser.quit()
                     except:
                         pass
             elif list(command).__len__() == 3:
@@ -54,13 +54,14 @@ class Execute_command(object):
                 elif command[1] == 'debug' and command[2] == 'off':
                     self.currentlyini.update({'debug':'off'})
             elif list(command).__len__() == 4:
-                if command[1] == 'init' and command[2] == 'ie' and command[3].lower() == "chrome":
-                   self.ie = Ie(systemini['chrome'],command[3].lower()).ie
-                elif command[1] == 'init' and command[2] == 'ie' and command[3].lower() == "firefox":
-                    self.ie = Ie(systemini['firefox'],command[3].lower()).ie
-                elif command[1] == 'init' and command[2] == 'ie' and command[3].lower() == "ie":
-                    self.ie = Ie(systemini['ie'],command[3].lower()).ie
+                if command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "chrome":
+                   self.browser = Browser(systemini['chrome'],command[3].lower()).browser
+                elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "firefox":
+                    self.browser = Browser(systemini['firefox'],command[3].lower()).browser
+                elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
+                    self.browser = Browser(systemini['ie'],command[3].lower()).browser
                 else:
+                    print command
                     ob = self.userclass.class_object[self.get_objectname(command)]
                     defname = self.get_defname(systemini,command)
                     ret = eval(defname)
@@ -90,7 +91,8 @@ class Execute_command(object):
     
     def get_objectname(self,command):
         
-        if str(command[2]).find('ie.')==0:
+        if str(command[2]).find('browser.')==0:
+            print str(str(command[2]).split('.')[1]).lower()
             return str(str(command[2]).split('.')[1]).lower()
         else:
             return str(command[2]).lower()
@@ -103,16 +105,16 @@ class Execute_command(object):
             action = command[1]
         
         if list(command).__len__() == 4:
-            if str(command[2]).find('ie.')==0:
-                return 'ob.' + command[3] + '_' + action + '(self.ie)'
+            if str(command[2]).find('browser.')==0:
+                return 'ob.' + command[3] + '_' + action + '(self.browser)'
             else:
                 return 'ob.' + command[3] + '_' + action + '()'
         elif list(command).__len__() == 5:
             param = Modify_command().replay_ini(systemini, self.currentlyini,str(command[4]))
             self.namevalue = Parse_name_value().parse_name_value(param)
-            if str(command[2]).find('ie.')==0:
-                #return 'ob.' + command[3] + '_' + action + '(self.ie,\''+param+'\')'
-                return 'ob.' + command[3] + '_' + action + '(self.ie,self.namevalue)'
+            if str(command[2]).find('browser.')==0:
+                #return 'ob.' + command[3] + '_' + action + '(self.browser,\''+param+'\')'
+                return 'ob.' + command[3] + '_' + action + '(self.browser,self.namevalue)'
             else:
                 #return 'ob.' + command[3] + '_' + action + '(\''+param+'\')'
                 return 'ob.' + command[3] + '_' + action + '('+'self.namevalue'+')'   

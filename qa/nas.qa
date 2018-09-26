@@ -1,8 +1,11 @@
-ini			file.ini
+ini			nas.ini
 start
 
 exec		File		smbnetuse		#command#=$clean_command$
 exec		File		smbnetuse		#command#=$mount_command$
+
+exec		File		rdfolder		#command#=$rd_command$
+exec		File		mdfolder		#command#=$md_command$
 
 exec		File		clean			#command#=$clean_smb_command$
 exec		File		clean			#command#=$clean_local_command$
@@ -14,5 +17,5 @@ $upmd5$=get			File		getmd5			#file#=$upfilename$
 $ldmd5$=get			File		getmd5			#file#=$ldfilename$
 
 verify		File		equalmd5		#md5#=$upmd5$,#ldmd5#=$ldmd5$
-
+#send		Fb			message			#user#=yr6703@gmail.com,#password#=Panda109!!,#message#=md5 finish!!
 end

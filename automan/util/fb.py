@@ -4,7 +4,7 @@ Created on 2018¦~7¤ë13¤é
 
 @author: Tim.Huang
 '''
-
+import datetime
 from fbchat import Client
 from fbchat.models import *
 
@@ -16,5 +16,8 @@ class Fb(object):
     def message_send(self,key):
         client = Client(key['user'], key['password'])
         #print('Own id: {}'.format(client.uid))
-        client.send(Message(text=key['message']), thread_id=client.uid, thread_type=ThreadType.USER)
+        now = datetime.datetime.now()
+        text=key['message']
+        text = text + " at " + now.strftime("%Y-%m-%d %H:%M:%S")
+        client.send(Message(text), thread_id=client.uid, thread_type=ThreadType.USER)
         client.logout()

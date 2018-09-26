@@ -26,18 +26,18 @@ class eonone_login(object):
        pass
 
 
-    def textbox_username_set(self, ie, value_dict):
+    def textbox_username_set(self, browser, value_dict):
         local_dict = dict(value_dict)
-        elem = ie.find_element_by_id(config.get("login", "id_signin_username"))
+        elem = browser.find_element_by_id(config.get("login", "id_signin_username"))
         elem.send_keys(local_dict["key"] )
         
-    def textbox_password_set(self, ie, value_dict):
+    def textbox_password_set(self, browser, value_dict):
         local_dict = dict(value_dict)
-        elem = ie.find_element_by_id(config.get("login", "id_signin_passwd"))
+        elem = browser.find_element_by_id(config.get("login", "id_signin_passwd"))
         elem.send_keys(local_dict["key"] )    
     
-    def button_login_click(self, ie):
+    def button_login_click(self, browser):
         text = config.get("login", "class_signin_button")
         xpath="//button[@class='replace']"
-        elem = ie.find_element_by_xpath(xpath.replace("replace",text))
+        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
         elem.click()

@@ -5,7 +5,7 @@ Created on 2010/12/15
 '''
 from selenium import webdriver
 
-class Ie(object):
+class Browser(object):
     '''
     classdocs
     '''
@@ -20,29 +20,28 @@ class Ie(object):
             #multi_dl_prefs = {}
             #multi_dl_prefs['profile.default_content_settings.multiple-automatic-downloads'] = 1
             #options.add_experimental_option("prefs", multi_dl_prefs)                
-            self.ie = webdriver.Chrome(chrome_options=options)
-            self.ie.get(url)
+            self.browser = webdriver.Chrome(chrome_options=options)
+            self.browser.get(url)
 
         if browser == "firefox":
             profile = webdriver.FirefoxProfile()
             profile.set_preference("browser.privatebrowsing.autostart", True)
-            self.ie = webdriver.Firefox(firefox_profile=profile)
-            #self.ie = webdriver.Firefox()
-            self.ie.maximize_window()   
-            self.ie.get(url)
+            self.browser = webdriver.Firefox(firefox_profile=profile)
+            self.browser.maximize_window()   
+            self.browser.get(url)
 
         if browser == "ie":
-            self.ie = webdriver.Ie()
-            self.ie.maximize_window()            
+            self.browser = webdriver.Browser()
+            self.browser.maximize_window()            
             #print self.driver.get_window_size()
-            self.ie.get(url)
+            self.browser.get(url)
 
         '''
         Constructor
         '''
         
     def getie(self):
-        return self.ie
+        return self.browser
 
     def delie(self):
-        self.ie.quit()
+        self.browser.quit()

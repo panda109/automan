@@ -25,42 +25,72 @@ class eonone_sharefolder(object):
        Constructor
        '''
        pass
-
-    def new_folder_click(self, ie):
-        text = config.get("sharefolder", "class_new_button")
+#layer 2
+    def newfolder_click(self, browser):
+        text = config.get("setting", "class_new_button")
         xpath="//button[@class='replace ']"
-        elem = ie.find_element_by_xpath(xpath.replace("replace",text))
-        Hover = ActionChains(ie).move_to_element(elem)
+        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
+        Hover = ActionChains(browser).move_to_element(elem)
         Hover.click().perform()
         #print elem.text
 
-    def checkbox_smbandcifs_click(self, ie):
-        text = config.get("sharefolder_new", "ng-model_smbandcifs_text")
+#layer 3 : popup
+    def popup_comfirm_click(self, browser):
+        text = config.get("sharefolder_popup", "class_comfirm_button")
+        xpath="//button[@ng-click='replace']"
+        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
+        Hover = ActionChains(browser).move_to_element(elem)
+        Hover.click().perform()
+
+#lauer 3 : common
+    def aclsetfolder_click(self, browser):
+        text = config.get("sharefolder_common", "class_aclsetfolder_button")
+        xpath="//ul//li[contains(.,'replace')]"
+        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
+        Hover = ActionChains(browser).move_to_element(elem)
+        Hover.click().perform()
+
+    def save_click(self, browser):
+        text = config.get("sharefolder_common", "class_save_button")
+        xpath="//button[@ng-click='replace']"
+        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
+        Hover = ActionChains(browser).move_to_element(elem)
+        Hover.click().perform()
+
+#layer 3 : quota
+
+#layer 3 : hash
+
+#layer 3 : permission
+
+#layer 3 : normal
+    def nor_checkbox_smbandcifs_click(self, browser):
+        text = config.get("sharefolder_normail", "ng-model_smbandcifs_text")
         xpath="//input[@ng-model='replace']"
-        elem = ie.find_element_by_xpath(xpath.replace("replace",text))
-        Hover = ActionChains(ie).move_to_element(elem)
+        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
+        Hover = ActionChains(browser).move_to_element(elem)
         Hover.click().perform()
         
-    def foldername_set(self, ie, value_dict):
+    def nor_text_foldername_set(self, browser, value_dict):
         local_dict = dict(value_dict)
-        text = config.get("sharefolder_new", "validate_folder_text")
+        text = config.get("sharefolder_normail", "validate_folder_text")
         xpath="//input[@validate='replace']"
-        elem = ie.find_element_by_xpath(xpath.replace("replace",text))
-        #Hover = ActionChains(ie).move_to_element(elem)
+        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
+        #Hover = ActionChains(browser).move_to_element(elem)
         elem.send_keys(local_dict["key"])
 
-    def sharefoldername_set(self, ie, value_dict):
+    def nor_text_sharefoldername_set(self, browser, value_dict):
         local_dict = dict(value_dict)
-        text = config.get("sharefolder_new", "validate_sharefolder_text")
+        text = config.get("sharefolder_normail", "validate_sharefolder_text")
         xpath="//input[@validate='replace']"
-        elem = ie.find_element_by_xpath(xpath.replace("replace",text))
-        #Hover = ActionChains(ie).move_to_element(elem)
-        elem.clear()
+        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
+        #Hover = ActionChains(browser).move_to_element(elem)
+        #elem.clear()
         elem.send_keys(local_dict["key"])
 
-    def sharefoldername_clear(self, ie):
-        text = config.get("sharefolder_new", "validate_sharefolder_text")
+    def nor_text_sharefoldername_clear(self, browser):
+        text = config.get("sharefolder_normail", "validate_sharefolder_text")
         xpath="//input[@validate='replace']"
-        elem = ie.find_element_by_xpath(xpath.replace("replace",text))
-        #Hover = ActionChains(ie).move_to_element(elem)
+        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
+        #Hover = ActionChains(browser).move_to_element(elem)
         elem.clear()

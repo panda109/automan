@@ -24,25 +24,25 @@ class login(object):
        pass
 
 
-    def textbox_username_set(self, ie, value_dict):
+    def textbox_username_set(self, browser, value_dict):
         local_dict = dict(value_dict)
-        elem = ie.find_element_by_id(config.get("login", "id_signin_username"))
+        elem = browser.find_element_by_id(config.get("login", "id_signin_username"))
         elem.send_keys(local_dict["key"] )
 
-    def textbox_password_set(self, ie, value_dict):
+    def textbox_password_set(self, browser, value_dict):
         local_dict = dict(value_dict)
-        elem = ie.find_element_by_id(config.get("login", "id_signin_passwd"))
+        elem = browser.find_element_by_id(config.get("login", "id_signin_passwd"))
         elem.send_keys(local_dict["key"] )
 
-    def button_signin_click(self, ie):
-        elem = ie.find_element_by_id(config.get("login", "id_signin_button"))
+    def button_signin_click(self, browser):
+        elem = browser.find_element_by_id(config.get("login", "id_signin_button"))
         elem.click()
 
     #====verify login sucess
-    def login_success_verify(self, ie, value_dict): 
+    def login_success_verify(self, browser, value_dict): 
         local_dict = dict(value_dict)
         try:
-            ie.find_element_by_link_text(config.get("login", "login_verify")).text
+            browser.find_element_by_link_text(config.get("login", "login_verify")).text
             verify_vaule = 'success'
         except:
             verify_vaule = 'Fail'       

@@ -18,6 +18,19 @@ class File(object):
         '''
         Constructor
         '''
+    def rdfolder_exec(self,dict):
+        try:
+            os.system(dict['command'])
+            return 0
+        except:
+            return 1
+        
+    def mdfolder_exec(self,dict):
+        try:
+            os.system(dict['command'])
+            return 0
+        except:
+            return 1    
     
     def smbnetuse_exec(self,dict):
         try:

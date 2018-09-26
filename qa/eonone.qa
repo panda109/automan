@@ -1,0 +1,34 @@
+ini		eonone.ini
+
+init	browser					Chrome	
+start
+set		browser.eonone_login	textbox_username		#key#=$username$
+set		browser.eonone_login	textbox_password		#key#=$password$
+click	browser.eonone_login	button_login
+
+sleep	2
+click	browser.eonone_overview		sharefolder
+sleep	1
+click	browser.eonone_sharefolder	newfolder
+
+sleep	1
+click	browser.eonone_sharefolder	nor_checkbox_smbandcifs
+sleep	1
+set		browser.eonone_sharefolder	nor_text_foldername			#key#=test
+
+sleep	1
+clear	browser.eonone_sharefolder	nor_text_sharefoldername
+set		browser.eonone_sharefolder	nor_text_sharefoldername	#key#=test
+
+sleep	1
+click	browser.eonone_sharefolder	aclsetfolder 
+
+click	Sikuli						icon				#key#=./img/DEMO/enable_write_read.png
+
+sleep	1
+click	browser.eonone_sharefolder	save
+sleep	10
+click	browser.eonone_sharefolder	popup_comfirm
+
+#send	Fb						message						#user#=yr6703@gmail.com,#password#=Panda109!!,#message#=eonone finish!!
+end

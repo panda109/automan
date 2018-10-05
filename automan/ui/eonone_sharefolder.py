@@ -73,24 +73,24 @@ class eonone_sharefolder(object):
         
     def nor_text_foldername_set(self, browser, value_dict):
         local_dict = dict(value_dict)
-        text = config.get("sharefolder_normail", "validate_folder_text")
-        xpath="//input[@validate='replace']"
+        text = config.get("sharefolder_normail", "placeholder_folder_text")
+        xpath="//input[@placeholder='replace']"
         elem = browser.find_element_by_xpath(xpath.replace("replace",text))
         #Hover = ActionChains(browser).move_to_element(elem)
         elem.send_keys(local_dict["key"])
 
     def nor_text_sharefoldername_set(self, browser, value_dict):
         local_dict = dict(value_dict)
-        text = config.get("sharefolder_normail", "validate_sharefolder_text")
-        xpath="//input[@validate='replace']"
+        text = config.get("sharefolder_normail", "placeholder_sharefolder_text")
+        xpath="//input[@placeholder='replace']"
         elem = browser.find_element_by_xpath(xpath.replace("replace",text))
         #Hover = ActionChains(browser).move_to_element(elem)
         #elem.clear()
         elem.send_keys(local_dict["key"])
 
     def nor_text_sharefoldername_clear(self, browser):
-        text = config.get("sharefolder_normail", "validate_sharefolder_text")
-        xpath="//input[@validate='replace']"
+        text = config.get("sharefolder_normail", "placeholder_sharefolder_text")
+        xpath="//input[@placeholder='replace']"
         elem = browser.find_element_by_xpath(xpath.replace("replace",text))
         #Hover = ActionChains(browser).move_to_element(elem)
         elem.clear()

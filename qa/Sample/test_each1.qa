@@ -9,7 +9,7 @@ start
 #each		end
 #verify		Tool		dir				#name# = test , #value# = test , #key# = , #criteria# = =
 #each		start		300,200,100
-each		start		!loop!=10
+each		start		!loop!=1
 verify		Tool		dir				#name# = test , #value# = $$ , #key# = , #criteria# = !
 each		end
 end

@@ -11,7 +11,7 @@ from automan.tool.execute_command import Execute_command
 from automan.tool.log import Log
 from automan.tool.parse_file import Parse_file
 import datetime
-#import pyscreenshot as ImageGrab
+import pyscreenshot as ImageGrab
 
 class Execute_qa(object):
     '''
@@ -77,9 +77,11 @@ class Execute_qa(object):
             print "[VP] = " + 'PASS\n\n'
 
     def screenshot(self):
+        print self.qa_file
+        print self.qa_list
         if len(self.qa_list) == 1 :
             SaveDirectory = os.getcwd()
-            SaveAs = os.path.join(SaveDirectory,'log\\'  
+            SaveAs = os.path.join(SaveDirectory,'log\\'  + self.qa_file.split(".")[0] + "\\"
                     + time.strftime('%Y_%m_%d_%H_%M_%S') + '.jpg')
             im=ImageGrab.grab()
             time.sleep(2)
@@ -87,9 +89,15 @@ class Execute_qa(object):
         else:
             self.nowcase = self.nowcase.rstrip(".qa")
             self.nowcase = self.nowcase.lstrip(".\\qa\\")
+            qas = self.qa_file.split('.')[0]
+
+            if self.nowcase.find("\\") != -1 :
+                self.nowcase = self.nowcase.split('\\')[1]
+                
+            print self.nowcase            
             SaveDirectory = os.getcwd()
-            os.mkdir(SaveDirectory + "\\log\\" + self.nowcase)
-            SaveAs = os.path.join(SaveDirectory,'log\\' + self.nowcase + "\\" 
+            os.mkdir(SaveDirectory + "\\log\\" + qas + "\\" + self.nowcase + "\\")
+            SaveAs = os.path.join(SaveDirectory,'log\\' + qas + "\\" + self.nowcase + "\\"
                 + time.strftime('%Y_%m_%d_%H_%M_%S') + '.jpg')
             im=ImageGrab.grab()
             time.sleep(2)

@@ -97,16 +97,34 @@ class Execute_qa(object):
             
     def execute_each_session(self):
         #replace $$
-        for param in str(self.each_session[0][3]).split(','):
-            for command in self.each_session[1:]:
-                temp_list = []
-                temp_list = temp_list + command
-                temp_list[-1] = str(command[-1]).replace('$$', param)
-                result = self.execute_normal_session(temp_list)
+        result=0
+        
+        if self.each_session[0][3].find("!loop!") != -1:
+            loop = self.each_session[0][3].split('=')[1]
+            for param in range(int(loop)):
+                for command in self.each_session[1:]:
+                    temp_list = []
+                    temp_list = temp_list + command
+                    param = param + 1
+                    temp_list[-1] = str(command[-1]).replace('$$', str(param))
+                    result = self.execute_normal_session(temp_list)
+                    if result == 1 and str(self.systemini['keepgoon'])=='no':
+                        break
                 if result == 1 and str(self.systemini['keepgoon'])=='no':
                     break
-            if result == 1 and str(self.systemini['keepgoon'])=='no':
-                break            
+            
+        if self.each_session[0][3].find(",") != -1:
+            for param in str(self.each_session[0][3]).split(','):
+                for command in self.each_session[1:]:
+                    temp_list = []
+                    temp_list = temp_list + command
+                    temp_list[-1] = str(command[-1]).replace('$$', param)
+                    result = self.execute_normal_session(temp_list)
+                    if result == 1 and str(self.systemini['keepgoon'])=='no':
+                        break
+                if result == 1 and str(self.systemini['keepgoon'])=='no':
+                    break
+                            
         return result
         
     def execute_normal_session(self,command):

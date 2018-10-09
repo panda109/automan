@@ -27,17 +27,26 @@ class eonone_login(object):
 
 
     def textbox_username_set(self, browser, value_dict):
-        local_dict = dict(value_dict)
-        elem = browser.find_element_by_id(config.get("login", "id_signin_username"))
-        elem.send_keys(local_dict["key"] )
+        try:
+            local_dict = dict(value_dict)
+            elem = browser.find_element_by_id(config.get("login", "id_signin_username"))
+            elem.send_keys(local_dict["key"] )
+        except:
+            raise error.notfind()
         
     def textbox_password_set(self, browser, value_dict):
-        local_dict = dict(value_dict)
-        elem = browser.find_element_by_id(config.get("login", "id_signin_passwd"))
-        elem.send_keys(local_dict["key"] )    
-    
+        try:
+            local_dict = dict(value_dict)
+            elem = browser.find_element_by_id(config.get("login", "id_signin_passwd"))
+            elem.send_keys(local_dict["key"] )    
+        except:
+            raise error.notfind()
+        
     def button_login_click(self, browser):
-        text = config.get("login", "class_signin_button")
-        xpath="//button[@class='replace']"
-        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
-        elem.click()
+        try:
+            text = config.get("login", "class_signin_button")
+            xpath="//button[@class='replace']"
+            elem = browser.find_element_by_xpath(xpath.replace("replace",text))
+            elem.click()
+        except:
+            raise error.notfind()

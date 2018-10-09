@@ -27,9 +27,12 @@ class eonone_overview(object):
        pass
 
     def sharefolder_click(self, browser):
-        text = config.get("overview", "class_sharefolder")
-        xpath="//div[@class='replace']"
-        elem = browser.find_element_by_xpath(xpath.replace("replace",text))
-        Hover = ActionChains(browser).move_to_element(elem)
-        Hover.click().perform()
-        #print elem.text
+        try:
+            text = config.get("overview", "class_sharefolder")
+            xpath="//div[@class='replace']"
+            elem = browser.find_element_by_xpath(xpath.replace("replace",text))
+            Hover = ActionChains(browser).move_to_element(elem)
+            Hover.click().perform()
+            #print elem.text
+        except:
+            raise error.notfind()

@@ -77,8 +77,6 @@ class Execute_qa(object):
             print "[VP] = " + 'PASS\n\n'
 
     def screenshot(self):
-        print self.qa_file
-        print self.qa_list
         if len(self.qa_list) == 1 :
             SaveDirectory = os.getcwd()
             SaveAs = os.path.join(SaveDirectory,'log\\'  + self.qa_file.split(".")[0] + "\\"
@@ -94,7 +92,6 @@ class Execute_qa(object):
             if self.nowcase.find("\\") != -1 :
                 self.nowcase = self.nowcase.split('\\')[1]
                 
-            print self.nowcase            
             SaveDirectory = os.getcwd()
             os.mkdir(SaveDirectory + "\\log\\" + qas + "\\" + self.nowcase + "\\")
             SaveAs = os.path.join(SaveDirectory,'log\\' + qas + "\\" + self.nowcase + "\\"

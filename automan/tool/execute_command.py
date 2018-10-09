@@ -53,6 +53,12 @@ class Execute_command(object):
                     self.currentlyini.update({'debug':'on'})
                 elif command[1] == 'debug' and command[2] == 'off':
                     self.currentlyini.update({'debug':'off'})
+                elif command[1] == 'close' and command[2] == 'browser':
+                    try:
+                        if self.browser:
+                            self.browser.quit()
+                    except:
+                        pass
             elif list(command).__len__() == 4:
                 if command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "chrome":
                    self.browser = Browser(systemini['chrome'],command[3].lower()).browser

@@ -103,9 +103,20 @@ class Parse_file(object):
         try:
             lines = os.path.join(".//ini//", filename)
             for line in open(lines):
-                system[str(line).strip().split('=')[0]] = str(line).strip().split('=')[1]
+                temp = str(line).strip().split('=')[1]
+                temp = self.modify(temp)
+                system[str(line).strip().split('=')[0]] = temp
             return system
         except:
             print "can't find "+filename
             raise error.notfindinifile()
-
+    
+    def modify(self,tempstring):
+        temp = tempstring.split('\\0x')
+        #print tempstring
+        for index in range(len(temp)):
+            if index > 0:
+                ascii = temp[index][:2]
+                tempstring = tempstring.replace("\\0x" + ascii , chr(int(ascii,16)) , 1)
+        #print len(tempstring),tempstring
+        return tempstring

@@ -60,16 +60,19 @@ class Execute_qa(object):
             else:
                 result = self.execute_normal_session(command)
                 #print "=============", result
-            if result == 1 and str(self.systemini['keepgoon'])=='no':
-                if str(self.systemini['screenshot'])=='yes':
+                
+                
+            if command[1] != 'end' :
+                if result == 1 and str(self.systemini['screenshot'])=='yes' :
                     self.screenshot()
-                    break
-                else:
-                    break
-            if ( result == 1 and str(self.systemini['screenshot'])=='yes'
-            and str(self.systemini['keepgoon'])=='yes'):
-                self.screenshot()
 
+                elif str(self.systemini['screenshot'])=='step' :
+                    self.screenshot()
+                 
+            elif command[1] == 'end' : 
+                if str(self.systemini['screenshot'])=='force'  :
+                    self.screenshot()
+          
         status = self.log.finall_status()
         if status == False:
             print "[VP] = " + 'FAIL\n\n'

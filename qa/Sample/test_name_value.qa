@@ -9,8 +9,12 @@ start
 #verify		Tool		dir				#name#=test,#value#=100
 #verify		Tool		dir				#name#=test,#value#=100,#key#=$test100$,#criteria#==
 #verify		Tool		dir				#name#=test,#value#=$test100$,#key#=$test100$,#criteria#==
+
 $test$=get	Tool		test
 verify		Tool		dir				#name#=test,#value#=100,#key#=$test100$,#criteria#==
+
+
 #verify		Tool		dir				#name# = test , #value# = 100 , #key# = , #criteria# = =
 #verify		Tool		dir				#name# = test , #value# = 100 , #key# = , #criteria# = !
+
 end

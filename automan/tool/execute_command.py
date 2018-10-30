@@ -72,9 +72,18 @@ class Execute_command(object):
                     defname = self.get_defname(systemini,command)
                     ret = eval(defname)
             elif list(command).__len__() == 5:
-                ob = self.userclass.class_object[self.get_objectname(command)]
-                defname = self.get_defname(systemini,command)
-                ret = eval(defname)
+                if command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "chrome":
+                   self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
+                elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "firefox":
+                    self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
+                elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
+                    self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
+                else:
+                    print command
+                    ob = self.userclass.class_object[self.get_objectname(command)]
+                    defname = self.get_defname(systemini,command)
+                    print defname
+                    ret = eval(defname)
             elif list(command).__len__() == 6:
                 pass
             if str(command[1]).find('$=get')>0:

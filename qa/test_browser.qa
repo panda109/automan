@@ -1,0 +1,20 @@
+ini		eonone.ini
+
+start
+init	browser					chrome
+set		browser.eonone_login	textbox_username		#key#=$username$
+set		browser.eonone_login	textbox_password		#key#=$password$
+close	browser
+
+init	browser					chrome	url1
+set		browser.eonone_login	textbox_username		#key#=$username$
+set		browser.eonone_login	textbox_password		#key#=$password$
+set		browser.eonone_login	textbox_username		#key#=1111111111111
+set		browser.eonone_login	textbox_password		#key#=$password$
+close	browser
+
+init	browser					chrome	url2
+close	browser
+sleep	3
+send	Fb		message		#user#=yr6703@gmail.com,#password#=Panda109!!,#message#=testcasename
+end

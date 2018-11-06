@@ -31,13 +31,21 @@ class Sikuli(object):
         except:
             raise error.notfind()
         
-    def icon_wait(self, name):
+    def icon_wait(self, name, dict):
         try:
-            x = self.screen.wait(name['key'],name['value'])
+            x = self.screen.wait(name['key'],name['value'],int(dict['sec']))
             if x == "None":
                 raise error.notfind()
         except:
             raise error.notfind()
+
+    def icon_waitvanish(self, name, dict):
+        try:
+            x = self.screen.wait(name['key'],name['value'],int(dict['sec']))
+            if x == "None":
+                raise error.find()
+        except:
+            raise error.find()
         
     def icon_click(self, name):
         try:

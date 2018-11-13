@@ -5,6 +5,7 @@ Created on 2010/12/28
 '''
 import automan.tool.error as error
 from automan.tool.verify import Verify
+from pathlib import Path
 
 class Tool(object):
     '''
@@ -16,6 +17,12 @@ class Tool(object):
         '''
         Constructor
         '''
+    def file_verify(self):
+        my_file = Path("test.txt")
+        if my_file.is_file() == True:
+            return
+        else:
+            raise error.notfind()
     
     def dir_list(self):
         return 100

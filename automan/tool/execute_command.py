@@ -82,7 +82,7 @@ class Execute_command(object):
                     print command
                     ob = self.userclass.class_object[self.get_objectname(command)]
                     defname = self.get_defname(systemini,command)
-                    print defname
+                    #print defname
                     ret = eval(defname)
             elif list(command).__len__() == 6:
                 pass

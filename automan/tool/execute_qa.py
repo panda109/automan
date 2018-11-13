@@ -20,6 +20,7 @@ class Execute_qa(object):
 
     def __init__(self):
         self.each_session = []
+        self.until_session = []
         self.for_session = []
         self.executer = Execute_command()
         '''
@@ -47,6 +48,7 @@ class Execute_qa(object):
         """
         os.chdir(os.getcwd())
         each_mode = False
+        until_mode = False
         for command in list(commands):
             if command[1] == 'each' and command[2] == 'start':
                 self.each_session.append(command)
@@ -57,9 +59,18 @@ class Execute_qa(object):
                 each_mode = False
             elif each_mode == True:
                 self.each_session.append(command)
+            elif command[1] == 'until' and command[2] == 'start':
+                self.until_session.append(command)
+                until_mode = True
+            elif command[1] == 'until' and command[2] == 'end':
+                result = self.execute_until_session()
+                self.until_session = []
+                until_mode = False
+            elif until_mode == True:
+                self.until_session.append(command)
             else:
                 result = self.execute_normal_session(command)
-                #print "=============", result
+            
                 
                 
             if command[1] != 'end' :
@@ -102,6 +113,27 @@ class Execute_qa(object):
             im=ImageGrab.grab()
             time.sleep(2)
             ImageGrab.grab_to_file(SaveAs)
+            
+    def execute_until_session(self):
+        result=1
+        if self.until_session[0][3].find("!loop!") != -1:
+            loop = self.until_session[0][3].split('=')[1]
+            command = ""
+            for param in range(int(loop)):
+                for command in self.until_session[1:]:
+                    temp_list = []
+                    temp_list = temp_list + command
+                    param = param + 1
+                    temp_list[-1] = str(command[-1]).replace('$$', str(param))
+
+                    result = self.executer.execute(command,self.systemini)
+                    time.sleep(int(str(self.systemini['sleep'])))
+                    
+                    if result == 0:
+                        self.log.parse_log(result,command)
+                        return
+            self.log.parse_log(result,command)
+            return  result
             
     def execute_each_session(self):
         #replace $$

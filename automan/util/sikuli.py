@@ -7,6 +7,7 @@ Description: Open remote desktop console.
 Requirement: pip install -U pyautoit
 '''
 from jpype import *
+import  jpype
 from pickle import NONE
 import automan.tool.error as error
 
@@ -15,43 +16,43 @@ class Sikuli(object):
         '''
         Constructor
         '''
-        jvmPath = getDefaultJVMPath()
-        startJVM(jvmPath, '-ea', r'-Djava.class.path=D:\sikuli\sikulixapi.jar')
-        self.app = JClass('org.sikuli.script.App')
-        Screen = JClass('org.sikuli.script.Screen')
-        self.screen = Screen()
-
+        jvmPath = jpype.getDefaultJVMPath()
+        jpype.startJVM(jvmPath, '-ea', r'-Djava.class.path=sikulixapi.jar')
+        self.app = jpype.JClass('org.sikuli.script.App')
+        self.Screen = jpype.JClass('org.sikuli.script.Screen')
+        self.sn = self.Screen()
+        
     def icon_hover(self, name):
         try:
-            x =  self.screen.exists(name['key'])
+            x =  self.sn.exists(name['key'])
             if x != "None":
-                self.screen.hover(name['key'])
+                self.sn.hover(name['key'])
             else:
                 raise error.notfind()
         except:
             raise error.notfind()
         
-    def icon_wait(self, name, dict):
+    def icon_wait(self, dict):
         try:
-            x = self.screen.wait(name['key'],name['value'],int(dict['sec']))
-            if x == "None":
+            x = self.sn.wait(dict['key'],int(dict['sec']))
+            if x == False:
                 raise error.notfind()
         except:
             raise error.notfind()
 
-    def icon_waitvanish(self, name, dict):
+    def icon_waitvanish(self, dict):
         try:
-            x = self.screen.wait(name['key'],name['value'],int(dict['sec']))
-            if x == "None":
+            x = self.sn.wait(dict['key'],int(dict['sec']))
+            if x == False:
                 raise error.find()
         except:
             raise error.find()
         
     def icon_click(self, name):
         try:
-            x =  self.screen.exists(name['key'])
+            x =  self.sn.exists(name['key'])
             if x != "None":
-                self.screen.click(name['key'])
+                self.sn.click(name['key'])
             else:
                 raise error.notfind()
         except :
@@ -59,15 +60,15 @@ class Sikuli(object):
             
     def text_type(self,text):
         try:
-            self.screen.type(text['value'])
+            self.sn.type(text['value'])
         except:
             raise error.notfind()
         
     def enter_type(self):
         try:
-            self.screen.type("\n")
+            self.sn.type("\n")
         except:
             raise error.notfind()
                 
     def __del__(self):
-        shutdownJVM()
+        jpype.shutdownJVM()

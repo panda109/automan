@@ -85,6 +85,7 @@ class Execute_qa(object):
                     self.screenshot()
           
         status = self.log.finall_status()
+        #print status
         if status == False:
             print "[VP] = " + 'FAIL\n\n'
         else:
@@ -94,7 +95,7 @@ class Execute_qa(object):
         if len(self.qa_list) == 1 :
             SaveDirectory = os.getcwd()
             SaveAs = os.path.join(SaveDirectory,'log\\'  + self.qa_file.split(".")[0] + "\\"
-                    + time.strftime('%Y_%m_%d_%H_%M_%S_%f') + '.jpg')
+                    + time.strftime('%Y_%m_%d_%H_%M_%S') + '.jpg')
             im=ImageGrab.grab()
             time.sleep(2)
             ImageGrab.grab_to_file(SaveAs)
@@ -109,7 +110,7 @@ class Execute_qa(object):
             SaveDirectory = os.getcwd()
             os.mkdir(SaveDirectory + "\\log\\" + qas + "\\" + self.nowcase + "\\")
             SaveAs = os.path.join(SaveDirectory,'log\\' + qas + "\\" + self.nowcase + "\\"
-                + time.strftime('%Y_%m_%d_%H_%M_%S_%f') + '.jpg')
+                + time.strftime('%Y_%m_%d_%H_%M_%S') + '.jpg')
             im=ImageGrab.grab()
             time.sleep(2)
             ImageGrab.grab_to_file(SaveAs)

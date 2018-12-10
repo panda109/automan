@@ -51,7 +51,7 @@ class Log(object):
             result = 'fail'
         else:
             result = 'pass'
-        runtime = time.mktime(time.strptime(self.result[-1],"%m %d %H:%M:%S %Y")) - time.mktime(time.strptime(self.result[0],"%m %d %H:%M:%S %Y"))
+        runtime = time.mktime(time.strptime(self.result[-1][1],"%m %d %H:%M:%S %Y")) - time.mktime(time.strptime(self.result[0][1],"%m %d %H:%M:%S %Y"))
         doc = Document()
         testcase = doc.createElement("testcase")
         testcase.setAttribute("time", str(runtime))
@@ -120,7 +120,7 @@ class Log(object):
        
     def parse_log(self,result,command):
         print 'Line : ' + str(command[0]) +' ---> '+ ' '.join(command[1:])
-        self.result.append(time.strftime("%m %d %H:%M:%S %Y", time.localtime()))
+        self.result.append((result,time.strftime("%m %d %H:%M:%S %Y", time.localtime())))
         if result == 0:
             print "result = PASS"
         else:

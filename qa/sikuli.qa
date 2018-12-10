@@ -1,7 +1,8 @@
 ini		sikuli.ini
 start
-get		Tool	testerror
+#get		Tool	testerror
 #click	Sikuli	icon		#key#=./img/HCI/ip.png
 #send	Fb		message		#user#=yr6703@gmail.com,#password#=Panda109!!,#message#=testcasename
 #get		Tool	testerror
+wait	Sikuli	icon		#key#=./img/HCI/ip.png,#sec#=1
 end

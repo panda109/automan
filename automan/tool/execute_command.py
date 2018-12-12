@@ -90,19 +90,23 @@ class Execute_command(object):
                 self.modify_currentlyini((command[1], ret))
         except error.nonamevalue:
             print "FAIL !! no name or key is in param_dict"
-            result = 1
+            ret = 1
         except error.equalerror:
             print "FAIL !! value is not equal or exist"
-            result = 1
+            ret = 1
         except error.notequalerror:
             print "FAIL !! value is equal or exist"
-            result = 1
+            ret = 1
         except error.notfind:
             print "FAIL !! not find"
-            result = 1    
+            ret = 1    
+        except error.find:
+            print "FAIL !! find"
+            ret = 1    
+
         #except:
         #    result = 1
-        return result
+        return ret
     
     def get_objectname(self,command):
         

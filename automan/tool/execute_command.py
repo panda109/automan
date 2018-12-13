@@ -107,7 +107,10 @@ class Execute_command(object):
 
         #except:
         #    result = 1
-        return ret
+        if ret == None:
+            return 0
+        else:
+            return ret
     
     def get_objectname(self,command):
         

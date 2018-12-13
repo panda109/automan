@@ -88,6 +88,7 @@ class Execute_command(object):
                 pass
             if str(command[1]).find('$=get')>0:
                 self.modify_currentlyini((command[1], ret))
+                ret = 0
         except error.nonamevalue:
             print "FAIL !! no name or key is in param_dict"
             ret = 1

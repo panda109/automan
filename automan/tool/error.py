@@ -1,3 +1,4 @@
+#coding:utf-8
 '''
 Created on 2010/12/21
 
@@ -21,3 +22,5 @@ class equalerror(Exception): pass
 class notequalerror(Exception): pass
 
 class notfind(Exception): pass
+
+class find(Exception): pass

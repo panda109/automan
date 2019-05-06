@@ -1,0 +1,4 @@
+start
+click	Autogui	screen		#x#=130,#y#=10
+size	Autogui	screen
+end

@@ -1,23 +1,24 @@
 ini			putty.ini
 start
-dosrun		Autoit	app		#name#=start /b cmd /c D:\putty.exe
+dosrun		Autoit	app		#name#=start /b cmd /c c:\putty.exe
+
 #sleep		1
 click		Sikuli	icon	#key#=./img/HCI/ip.png
 type		Sikuli	text	#value#=$ipaddress$
 sleep		1
-#click		Autoit	control	#title#=PuTTY Configuration,#value#=[CLASS:Button; INSTANCE:1]
-click		Sikuli	icon	#key#=./img/HCI/open.png
+click		Autoit	control	#title#=PuTTY Configuration,#value#=[CLASS:Button; INSTANCE:1]
+#click		Sikuli	icon	#key#=./img/HCI/open.png
 sleep		1
-hover		Sikuli	icon	#key#=./img/HCI/login.png
-type		Sikuli	text	#value#=$username$
-type		Sikuli	enter
-hover		Sikuli	icon	#key#=./img/HCI/password.png
-type		Sikuli	text	#value#=$password$
-type		Sikuli	enter
+#hover		Sikuli	icon	#key#=./img/HCI/login.png
+#type		Sikuli	text	#value#=$username$
+#type		Sikuli	enter
+#hover		Sikuli	icon	#key#=./img/HCI/password.png
+#type		Sikuli	text	#value#=$password$
+#type		Sikuli	enter
 sleep		10
 close		Autoit	app
 sleep		1
 click		Autoit	control	#title#=PuTTY Exit Confirmation,#value#=[CLASS:Button; INSTANCE:1]
-send		Fb		message	#user#=yr6703@gmail.com,#password#=Panda109!!,#message#=putty test finished
+#send		Fb		message	#user#=yr6703@gmail.com,#password#=Panda109!!,#message#=putty test finished
 end
 

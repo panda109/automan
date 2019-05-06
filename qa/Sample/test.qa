@@ -1,13 +1,9 @@
 #include		sub.qa
-ini			test.ini
-
-#init		ie		
-
+#init			browser				Chrome
 start
 
-#set			ie.Netgear7532		textbox_username		#value#=admin
-#click		ie.Netgear7532		button_login
+$text$=get		Ocr		image_text	#file=vld.bmp
 
-sleep		30
+test			Ocr		image_text	#test#=$text$		
 
 end

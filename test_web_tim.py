@@ -20,12 +20,12 @@ class test_web(object):
     if __name__ == '__main__':
 
         driver = webdriver.Ie()
-        driver.get('http://google.com.tw')
+        driver.get('https://www.hepsiburada.com/')
         #driver = webdriver.Firefox()
         #driver.get("http://www.python.org")
-        elem = driver.find_element_by_name('q')
-        elem.send_keys("pycon")
-        elem.send_keys(Keys.RETURN)
-        for handle in driver.window_handles:
-            print "Handle = ",handle
+        #elem = driver.find_element_by_name('q')
+        #elem.send_keys("pycon")
+        #elem.send_keys(Keys.RETURN)
+        #for handle in driver.window_handles:
+        #    print "Handle = ",handle
         #driver.close()

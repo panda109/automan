@@ -29,6 +29,7 @@ class Execute_command(object):
     def execute(self, command, systemini):
         result = 0
         ret = 0
+        #print (command)
         if self.currentlyini['debug'] == 'on':
             print (systemini)
             print (self.currentlyini)
@@ -68,7 +69,7 @@ class Execute_command(object):
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
                     self.browser = Browser(systemini['ie'],command[3].lower()).browser
                 else:
-                    print (command)
+                    #print (command)
                     ob = self.userclass.class_object[self.get_objectname(command)]
                     defname = self.get_defname(systemini,command)
                     ret = eval(defname)

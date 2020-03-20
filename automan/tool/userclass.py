@@ -19,7 +19,7 @@ class Userclass(object):
         '''
     
     def check_class(self,command):
-        print (command)
+        #print (command)
         if str(command).find('.')>=0:
             keyname = str(str(command).split('.')[1]).lower()
             classname = str(command).split('.')[1]

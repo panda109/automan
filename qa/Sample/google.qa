@@ -1,0 +1,6 @@
+start
+init	browser					chrome
+set		browser.Google	textbox_search		#key#=test
+click		browser.Google	button_submit
+close	browser
+end

@@ -6,53 +6,28 @@ Description: Open remote desktop console.
 
 Requirement: pip install -U pyautoit
 '''
-from jpype import *
-import  jpype
+
+import jpype  
+from jpype import *  
 from pickle import NONE
 import automan.tool.error as error
+from _overlapped import NULL
 
 class Sikuli(object):
     def __init__(self):
         '''
         Constructor
         '''
-        jvmPath = jpype.getDefaultJVMPath()
-        jpype.startJVM(jvmPath, '-ea', r'-Djava.class.path=sikulixapi.jar')
-        self.app = jpype.JClass('org.sikuli.script.App')
-        self.Screen = jpype.JClass('org.sikuli.script.Screen')
-        self.sn = self.Screen()
-        
-    def icon_hover(self, name):
-        try:
-            x =  self.sn.exists(name['key'])
-            if x != "None":
-                self.sn.hover(name['key'])
-            else:
-                raise error.notfind()
-        except:
-            raise error.notfind()
-        
-    def icon_wait(self, dict):
-        try:
-            x = self.sn.wait(dict['key'],int(dict['sec']))
-            if x == False:
-                raise error.notfind()
-        except:
-            raise error.notfind()
+        jvmPath = getDefaultJVMPath()
+        jpype.startJVM(jvmPath, '-ea', r'-Djava.class.path=sikulixapi.jar' , convertStrings=False)
+        #self.app = JClass('org.sikuli.script.App')
+        Screen = JClass('org.sikuli.script.Screen')
+        self.screen = Screen()
 
-    def icon_waitvanish(self, dict):
-        try:
-            x = self.sn.wait(dict['key'],int(dict['sec']))
-            if x == False:
-                raise error.find()
-        except:
-            raise error.find()
-        
     def icon_click(self, name):
         try:
-            x =  self.sn.exists(name['key'])
-            if x != "None":
-                self.sn.click(name['key'])
+            if self.screen.exists(name['key']):
+                self.screen.click(name['key'])
             else:
                 raise error.notfind()
         except :
@@ -60,15 +35,16 @@ class Sikuli(object):
             
     def text_type(self,text):
         try:
-            self.sn.type(text['value'])
+            self.screen.type(text['value'])
         except:
             raise error.notfind()
         
     def enter_type(self):
         try:
-            self.sn.type("\n")
+            self.screen.type("\n")
         except:
             raise error.notfind()
                 
     def __del__(self):
-        jpype.shutdownJVM()
+        shutdownJVM()
+

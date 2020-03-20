@@ -99,7 +99,9 @@ class Execute_qa(object):
                     + time.strftime('%Y_%m_%d_%H_%M_%S') + '.jpg')
             im=ImageGrab.grab()
             time.sleep(2)
-            ImageGrab.grab_to_file(SaveAs)
+            #print (SaveAs)
+            im.save(SaveAs)
+            #ImageGrab.grab_to_file(SaveAs)
         else:
             self.nowcase = self.nowcase.rstrip(".qa")
             self.nowcase = self.nowcase.lstrip(".\\qa\\")

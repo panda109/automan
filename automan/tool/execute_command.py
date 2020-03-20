@@ -30,8 +30,8 @@ class Execute_command(object):
         result = 0
         ret = 0
         if self.currentlyini['debug'] == 'on':
-            print systemini
-            print self.currentlyini
+            print (systemini)
+            print (self.currentlyini)
         #need to be merge into userclass
         if len(command) >= 3 and str(command[2]) == 'browser':
             from automan.ui.browser import Browser
@@ -68,7 +68,7 @@ class Execute_command(object):
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
                     self.browser = Browser(systemini['ie'],command[3].lower()).browser
                 else:
-                    print command
+                    print (command)
                     ob = self.userclass.class_object[self.get_objectname(command)]
                     defname = self.get_defname(systemini,command)
                     ret = eval(defname)
@@ -80,7 +80,7 @@ class Execute_command(object):
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
                     self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
                 else:
-                    print command
+                    print (command)
                     ob = self.userclass.class_object[self.get_objectname(command)]
                     defname = self.get_defname(systemini,command)
                     #print defname
@@ -91,19 +91,19 @@ class Execute_command(object):
                 self.modify_currentlyini((command[1], ret))
                 ret = 0
         except error.nonamevalue:
-            print "FAIL !! no name or key is in param_dict"
+            print ("FAIL !! no name or key is in param_dict")
             ret = 1
         except error.equalerror:
-            print "FAIL !! value is not equal or exist"
+            print ("FAIL !! value is not equal or exist")
             ret = 1
         except error.notequalerror:
-            print "FAIL !! value is equal or exist"
+            print ("FAIL !! value is equal or exist")
             ret = 1
         except error.notfind:
-            print "FAIL !! not find"
+            print ("FAIL !! not find")
             ret = 1    
         except error.find:
-            print "FAIL !! find"
+            print ("FAIL !! find")
             ret = 1    
 
         #except:
@@ -116,7 +116,7 @@ class Execute_command(object):
     def get_objectname(self,command):
         
         if str(command[2]).find('browser.')==0:
-            print str(str(command[2]).split('.')[1]).lower()
+            print (str(str(command[2]).split('.')[1]).lower())
             return str(str(command[2]).split('.')[1]).lower()
         else:
             return str(command[2]).lower()
@@ -142,5 +142,6 @@ class Execute_command(object):
             else:
                 #return 'ob.' + command[3] + '_' + action + '(\''+param+'\')'
                 return 'ob.' + command[3] + '_' + action + '('+'self.namevalue'+')'   
-    def modify_currentlyini(self,(key,value)):
+            
+    def modify_currentlyini(self,key,value):
         self.currentlyini[str(key).split('$')[1]]=str(value)

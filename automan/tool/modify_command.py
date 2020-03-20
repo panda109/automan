@@ -23,7 +23,7 @@ class Modify_command(object):
                 list_command[index] = currentyini[list_command[index]]
             if list_command[index] in systemini:
                 list_command[index] = systemini[list_command[index]]
-        print 'parameters => '+''.join(list_command)
+        print ('parameters => '+''.join(list_command))
         return ''.join(list_command)
     
     

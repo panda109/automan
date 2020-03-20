@@ -34,7 +34,7 @@ class Execute_qa(object):
         self.log = Log(qa_file,qa_list)
         for index in range(len(qa_list)):
             self.nowcase = qa_list[index]
-            print 'The '+str(index+1)+'th testcase\'s name is : '+qa_list[index]+'\n'
+            print ('The '+str(index+1)+'th testcase\'s name is : '+qa_list[index]+'\n')
             self.commands = Parse_file().parse_qa(qa_list[index])
             self.systemini = Parse_file().get_ini('system.ini')
             self.commandline(self.commands)
@@ -88,9 +88,9 @@ class Execute_qa(object):
         status = self.log.finall_status()
         #print status
         if status == False:
-            print "[VP] = " + 'FAIL\n\n'
+            print ("[VP] = " + 'FAIL\n\n')
         else:
-            print "[VP] = " + 'PASS\n\n'
+            print ("[VP] = " + 'PASS\n\n')
 
     def screenshot(self):
         if len(self.qa_list) == 1 :

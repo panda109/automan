@@ -1,6 +1,5 @@
 '''
 Created on 2010/11/25
-
 @author: panda.huang
 '''
 import sys
@@ -17,13 +16,13 @@ if __name__ == '__main__':
         Execute_qa().execute_qa_list(argv[0],qa_list)
        
     except  error.noqafile:
-        print "no qa file"
+        print ("no qa file")
     except error.notfindqafile:
-        print "not find qafile"
+        print ("not find qafile")
     except error.notfindinifile:
-        print "not find inifile"
+        print ("not find inifile")
     except error.notfindincludefile:
-        print "not find include file"
+        print ("not find include file")
 
     #else:
     #    print "unhandle error!!!"

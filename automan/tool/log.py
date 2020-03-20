@@ -24,7 +24,7 @@ class Log(object):
 
         dir = '.\\log\\'+str(self.qafile).split('.')[0]
         if dir == '.\\log\\':
-            print "Name is .qa -> no qa file"
+            print ("Name is .qa -> no qa file")
         else:
             try:
                 self.del_folder(dir)
@@ -120,14 +120,14 @@ class Log(object):
 
        
     def parse_log(self,result,command):
-        print 'Line : ' + str(command[0]) +' ---> '+ ' '.join(command[1:])
+        print ('Line : ' + str(command[0]) +' ---> '+ ' '.join(command[1:]))
         self.result.append((result,time.strftime("%m %d %H:%M:%S %Y", time.localtime())))
         if result == 0:
-            print "result = PASS"
+            print ("result = PASS")
         else:
-            print "result = FAIL"
-            print "result code = " + str(result)
-        print 'Stop : ' + time.ctime() +'\n'
+            print ("result = FAIL")
+            print ("result code = " + str(result))
+        print ('Stop : ' + time.ctime() +'\n')
                    
     def finall_status(self):
         status = True

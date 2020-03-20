@@ -20,7 +20,7 @@ class Parse_file(object):
         #create suite folder 
         fhd= open('.\\log\\'+str(testsuite)+'\\'+str(testcasename)+'.log','w')
         for logs in log_list:
-            print logs
+            print (logs)
             fhd.write(logs[0] +' '+ logs[1]+'\n')
             
         
@@ -109,7 +109,7 @@ class Parse_file(object):
                 system[str(line).strip().split('=')[0]] = temp
             return system
         except:
-            print "can't find "+filename
+            print ("can't find "+filename)
             raise error.notfindinifile()
     
     def modify(self,tempstring):

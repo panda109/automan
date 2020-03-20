@@ -19,7 +19,7 @@ class Userclass(object):
         '''
     
     def check_class(self,command):
-        #print command
+        print (command)
         if str(command).find('.')>=0:
             keyname = str(str(command).split('.')[1]).lower()
             classname = str(command).split('.')[1]
@@ -29,7 +29,7 @@ class Userclass(object):
             classname = str(command)
             cmd = 'from automan.util.' + keyname +' import ' + classname
             
-        if  self.class_object.has_key(keyname):
+        if  keyname in self.class_object.keys():
             pass
         else:
             #print cmd

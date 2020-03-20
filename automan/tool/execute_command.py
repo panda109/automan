@@ -80,10 +80,10 @@ class Execute_command(object):
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
                     self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
                 else:
-                    print (command)
+                    #print (command)
                     ob = self.userclass.class_object[self.get_objectname(command)]
                     defname = self.get_defname(systemini,command)
-                    #print defname
+                    #print (defname)
                     ret = eval(defname)
             elif list(command).__len__() == 6:
                 pass
@@ -144,4 +144,6 @@ class Execute_command(object):
                 return 'ob.' + command[3] + '_' + action + '('+'self.namevalue'+')'   
             
     def modify_currentlyini(self,key,value):
+        #print (key)
+        #print (value)
         self.currentlyini[str(key).split('$')[1]]=str(value)

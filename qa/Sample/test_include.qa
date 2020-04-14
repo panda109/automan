@@ -1,5 +1,5 @@
 include		test.sub
-init		ie					Chrome	
+init		browser				Chrome	
 
 start
 

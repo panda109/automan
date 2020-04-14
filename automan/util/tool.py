@@ -11,12 +11,17 @@ class Tool(object):
     '''
     classdocs
     '''
-
-
     def __init__(self):
         '''
         Constructor
         '''
+    def file_exist_verify(self,value_dict):
+        my_file = Path(value_dict["file"])
+        if my_file.is_file() == True:
+            return
+        else:
+            raise error.notfind()
+        
     def file_verify(self):
         my_file = Path("test.txt")
         if my_file.is_file() == True:

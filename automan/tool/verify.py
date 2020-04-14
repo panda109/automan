@@ -22,13 +22,13 @@ class Verify(object):
                 if local_dict['system_value'] == local_dict['value']:
                     pass
                 else:
-                    print "verify string dict : " , local_dict
+                    print ("verify string dict : ") , local_dict
                     raise error.equalerror()
             if local_dict['criteria'] == '!':
                 if local_dict['system_value'] != local_dict['value']:
                     pass
                 else:
-                    print "verify string dict : " , local_dict
+                    print ("verify string dict : ") , local_dict
                     raise error.notequalerror()
         else:
             raise error.nonamevalue()

@@ -29,15 +29,15 @@ class Automan_agent(object):
         #print "Socket create succeed!!"
         print ("Server is Listening :ip %s port %s" % (myip,"10000"))
         while True:
-            print "Waiting for new connection !!!"
+            print ¡]"Waiting for new connection !!!"¡^
             (csock, adr) = sock.accept()
-            print "Client Info: ", csock, adr 
+            print ¡]"Client Info: ", csock, adr¡^ 
             #start_new_thread(automan.threadwork, (csock,))
             msg = csock.recv(1024)
             if not msg:
                 pass
             else:
-                print "Client send: " + msg    
+                print ¡]"Client send: " + msg¡^    
                 result = automan.call_function(msg)
                 csock.sendall(result)
         sock.close()
@@ -50,7 +50,7 @@ class Automan_agent(object):
         if not msg:
             pass
         else:
-            print "Client send: " + msg    
+            print ¡]"Client send: " + msg¡^    
             result = automan.call_function(msg)
             client.sendall(result)
             
@@ -65,7 +65,7 @@ class Automan_agent(object):
         ob = eval(items[1]+'()')
         defname = items[2] + '("' + parameter + '")'
         def_result = eval('ob.'+ defname)
-        print "Return result : ",def_result
+        print ¡]def_result¡^
         return def_result
 
 

@@ -6,6 +6,10 @@ Created on 2011/2/14
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from saker.fuzzers.fuzzer import Fuzzer 
+from saker.core.mutator import Mutator
+from saker.brute.brute import Brute
+from saker.cmdline.fuzz import fuzz
 
 class test_web(object):
     '''
@@ -21,6 +25,18 @@ class test_web(object):
 
         driver = webdriver.Ie()
         driver.get('https://www.hepsiburada.com/')
+        
+        options = {
+            "url": "http://127.0.0.1:7777/",
+            "params": {
+                "test": "test"
+            }
+        }
+           
+        mut = Mutator({}) 
+        for payload in mut.fuzzdata('/v1/service/',"ssrf")   :
+            print (payload)   
+        print (Fuzzer.randomCStr(129))
         #driver = webdriver.Firefox()
         #driver.get("http://www.python.org")
         #elem = driver.find_element_by_name('q')

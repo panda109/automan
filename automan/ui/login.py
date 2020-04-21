@@ -46,6 +46,6 @@ class login(object):
         except:
             verify_vaule = 'Fail'       
         local_dict['value'] = verify_vaule
-        print local_dict
+        print (local_dict)
         Tool().dir_verify(local_dict)
        

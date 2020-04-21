@@ -8,12 +8,12 @@ import time
 import automan.tool.error as error
 from selenium.webdriver.common.keys import Keys
 from automan.util.tool  import Tool
-import ConfigParser
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
-config = ConfigParser.ConfigParser()
-config.read(".\ini\Eonone.conf")
+import configparser
+config = configparser.ConfigParser()
+config.read(".\ini\Eonone.conf",encoding="utf-8")
 
 
 class eonone_sharefolder(object):

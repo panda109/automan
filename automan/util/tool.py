@@ -7,6 +7,10 @@ import automan.tool.error as error
 from automan.tool.verify import Verify
 from pathlib import Path
 
+import configparser
+config = configparser.ConfigParser()
+config.read(".\ini\Eonone.conf",encoding="utf-8")
+
 class Tool(object):
     '''
     classdocs

@@ -19,7 +19,7 @@ class test_web(object):
         '''
     if __name__ == '__main__':
 
-        driver = webdriver.Ie()
+        driver = webdriver.Chrome()
         driver.get('https://www.hepsiburada.com/')
         #driver = webdriver.Firefox()
         #driver.get("http://www.python.org")

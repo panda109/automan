@@ -101,16 +101,27 @@ class Parse_file(object):
 
     def get_ini(self,filename):
         system={}
-        try:
-            lines = os.path.join(".//ini//", filename)
-            for line in open(lines):
-                temp = str(line).strip().split('=')[1]
-                temp = self.modify(temp)
-                system[str(line).strip().split('=')[0]] = temp
-            return system
-        except:
+        for dirname, dirnames, filenames in os.walk('.\ini'):    
+            try:
+                if open(dirname + '\\' + filename):
+                    lines = dirname + '\\' + filename
+                    print(lines)
+                    for line in open(lines):
+                        temp = str(line).strip().split('=')[1]
+                        temp = self.modify(temp)
+                        system[str(line).strip().split('=')[0]] = temp
+            except:
+                pass
+            
+        if len(system) == 0 :
             print ("can't find "+filename)
             raise error.notfindinifile()
+        else:
+            print(system)
+            return system
+        
+        
+        
     
     def modify(self,tempstring):
         temp = tempstring.split('\\x')

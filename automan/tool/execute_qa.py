@@ -120,7 +120,6 @@ class Execute_qa(object):
             
     def execute_until_session(self):
         result=1
-        print("1111")
         print(self.until_session[0])
         if self.until_session[0][3].find("!loop!") != -1:
             loop = self.until_session[0][3].split('=')[1]

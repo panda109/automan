@@ -1,0 +1,12 @@
+ini	EcoTrans.ini
+
+start
+init	browser	Chrome	ioe_staging_url
+load	browser.general_login	config_file	#file#=$conf_file$
+set		browser.general_login	textbox_username		#key#=$username_correct$
+set		browser.general_login	textbox_password		#key#=$password_correct$
+click	browser.general_login	button_login
+sleep	30
+
+
+end

@@ -29,7 +29,8 @@ class Execute_command(object):
     def execute(self, command, systemini):
         result = 0
         ret = 0
-        #print (command)
+        #print("command",command)
+        #print("systemini",systemini)
         if self.currentlyini['debug'] == 'on':
             print (systemini)
             print (self.currentlyini)
@@ -74,12 +75,12 @@ class Execute_command(object):
                     defname = self.get_defname(systemini,command)
                     ret = eval(defname)
             elif list(command).__len__() == 5:
-                if command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "chrome":
-                   self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
-                elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "firefox":
-                    self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
-                elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
-                    self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
+                if command[1] == 'init' and command[2] == 'browser' and command[3].lower() in ("chrome","firefox","ie"):
+                    if command[4].lower() in self.currentlyini.keys(): # 2020.5.8 Shawn Lin. can set customized URL in the user-defined INI. 
+                        self.browser = Browser(self.currentlyini[command[4].lower()],command[3].lower()).browser
+                    else:
+                        #print("systemini[command[4].lower()]",systemini[command[4].lower()])
+                        self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
                 else:
                     #print (command)
                     ob = self.userclass.class_object[self.get_objectname(command)]

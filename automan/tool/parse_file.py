@@ -120,6 +120,27 @@ class Parse_file(object):
             print(system)
             return system
         
+    def get_app(self,filename):
+        app={}
+        for dirname, dirnames, filenames in os.walk('.\app'):
+            try:
+                if open(dirname + '\\' + filename):
+                    lines = dirname + '\\' + filename
+                    print(lines)
+                    for line in open(lines):
+                        temp = str(line).strip().split('=')[1]
+                        temp = self.modify(temp)
+                        app[str(line).strip().split('=')[0]] = temp
+            except:
+                pass
+            
+        if len(app) == 0 :
+            print ("can't find "+filename)
+            raise error.notfindappfile()
+        else:
+            print(app)
+            return app
+            
         
         
     

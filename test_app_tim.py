@@ -18,6 +18,14 @@ class test_web(object):
         dc = {}
         dc['platformName'] = 'Android'
         dc['deviceName'] = 'GCNPCX025651GHH'
-        dc['appActivity'] = ''
-        dc['appWaitActivity'] =''
-        webdriver.Remote('localhost:4723/wd/hub', desired_capabilities=dc)
+        dc['platformVersion'] = '7'
+        dc['noReset'] = True
+        dc['app'] = "c:\\Android\\ApiDemos-debug.apk"
+        dc['autoAcceptAlerts'] = True
+
+        driver = webdriver.Remote('http://127.0.0.1:4725/wd/hub', desired_capabilities=dc)
+        el = driver.find_element_by_id('android:id/text1')
+        el.click()
+        driver.quit()
+        
+        

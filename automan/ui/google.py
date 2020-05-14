@@ -26,3 +26,7 @@ class Google(object):
 
     def button_error_click(self,browser):
         raise
+    
+    def text_gmail_print(self,browser):
+        elem = browser.find_element_by_class_name('gb_g')
+        print(elem.text)

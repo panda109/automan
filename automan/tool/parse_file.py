@@ -121,23 +121,19 @@ class Parse_file(object):
             return system
         
     def get_app(self,filename):
-        app={}
-        for dirname, dirnames, filenames in os.walk('.\apps'):
+        app_list=[]
+        for dirname, dirnames, filenames in os.walk('.\conf'):
             try:
-                if open(dirname + '\\' + 'asuspad.conf'):
-                    lines = dirname + '\\' + 'asuspad.conf'
-                    print(lines)
-                    for line in open(lines):
-                        print(line)
+                if open(dirname + '\\' + filename):
+                    for line in open(dirname + '\\' + filename):
+                        app_list.append(line)
+                        #print (app_list)
             except:
                 pass
-            
-        if len(app) == 0 :
-            print ("can't find "+'asuspad.conf')
+        if len(app_list) == 0 :
             raise error.notfindappfile()
         else:
-            print(app)
-            return app
+            return app_list
  
     
     def modify(self,tempstring):

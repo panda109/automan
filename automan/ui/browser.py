@@ -40,17 +40,14 @@ class Browser(object):
 
         if browser == "app":
             #read from url in to desired_capabilities
-            app = []
+            dc = {}
             app = Parse_file().get_app(param)
-            #dc = {}
             for line in list(app):
-                print(line)
-            
-            #self.browser = appium.Remote('http://127.0.0.1:4725/wd/hub', desired_capabilities=dc)
-            #self.browser.quit()
-        '''
-        Constructor
-        '''
+                if str(line).strip().split('=')[1] == 'True':
+                    dc[str(line).strip().split('=')[0]] = True
+                else:
+                    dc[str(line).strip().split('=')[0]] = str(line).strip().split('=')[1]
+            self.browser = appium.Remote('http://127.0.0.1:%s/wd/hub' % dc['port'], desired_capabilities=dc)
         
     def getie(self):
         return self.browser

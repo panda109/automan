@@ -40,6 +40,7 @@ class Browser(object):
 
         if browser == "app":
             #read from url in to desired_capabilities
+            app = []
             app = Parse_file().get_app(param)
             #dc = {}
             for line in list(app):

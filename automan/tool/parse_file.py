@@ -101,7 +101,7 @@ class Parse_file(object):
 
     def get_ini(self,filename):
         system={}
-        for dirname, dirnames, filenames in os.walk('.\ini'):    
+        for dirname, dirnames, filenames in os.walk('.\ini'):   
             try:
                 if open(dirname + '\\' + filename):
                     lines = dirname + '\\' + filename
@@ -122,27 +122,23 @@ class Parse_file(object):
         
     def get_app(self,filename):
         app={}
-        for dirname, dirnames, filenames in os.walk('.\app'):
+        for dirname, dirnames, filenames in os.walk('.\apps'):
             try:
-                if open(dirname + '\\' + filename):
-                    lines = dirname + '\\' + filename
+                if open(dirname + '\\' + 'asuspad.conf'):
+                    lines = dirname + '\\' + 'asuspad.conf'
                     print(lines)
                     for line in open(lines):
-                        temp = str(line).strip().split('=')[1]
-                        temp = self.modify(temp)
-                        app[str(line).strip().split('=')[0]] = temp
+                        print(line)
             except:
                 pass
             
         if len(app) == 0 :
-            print ("can't find "+filename)
+            print ("can't find "+'asuspad.conf')
             raise error.notfindappfile()
         else:
             print(app)
             return app
-            
-        
-        
+ 
     
     def modify(self,tempstring):
         temp = tempstring.split('\\x')

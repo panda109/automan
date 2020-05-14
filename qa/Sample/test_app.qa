@@ -1,0 +1,5 @@
+start
+init		browser			app
+set			browser.asus	textbox_search		#key#=test
+close		browser
+end

@@ -4,10 +4,10 @@ from thread import *
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 except socket.error:
-    print 'Failed to create socket'
+    print('Failed to create socket')
     sys.exit()
      
-print 'Socket Created'
+print('Socket Created')
  
 host = '172.16.2.100';
 port = 80;
@@ -17,7 +17,7 @@ try:
  
 except socket.gaierror:
     #could not resolve
-    print 'Hostname could not be resolved. Exiting'
+    print('Hostname could not be resolved. Exiting')
     sys.exit()
 
 class Function_class(object):

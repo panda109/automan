@@ -5,7 +5,7 @@ Created on 2010/12/10
 '''
 import automan.tool.error as error
 from selenium.webdriver.common.keys import Keys
-class Google(object):
+class google(object):
     '''
     classdocs
     '''

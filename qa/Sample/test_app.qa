@@ -1,5 +1,7 @@
 start
 init		browser			app
-set			browser.asus	textbox_search		#key#=test
+click		browser.asus	textbox_search		#key#=test
+back		browser.asus	page
 close		browser
+sleep		5
 end

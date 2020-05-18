@@ -10,10 +10,10 @@ from selenium.webdriver.common.keys import Keys
 from automan.util.tool  import Tool
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-
+import os
 import configparser
 config = configparser.ConfigParser()
-config.read(".\ini\Eonone.conf",encoding="utf-8")
+config.read(os.path.join(os.getcwd() , 'ini') + "Eonone.conf",encoding="utf-8")
 
 
 class eonone_sharefolder(object):

@@ -6,10 +6,10 @@ Created on 2010/12/28
 import automan.tool.error as error
 from automan.tool.verify import Verify
 from pathlib import Path
-
+import os
 import configparser
 config = configparser.ConfigParser()
-config.read(".\ini\Eonone.conf",encoding="utf-8")
+config.read(os.path.join(os.getcwd() , 'ini') + "Eonone.conf",encoding="utf-8")
 
 class Tool(object):
     '''

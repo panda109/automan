@@ -142,10 +142,8 @@ class Execute_command(object):
             param = Modify_command().replay_ini(systemini, self.currentlyini,str(command[4]))
             self.namevalue = Parse_name_value().parse_name_value(param)
             if str(command[2]).find('browser.')==0:
-                #return 'ob.' + command[3] + '_' + action + '(self.browser,\''+param+'\')'
                 return 'ob.' + command[3] + '_' + action + '(self.browser,self.namevalue)'
             else:
-                #return 'ob.' + command[3] + '_' + action + '(\''+param+'\')'
                 return 'ob.' + command[3] + '_' + action + '('+'self.namevalue'+')'   
             
     def modify_currentlyini(self,key,value):

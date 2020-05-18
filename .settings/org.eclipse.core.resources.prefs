@@ -8,6 +8,7 @@ encoding//automan/tool/parse_file.py=utf-8
 encoding//automan/tool/parse_name_value.py=utf-8
 encoding//automan/tool/userclass.py=utf-8
 encoding//automan/tool/verify.py=utf-8
+encoding//automan/ui/asus.py=utf-8
 encoding//automan/ui/browser.py=utf-8
 encoding//automan/ui/eonone_login.py=utf-8
 encoding//automan/ui/eonone_overview.py=utf-8

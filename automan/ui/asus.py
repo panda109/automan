@@ -17,3 +17,6 @@ class asus(object):
     def textbox_search_click(self,browser,value_dict):
         el = browser.find_element_by_id('android:id/text1')
         el.click()
+        
+    def page_back(self,browser):
+        browser.back()

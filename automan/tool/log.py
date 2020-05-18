@@ -22,8 +22,8 @@ class Log(object):
         self.qafile = qafile
         self.qalist = qalist
 
-        dir = '.\\log\\'+str(self.qafile).split('.')[0]
-        if dir == '.\\log\\':
+        dir = os.path.join(os.getcwd() , "log" , str(self.qafile).split('.')[0])
+        if str(self.qafile).split('.')[0] != 'qa':
             print ("Name is .qa -> no qa file")
         else:
             try:
@@ -47,7 +47,7 @@ class Log(object):
     
     def create_testcase_xml(self,xml_log):
         
-        filename = str(xml_log).split('\\')[-1] 
+        filename = str(xml_log).split(os.sep)[-1]
         if self.finall_status() == False:
             result = 'fail'
         else:
@@ -64,25 +64,25 @@ class Log(object):
     
     def parse_case_log(self,index):
         
-        dir = '.\\log\\'+str(self.qafile).split('.')[0] + '\\' + str(str(self.qalist[index]).split('\\')[-1]).split('.')[0]
+        dir = os.path.join(os.getcwd() , 'log' , str(self.qafile).split('.')[0] , str(str(self.qalist[index]).split(os.sep)[-1]).split('.')[0])
         try:
             os.mkdir(dir)
         except:
             #print "mkdir fail!! : " , dir
             pass
-        self.create_testcase_xml(dir +'\\'+ str(str(self.qalist[index]).split('\\')[-1]).split('.')[0] + '.xml')
+        self.create_testcase_xml(dir + os.sep + str(str(self.qalist[index]).split(os.sep)[-1]).split('.')[0] + '.xml')
             
     def create_hudson_xml(self):
         total_runtime = 0
         total_fail = 0
         total_pass = 0
         testcase_logs = []
-        suite_dir = '.\\log\\'+str(self.qafile).split('.')[0] 
-        suite_xml = '.\\log\\'+str(self.qafile).split('.')[0]+'\\'+str(self.qafile).split('.')[0]+'.xml'
+        suite_dir = os.path.join(os.getcwd() , 'log' , str(self.qafile).split('.')[0])
+        suite_xml = suite_dir + os.sep +str(self.qafile).split('.')[0]+'.xml'
         for xml_file in self.qalist:
-            testcase_dir = suite_dir + '\\'+str(str(xml_file).split('\\')[-1]).split('.')[0]
-            xml_file = str(str(xml_file).split('\\')[-1]).split('.')[0]+ '.xml'
-            doc = xml.dom.minidom.parse(testcase_dir+'\\'+xml_file)
+            testcase_dir = suite_dir + os.sep +str(str(xml_file).split('os.sep')[-1]).split('.')[0]
+            xml_file = str(str(xml_file).split(os.sep)[-1]).split('.')[0]+ '.xml'
+            doc = xml.dom.minidom.parse(testcase_dir+ os.sep +xml_file)
             for node in doc.getElementsByTagName("testcase"):
                 qa_name = node.getAttribute("name")
                 qa_result = node.getAttribute("result")
@@ -135,6 +135,3 @@ class Log(object):
             if self.result[index][0] == 1:
                 status = False
         return status
-        
-            
-            

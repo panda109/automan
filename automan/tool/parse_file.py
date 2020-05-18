@@ -18,7 +18,7 @@ class Parse_file(object):
         '''
     def parse_suite_log(self,log_list,testsuite,testcasename):
         #create suite folder 
-        fhd= open('.\\log\\'+str(testsuite)+'\\'+str(testcasename)+'.log','w')
+        fhd= open('.'+os.sep+'log'+os.sep+str(testsuite)+os.sep+str(testcasename)+'.log','w')
         for logs in log_list:
             print (logs)
             fhd.write(logs[0] +' '+ logs[1]+'\n')
@@ -53,10 +53,10 @@ class Parse_file(object):
         
     def get_include_file(self,filename):
         include_list = []
-        for dirname, dirnames, filenames in os.walk('.\qa'):     
+        for dirname, dirnames, filenames in os.walk('.'+os.sep+'qa'):     
             try:
-                if open(dirname + '\\' + filename):
-                    include_list.append(dirname + '\\' + filename)
+                if open(dirname + os.sep + filename):
+                    include_list.append(dirname + os.sep + filename)
                     break
             except:
                 pass
@@ -69,13 +69,13 @@ class Parse_file(object):
     def search_file(self,qa_filename):
         qa_list = []
         if str(qa_filename).find('.qas') > 0:
-            for dirname, dirnames, filenames in os.walk('.\qa'):  
+            for dirname, dirnames, filenames in os.walk('.'+os.sep +'qa'):  
                 try:
-                    if open(dirname + '\\' + qa_filename):
-                        qas_file = dirname + '\\' + qa_filename
+                    if open(dirname + os.sep + qa_filename):
+                        qas_file = dirname + os.sep + qa_filename
                         break
-                        #print self.get_qa_file((dirname + '\\' + qa_filename))
-                        #self.qa_list.append(self.get_qa_file((dirname + '\\' + qa_filename)))
+                        #print self.get_qa_file((dirname + os.sep + qa_filename))
+                        #self.qa_list.append(self.get_qa_file((dirname + os.sep + qa_filename)))
                 except:
                     pass
             for qa_filename in open(qas_file):
@@ -87,10 +87,10 @@ class Parse_file(object):
         
     def get_qa_file(self,filename):
         qa_list = []
-        for dirname, dirnames, filenames in os.walk('.\qa'):     
+        for dirname, dirnames, filenames in os.walk('.'+os.sep+'qa'):     
             try:
-                if open(dirname + '\\' + filename):
-                    qa_list.append(dirname + '\\' + filename)
+                if open(dirname + os.sep + filename):
+                    qa_list.append(dirname + os.sep + filename)
                     break
             except:
                 pass
@@ -102,7 +102,7 @@ class Parse_file(object):
     def get_ini(self,filename):
         system={}
         try:
-            lines = os.path.join(".//ini//", filename)
+            lines = os.path.join(os.getcwd(),"ini", filename)
             for line in open(lines):
                 temp = str(line).strip().split('=')[1]
                 temp = self.modify(temp)

@@ -95,7 +95,7 @@ class Execute_qa(object):
     def screenshot(self):
         if len(self.qa_list) == 1 :
             SaveDirectory = os.getcwd()
-            SaveAs = os.path.join(SaveDirectory,'log\\'  + self.qa_file.split(".")[0] + "\\"
+            SaveAs = os.path.join(SaveDirectory,'log'+os.sep + self.qa_file.split(".")[0] + os.sep
                     + time.strftime('%Y_%m_%d_%H_%M_%S') + '.jpg')
             im=ImageGrab.grab()
             time.sleep(2)
@@ -104,15 +104,15 @@ class Execute_qa(object):
             #ImageGrab.grab_to_file(SaveAs)
         else:
             self.nowcase = self.nowcase.rstrip(".qa")
-            self.nowcase = self.nowcase.lstrip(".\\qa\\")
+            self.nowcase = self.nowcase.lstrip("."+ os.sep+"qa"+os.sep)
             qas = self.qa_file.split('.')[0]
 
-            if self.nowcase.find("\\") != -1 :
-                self.nowcase = self.nowcase.split('\\')[1]
+            if self.nowcase.find(os.sep) != -1 :
+                self.nowcase = self.nowcase.split(os.sep)[1]
                 
             SaveDirectory = os.getcwd()
-            os.mkdir(SaveDirectory + "\\log\\" + qas + "\\" + self.nowcase + "\\")
-            SaveAs = os.path.join(SaveDirectory,'log\\' + qas + "\\" + self.nowcase + "\\"
+            os.mkdir(SaveDirectory + os.sep+"log"+os.sep + qas + os.sep + self.nowcase + os.sep)
+            SaveAs = os.path.join(SaveDirectory,'log'+os.sep + qas + os.sep + self.nowcase + os.sep
                 + time.strftime('%Y_%m_%d_%H_%M_%S') + '.jpg')
             im=ImageGrab.grab()
             time.sleep(2)

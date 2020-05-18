@@ -6,6 +6,7 @@ Created on 2010/12/28
 import hashlib
 import automan.tool.error as error
 import os
+import subprocess
 from automan.tool.verify import Verify
 
 class File(object):
@@ -18,6 +19,17 @@ class File(object):
         '''
         Constructor
         '''
+    def shellcmd_exec(self,dict):
+        try:
+            os.system(dict['command'])
+            return 0
+        except:
+            return 1
+        
+    def shellcmd_get(self,dict):
+        
+        ret=self.shellcmd_output(dict['command'])
+        return ret
     def rdfolder_exec(self,dict):
         try:
             os.system(dict['command'])
@@ -81,3 +93,18 @@ class File(object):
         else:
             raise error.notequalerror()
         
+    def shellcmd_output(self,command):
+        #store stdout to tempfile
+        fTemp="temp.stdout"
+        #print (dict['command'])
+        if os.path.isfile(os.path.join(os.getcwd(),fTemp)):
+           os.remove(os.path.join(os.getcwd(),fTemp))
+        
+        #try:
+        subprocess.run(command + " > " + fTemp, shell=True, capture_output=True)
+        for line in open(os.path.join(os.getcwd(),fTemp)):
+               print(str(line))
+               return str(line)
+            #return 0
+        #except:
+        return 1

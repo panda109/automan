@@ -23,10 +23,11 @@ class Log(object):
         self.qalist = qalist
 
         dir = os.path.join(os.getcwd() , "log" , str(self.qafile).split('.')[0])
-        if str(self.qafile).split('.')[0] != 'qa':
-            print ("Name is .qa -> no qa file")
+        if len(self.qafile.split('.qa')) == 1:
+            print ("Name is xxxx.qa -> not xxxx")
         else:
             try:
+                print("111",dir)
                 self.del_folder(dir)
                 os.mkdir(dir)
             except:
@@ -80,9 +81,9 @@ class Log(object):
         suite_dir = os.path.join(os.getcwd() , 'log' , str(self.qafile).split('.')[0])
         suite_xml = suite_dir + os.sep +str(self.qafile).split('.')[0]+'.xml'
         for xml_file in self.qalist:
-            testcase_dir = suite_dir + os.sep +str(str(xml_file).split('os.sep')[-1]).split('.')[0]
+            testcase_dir = suite_dir + os.sep + str(str(xml_file).split(os.sep)[-1]).split('.')[0]
             xml_file = str(str(xml_file).split(os.sep)[-1]).split('.')[0]+ '.xml'
-            doc = xml.dom.minidom.parse(testcase_dir+ os.sep +xml_file)
+            doc = xml.dom.minidom.parse(testcase_dir + os.sep + xml_file)
             for node in doc.getElementsByTagName("testcase"):
                 qa_name = node.getAttribute("name")
                 qa_result = node.getAttribute("result")

@@ -1,0 +1,54 @@
+#ini			test.ini
+ini			bvt.ini
+
+start
+
+
+exec 		File 	shellcmd	#command#=adb devices
+sleep		3
+exec 		File 	shellcmd	#command#=$adb_mount_root$
+exec 		File 	shellcmd	#command#=$adb_setprop_staging_test$
+exec		File 	shellcmd 	#command#=$adb_sync$
+
+
+#no ota info for 3.4.99
+
+$oldslot$=get		File	shellcmd	#command#=adb shell getprop $slot$
+exec 		File 	shellcmd	#command#=adb shell sed -i s/$prop$=.*/$prop$=3.4.99/ /build.prop
+
+exec 		File 	shellcmd 	#command#=$adb_sync$
+exec		File	shellcmd	#command#=adb reboot
+sleep		 10
+exec 		File 	shellcmd	#command#=adb wait-for-device
+#wait for wifi
+sleep		 20
+
+exec 		File 	shellcmd	#command#=adb shell rm -rf /data/ota
+exec 		File 	shellcmd	#command#=adb shell setprop test.ota.init_delay 1
+exec		File 	shellcmd 	#command#=adb shell stop ota
+exec 		File 	shellcmd	#command#=adb shell start ota
+
+exec 		File 	shellcmd	#command#=adb logcat -s OTA
+sleep 		20
+exec		File 	shellcmd 	#command#=adb wait-for-device
+
+$n_fwver$=get 	File 	shellcmd	#command#=adb shell getprop $prop$
+verify 		Tool 		dir 		#key#=3.4.99,#value#=$n_fwver$,#criteria#==
+
+$n_slot$=get	File	shellcmd	#command#=adb shell getprop $slot$
+verify 		Tool 		dir 		#key#=$oldslot$,#value#=$n_slot$,#criteria#==
+
+
+
+exec 		File 	shellcmd	#command#=$adb_mount_root$
+exec 		File 	shellcmd	#command#=$adb_setprop_staging_test$
+exec		File 	shellcmd 	#command#=$adb_sync$
+
+exec 		File 	shellcmd	#command#=adb shell sed -i s/$prop$=.*/$prop$=3.4.7/ /build.prop
+
+exec 		File 	shellcmd 	#command#=$adb_sync$
+exec		File	shellcmd	#command#=adb reboot
+sleep		 10
+exec 		File 	shellcmd	#command#=adb wait-for-device
+
+end

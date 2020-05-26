@@ -1,6 +1,7 @@
 start
-init	browser					chrome
+init		browser	Chrome
+#print		browser.Google	text_gmail
 set		browser.Google	textbox_search		#key#=test
 click		browser.Google	button_submit
-close	browser
+close		browser
 end

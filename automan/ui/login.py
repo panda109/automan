@@ -9,8 +9,10 @@ import automan.tool.error as error
 from selenium.webdriver.common.keys import Keys
 from automan.util.tool  import Tool
 import configparser
+import os
+import configparser
 config = configparser.ConfigParser()
-config.read(".\ini\Path.conf",encoding="utf-8")
+config.read(os.path.join(os.getcwd() , 'ini') + "Path.conf",encoding="utf-8")
 
 class login(object):
     '''

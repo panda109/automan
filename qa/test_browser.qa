@@ -1,8 +1,10 @@
-ini		eonone.ini
+#ini		eonone.ini
 
 start
 init	browser					chrome
-set		browser.eonone_login	textbox_username		#key#=$username$
+
+set		browser.google			textbox_search		#key#=hello
+click	browser.google			button_submit
 close	browser
 
 end

@@ -1,9 +1,7 @@
 #include		sub.qa
-init			browser				Chrome
+#init			browser				Chrome
 start
-close			browser
-#$text$=get		Ocr		image_text	#file=vld.bmp
-
-#test			Ocr		image_text	#test#=$text$		
+#close			browser
+verify			Tool				file
 
 end

@@ -53,6 +53,7 @@ class test_web(object):
         #time.sleep(5)       
         #objElem = driver.find_element_by_xpath('//div[@id="app"]/div[2]/div/div/section/div/div/div/div[1]')
         #print(objElem.text.encode(encoding='UTF-8'))
+
         #driver.get("http://www.python.org")
         #elem = driver.find_element_by_name('q')
         #elem.send_keys("pycon")

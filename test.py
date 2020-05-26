@@ -1,11 +1,6 @@
 '''
 Created on 2010/12/20
 
-
-0 Mon Dec 20 15:36:05 2010
-0 Mon Dec 20 15:36:08 2010
-0 Mon Dec 20 15:36:10 2010
-1 Mon Dec 20 15:36:12 2010
 0 Mon Dec 20 15:36:14 2010
 0 Mon Dec 20 15:36:16 2010
 
@@ -23,7 +18,6 @@ import Pillow
 
 if __name__ == '__main__':
     pass
-#add test
 
 #define
 #testsuite

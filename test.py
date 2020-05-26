@@ -19,7 +19,7 @@ Created on 2010/12/20
 #      <testcase time="2.0 sec" result="pass" name="test_db">
 #      </testcase>
 #    </testsuite>
-
+import Pillow
 
 if __name__ == '__main__':
     pass

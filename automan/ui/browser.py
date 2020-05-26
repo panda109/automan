@@ -7,6 +7,7 @@ Created on 2010/12/15
 from selenium import webdriver
 from appium import webdriver as appium
 from automan.tool.parse_file import Parse_file
+import os
 
 class Browser(object):
     '''
@@ -22,7 +23,8 @@ class Browser(object):
             #multi_dl_prefs = {}
             #multi_dl_prefs['profile.default_content_settings.multiple-automatic-downloads'] = 1
             #options.add_experimental_option("prefs", multi_dl_prefs)                
-            self.browser = webdriver.Chrome(chrome_options=options)
+            driver_path = os.getcwd() + '/chromedriver'
+            self.browser = webdriver.Chrome(driver_path , chrome_options=options)
             self.browser.get(param)
 
         if browser == "firefox":

@@ -1,0 +1,14 @@
+ini				test.ini
+#ini				deployment_cluster.ini
+#ini				application_configuration.ini
+#init			ie							Chrome	
+
+start
+
+exec 	File 	shellcmd	#command#=$adb_devices$
+sleep			2
+$fwver$=get 	File 	shellcmd	#command#=$adb_getprop_fw_version$
+sleep			2
+verify 		Tool 		dir 		#key#=$ori_fw$,#value#=$fwver$,#criteria#==
+
+end

@@ -1,7 +1,6 @@
 '''
 Created on 2010/12/20
 
-0 Mon Dec 20 15:36:14 2010
 0 Mon Dec 20 15:36:16 2010
 
 @author: panda.huang

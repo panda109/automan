@@ -24,3 +24,5 @@ class notequalerror(Exception): pass
 class notfind(Exception): pass
 
 class find(Exception): pass
+
+class notfindappfile(Exception): pass

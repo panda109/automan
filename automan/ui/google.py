@@ -5,7 +5,7 @@ Created on 2010/12/10
 '''
 import automan.tool.error as error
 from selenium.webdriver.common.keys import Keys
-class Google(object):
+class google(object):
     '''
     classdocs
     '''
@@ -26,3 +26,7 @@ class Google(object):
 
     def button_error_click(self,browser):
         raise
+    
+    def text_gmail_print(self,browser):
+        elem = browser.find_element_by_class_name('gb_g')
+        print(elem.text)

@@ -68,6 +68,8 @@ class Execute_command(object):
                     self.browser = Browser(systemini['firefox'],command[3].lower()).browser
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
                     self.browser = Browser(systemini['ie'],command[3].lower()).browser
+                elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "app":
+                    self.browser = Browser(systemini['app'],command[3].lower()).browser       
                 else:
                     #print (command)
                     ob = self.userclass.class_object[self.get_objectname(command)]
@@ -79,6 +81,8 @@ class Execute_command(object):
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "firefox":
                     self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
+                    self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
+                elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "app":
                     self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
                 else:
                     #print (command)
@@ -138,10 +142,8 @@ class Execute_command(object):
             param = Modify_command().replay_ini(systemini, self.currentlyini,str(command[4]))
             self.namevalue = Parse_name_value().parse_name_value(param)
             if str(command[2]).find('browser.')==0:
-                #return 'ob.' + command[3] + '_' + action + '(self.browser,\''+param+'\')'
                 return 'ob.' + command[3] + '_' + action + '(self.browser,self.namevalue)'
             else:
-                #return 'ob.' + command[3] + '_' + action + '(\''+param+'\')'
                 return 'ob.' + command[3] + '_' + action + '('+'self.namevalue'+')'   
             
     def modify_currentlyini(self,key,value):

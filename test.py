@@ -1,12 +1,6 @@
 '''
 Created on 2010/12/20
 
-
-0 Mon Dec 20 15:36:05 2010
-0 Mon Dec 20 15:36:08 2010
-0 Mon Dec 20 15:36:10 2010
-1 Mon Dec 20 15:36:12 2010
-0 Mon Dec 20 15:36:14 2010
 0 Mon Dec 20 15:36:16 2010
 
 @author: panda.huang
@@ -19,7 +13,7 @@ Created on 2010/12/20
 #      <testcase time="2.0 sec" result="pass" name="test_db">
 #      </testcase>
 #    </testsuite>
-
+import Pillow
 
 if __name__ == '__main__':
     pass

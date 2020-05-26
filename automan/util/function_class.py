@@ -4,10 +4,10 @@ from thread import *
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 except socket.error:
-    print 'Failed to create socket'
+    print('Failed to create socket')
     sys.exit()
      
-print 'Socket Created'
+print('Socket Created')
  
 host = '172.16.2.100';
 port = 80;
@@ -17,7 +17,7 @@ try:
  
 except socket.gaierror:
     #could not resolve
-    print 'Hostname could not be resolved. Exiting'
+    print('Hostname could not be resolved. Exiting')
     sys.exit()
 
 class Function_class(object):
@@ -49,12 +49,12 @@ class Function_class(object):
         import netifaces
         import netifaces as ni
         result = ni.ifaddresses('eth0')[AF_INET][0]['addr']
-        print result
+        print(result)
         return result
     
     def vcpu_check(self,parameter):
         dict_patameter = functions.cut_parameter(parameter)
-        print dict_patameter
+        print (dict_patameter)
         result = "vcpu_check"
         return result
     
@@ -76,10 +76,10 @@ class Function_class(object):
             print(output)
     
             if ('unreachable' in output):
-                print hostname, 'is down!'
+                print (hostname, 'is down!')
                 return False
             else:
-                print hostname, 'is up!'
+                print (hostname, 'is up!')
                 return True
             
         elif list[1]=="linux":
@@ -88,10 +88,10 @@ class Function_class(object):
 
             #and then check the response...
             if response == 0:
-                print hostname, 'is up!'
+                print (hostname, 'is up!')
                 return True
             else:
-                print hostname, 'is down!'
+                print (hostname, 'is down!')
                 return False
             
 functions = Function_class()

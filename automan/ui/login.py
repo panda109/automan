@@ -8,11 +8,11 @@ import time
 import automan.tool.error as error
 from selenium.webdriver.common.keys import Keys
 from automan.util.tool  import Tool
-import ConfigParser
-
-config = ConfigParser.ConfigParser()
-config.read(".\ini\Path.conf")
-
+import configparser
+import os
+import configparser
+config = configparser.ConfigParser()
+config.read(os.path.join(os.getcwd() , 'ini') + "Path.conf",encoding="utf-8")
 
 class login(object):
     '''
@@ -48,6 +48,6 @@ class login(object):
         except:
             verify_vaule = 'Fail'       
         local_dict['value'] = verify_vaule
-        print local_dict
+        print (local_dict)
         Tool().dir_verify(local_dict)
        

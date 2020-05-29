@@ -22,6 +22,7 @@ class Execute_qa(object):
     def __init__(self):
         self.each_session = []
         self.until_session = []
+        self.suite_session = []
         self.for_session = []
         self.executer = Execute_command()
         '''
@@ -50,7 +51,9 @@ class Execute_qa(object):
         os.chdir(os.getcwd())
         each_mode = False
         until_mode = False
+        suite_mode = False
         for command in list(commands):
+            print(command)
             if command[1] == 'each' and command[2] == 'start':
                 self.each_session.append(command)
                 each_mode = True
@@ -60,6 +63,7 @@ class Execute_qa(object):
                 each_mode = False
             elif each_mode == True:
                 self.each_session.append(command)
+                
             elif command[1] == 'until' and command[2] == 'start':
                 self.until_session.append(command)
                 until_mode = True
@@ -69,10 +73,21 @@ class Execute_qa(object):
                 until_mode = False
             elif until_mode == True:
                 self.until_session.append(command)
+                
+            elif command[1] == 'suite' and command[2] == 'start':
+                self.suite_session.append(command)
+                suite_mode = True
+            elif command[1] == 'suite' and command[2] == 'end':
+                if str(self.systemini['suite'])=='no' :
+                    result = self.execute_suite_session()
+                self.suite_session = []
+                
+                suite_mode = False
+            elif suite_mode == True:
+                self.suite_session.append(command)                
+                
             else:
                 result = self.execute_normal_session(command)
-            
-                
                 
             if command[1] != 'end' :
                 if result == 1 and str(self.systemini['screenshot'])=='yes' :
@@ -115,6 +130,23 @@ class Execute_qa(object):
             im=ImageGrab.grab()
             time.sleep(2)
             ImageGrab.grab_to_file(SaveAs)
+            
+    def execute_suite_session(self):        
+        result=1
+        print(self.suite_session[0])
+        command = ""
+        for command in self.suite_session[1:]:
+            temp_list = []
+            temp_list = temp_list + command
+            result = self.executer.execute(command,self.systemini)
+            time.sleep(int(str(self.systemini['sleep'])))
+            
+            if result == 0:
+                self.log.parse_log(result,command)
+                return
+
+        self.log.parse_log(result,command)
+        return  result
             
     def execute_until_session(self):
         result=1

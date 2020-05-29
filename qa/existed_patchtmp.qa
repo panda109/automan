@@ -1,0 +1,47 @@
+#ini			test.ini
+ini			bvt.ini
+
+start
+
+
+exec 		File 	shellcmd	#command#=adb devices
+sleep		3
+exec 		File 	shellcmd	#command#=$adb_mount_root$
+exec 		File 	shellcmd	#command#=$adb_setprop_staging_test$
+exec		File 	shellcmd 	#command#=$adb_sync$
+
+
+
+
+$oldslot$=get		File	shellcmd	#command#=adb shell getprop $slot$
+exec 		File 	shellcmd	#command#=adb shell sed -i s/$prop$=.*/$prop$=$old_fw_ver$/ /build.prop
+
+exec 		File 	shellcmd 	#command#=$adb_sync$
+exec		File	shellcmd	#command#=adb reboot
+sleep		 10
+exec 		File 	shellcmd	#command#=adb wait-for-device
+#wait for wifi
+sleep		 20
+
+exec 		File 	shellcmd	#command#=adb shell rm -rf /data/ota
+exec 		File 	shellcmd	#command#=adb shell mkdir -p /data/ota
+exec		File 	shellcmd 	#command#=adb shell cp $path_cube_test_data$/$update_image_345$ /data/ota/update.img
+exec		File 	shellcmd 	#command#=adb shell cp $path_cube_test_data$/$existed_patch$ /data/ota/patch.tmp
+exec		File 	shellcmd 	#command#=adb shell cp $path_cube_test_data$/$existed_patch$ /data/ota/patch.tmp.apply.tmp
+#exec 		File 	shellcmd	#command#=adb shell setprop ro.ota.folder '/storage'
+exec 		File 	shellcmd	#command#=adb shell setprop test.ota.init_delay 1
+exec		File 	shellcmd 	#command#=adb shell stop ota
+exec 		File 	shellcmd	#command#=adb shell start ota
+
+exec 		File 	shellcmd	#command#=adb logcat -s OTA
+sleep 		20
+exec		File 	shellcmd 	#command#=adb wait-for-device
+
+$n_fwver$=get 	File 	shellcmd	#command#=adb shell getprop $prop$
+verify 		Tool 		dir 		#key#=$old_fw_ver$,#value#=$n_fwver$,#criteria#=<
+
+$n_slot$=get	File	shellcmd	#command#=adb shell getprop $slot$
+verify 		Tool 		dir 		#key#=$oldslot$,#value#=$n_slot$,#criteria#=!
+
+
+end

@@ -29,7 +29,8 @@ class Execute_command(object):
     def execute(self, command, systemini):
         result = 0
         ret = 0
-        #print (command)
+        #print("command",command)
+        #print("systemini",systemini)
         if self.currentlyini['debug'] == 'on':
             print (systemini)
             print (self.currentlyini)

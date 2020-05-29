@@ -1,0 +1,17 @@
+ini				FWBVT.ini
+
+start
+
+exec 		File 	shellcmd	#command#=$adb_mount_root$
+exec 		File 	shellcmd	#command#=$adb_setprop_staging_test$
+exec		File 	shellcmd 	#command#=$adb_sync$
+
+
+
+$fwver$=get 	File 	shellcmd	#command#=$adb_getprop_fw_ver$
+$oldslot$=get	File	shellcmd	#command#=$adb_getprop_slot$
+
+exec 		File 	shellcmd	#command#=$adb_sed_old_ver$
+verify 		Tool 		dir 		#key#=3,#value#=$fwver$,#criteria#==
+
+end

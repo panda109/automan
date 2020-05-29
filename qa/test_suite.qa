@@ -1,0 +1,7 @@
+start
+
+suite		start
+include		test.sub
+suite		end
+
+end

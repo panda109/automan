@@ -31,7 +31,7 @@ class Parse_name_value(object):
                 elif len(str(name_vale_list.strip()).split('=')) == 3: 
                     value = '='
                 else:
-                    value = str(name_vale_list.strip()).split('=')[1].strip()
+                    value = "=".join(name_vale_list.strip().split('=')[1:])
                 name = str(name).replace("#", "")
                 namevalue[name.strip()] = value
         return namevalue

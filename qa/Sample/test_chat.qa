@@ -1,0 +1,4 @@
+start
+#send	chat	message		#uri#=https://chat.googleapis.com/v1/spaces/AAAA7ccVMDQ/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=kLudwcL7NnrteboFxTN6WGXJPrZSFBOn0gvDEE1kjzw%3D,#message#=test chat bot and send text
+sendpic	chat	message		#uri#=https://chat.googleapis.com/v1/spaces/AAAA7ccVMDQ/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=kLudwcL7NnrteboFxTN6WGXJPrZSFBOn0gvDEE1kjzw%3D,#imageurl#=https://www.nextdrive.io/wp-content/uploads/2020/01/Illustration-18.png
+end

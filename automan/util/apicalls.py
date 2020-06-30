@@ -7,8 +7,8 @@ Created on 2020/06/16
 import automan.tool.error as error
 import requests,base64,json
 from symbol import except_clause
-import os, sys, traceback
-from _ast import If
+import os
+
 
 
 class apicalls(object):
@@ -59,6 +59,10 @@ class apicalls(object):
             
             
             dicResponse = objResponse.json()
+            
+            print("return code: ->")
+            print(objResponse.status_code)
+            print(objResponse.text)
             #print(objResponse.status_code)
             
             if dicParm['returnCode'] == str(200):
@@ -74,10 +78,12 @@ class apicalls(object):
             elif dicParm['returnCode'] == str(400) and objResponse.status_code == 400:
                 pass
             else:
-                print(objResponse.status_code, "%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@############$$$$$$$")
+                print("else return:", objResponse.status_code)
             
-        except:
+        except Exception as exceptionError:
             #raise error.notfind()
+            print("$$$$$Exception error$$$$$")
+            print(exceptionError)
             raise error.equalerror()
         
 
@@ -134,13 +140,9 @@ class apicalls(object):
         
         try:
             strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath'] % dicParm['strProductID']
-            #-> https://ndplay-staging.nextdrive.io/v1/devices/%s/devices *%s = 984CFF18B2500209
             strGWM_Autho = '%s %s' % (dicParm['strAuthoType'],dicParm['AToken'])            
-            #authorization type + token
             dicGWM_Header = {dicParm['strHeaderAutho']:strGWM_Autho, dicParm['strContentType']: dicParm['strContentDescription']}
-            #->dictionary
             dicGWM_Params={dicParm['strParame_ProID']:dicParm['strProductID']}
-            #dict {'product_id':'984CFF18B2500209'}
             objGWMResponse = requests.get(strGWM_URL, params=dicGWM_Params, headers=dicGWM_Header)
             
             dicGWMResponse = objGWMResponse.json()    

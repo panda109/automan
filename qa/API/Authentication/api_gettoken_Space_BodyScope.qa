@@ -1,4 +1,4 @@
 ini	authentication.ini
 start
-$AccToken$=get	apicalls	accesstoken	#strID#=$strID$,#strSecret#=$strSecret$,#strURL#=$strStagingURL$,#strPrefixOfAutho#=$strPrefixOfAutho$,#strHeaderAutho#=$strHeaderAutho$,#strHeaderContentType#=$strHeaderContentType$,#strHeaderConTypeValue#=$strHeaderConTypeValue$,#strBodyGrantType#=$strBodyGrantType$,#strBodyGrantTypeValue#=$strBodyGrantTypeValue$,#strBodyScope#=$strSpace_BodyScope$,#strScopeRange#=$strScope_DeviceInfo$
+$AccToken$=get	apicalls	accesstoken	#returnCode#=0,#strID#=$strID$,#strSecret#=$strSecret$,#strURL#=$strStagingURL$,#strPrefixOfAutho#=$strPrefixOfAutho$,#strHeaderAutho#=$strHeaderAutho$,#strHeaderContentType#=$strHeaderContentType$,#strHeaderConTypeValue#=$strHeaderConTypeValue$,#strBodyGrantType#=$strBodyGrantType$,#strBodyGrantTypeValue#=$strBodyGrantTypeValue$,#strBodyScope#=$strSpace_BodyScope$,#strScopeRange#=$strScope_DeviceInfo$
 end

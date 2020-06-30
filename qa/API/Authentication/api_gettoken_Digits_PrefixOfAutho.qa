@@ -1,0 +1,4 @@
+ini	authentication.ini
+start
+$AccToken$=get	apicalls	accesstoken	#returnCode#=400,#strID#=$strID$,#strSecret#=$strSecret$,#strURL#=$strStagingURL$,#strPrefixOfAutho#=$strDigits_PrefixOfAutho$,#strHeaderAutho#=$strHeaderAutho$,#strHeaderContentType#=$strHeaderContentType$,#strHeaderConTypeValue#=$strHeaderConTypeValue$,#strBodyGrantType#=$strBodyGrantType$,#strBodyGrantTypeValue#=$strBodyGrantTypeValue$,#strBodyScope#=$strBodyScope$,#strScopeRange#=$strScope_DeviceInfo$
+end

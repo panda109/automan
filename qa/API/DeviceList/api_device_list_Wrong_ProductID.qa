@@ -1,0 +1,9 @@
+ini				devicelist.ini
+load			apicalls						golden_sample	#type#=device_list,#exclude#=strProductID
+ini				device_list_golden_sample.ini
+
+start
+$AccToken$=get	apicalls						accesstoken		#returnCode#=200,#strID#=$strID$,#strSecret#=$strSecret$,#strURL#=$strStagingURL$,#strPrefixOfAutho#=$strPrefixOfAutho$,#strHeaderAutho#=$strHeaderAutho$,#strHeaderContentType#=$strHeaderContentType$,#strHeaderConTypeValue#=$strHeaderConTypeValue$,#strBodyGrantType#=$strBodyGrantType$,#strBodyGrantTypeValue#=$strBodyGrantTypeValue$,#strBodyScope#=$strBodyScope$,#strScopeRange#=$strScope_DeviceInfo$,#strProductID#=$strProductID$
+get	apicalls	devicelist										#returnCode#=403,#AToken#=$AccToken$,#strNDAPIServer#=$strNDAPIServer$,#strProductID#=$strWrong_ProductID$,#strHeaderAutho#=$strHeaderAutho$,#strParame_ProID#=$strParame_ProID$,#strAuthoType#=$strAuthoType$,#strNDAPIServerPath#=$strNDAPIServerPath$,#strGWState#=$strGWState$,#strContentType#=$strContentType$,#strContentDescription#=$strContentDescription$,#strAccessory_uuid#=$strAccessory_uuid$,#strModel#=$strModel$,#strConnected#=$strConnected$
+end
+

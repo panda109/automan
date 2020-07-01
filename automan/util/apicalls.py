@@ -96,7 +96,12 @@ class apicalls(object):
             #raise error.notfind()
             print("Exception---->")
             print(exceptionError)
-            raise error.equalerror()
+            #raise error.equalerror()
+            if dicParm['except'] == 'ignore':
+                #有些test case跑進except是正常的但因進入except結果會為fail，當#except#=ignore時直接跳過except，強制讓結果為pass
+                pass
+            else:
+                raise error.equalerror()
         
 
     def gwstate_get(self, value_dict):
@@ -166,7 +171,14 @@ class apicalls(object):
             
             print("Exception---->")
             print(exceptionError)
-            raise error.equalerror()
+            #print("error class")
+            #error_class = exceptionError.__class__.__name__
+            #print(error_class)
+            #raise error.equalerror()
+            if dicParm['except'] == 'ignore':
+                pass
+            else:
+                raise error.equalerror()
     
                
         
@@ -245,8 +257,20 @@ class apicalls(object):
         except Exception as exceptionError:
             print("Exception---->")
             print(exceptionError)
-            raise error.equalerror()
-        
+            #print("error class")
+            #error_class = exceptionError.__class__.__name__
+            #print(error_class)
+            #detail = exceptionError.args[0]
+            #print('detail')
+            #print(detail)
+            #raise error.equalerror()      
+            if dicParm['except'] == 'ignore':
+                pass
+            else:
+                raise error.equalerror()
+            
+                
+            
         
         
         

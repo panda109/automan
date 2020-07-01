@@ -2,6 +2,6 @@ ini				gwstate.ini
 load			apicalls					golden_sample	#type#=gwstate
 ini				gwstate_golden_sample.ini
 start
-$AccToken$=get	apicalls					accesstoken		#returnCode#=200,#method#=post,#strID#=$strID$,#strSecret#=$strSecret$,#strURL#=$strStagingURL$,#strPrefixOfAutho#=$strPrefixOfAutho$,#strHeaderAutho#=$strHeaderAutho$,#strHeaderContentType#=$strHeaderContentType$,#strHeaderConTypeValue#=$strHeaderConTypeValue$,#strBodyGrantType#=$strBodyGrantType$,#strBodyGrantTypeValue#=$strBodyGrantTypeValue$,#strBodyScope#=$strBodyScope$,#strScopeRange#=$strScope_DeviceInfo$,#strProductID#=$strProductID$
-get	apicalls	gwstate										#returnCode#=502,#method#=get,#AToken#=$AccToken$,#strNDAPIServer#=$strNDAPIServer$,#strProductID#=$strProductID$,#strHeaderAutho#=$strSymbols_HeaderAutho$,#strParame_ProID#=$strParame_ProID$,#strAuthoType#=$strAuthoType$,#strNDAPIServerPath#=$strNDAPIServerPath$,#strGWState#=$strGWState$
+$AccToken$=get	apicalls					accesstoken		#returnCode#=200,#except#=false,#method#=post,#strID#=$strID$,#strSecret#=$strSecret$,#strURL#=$strStagingURL$,#strPrefixOfAutho#=$strPrefixOfAutho$,#strHeaderAutho#=$strHeaderAutho$,#strHeaderContentType#=$strHeaderContentType$,#strHeaderConTypeValue#=$strHeaderConTypeValue$,#strBodyGrantType#=$strBodyGrantType$,#strBodyGrantTypeValue#=$strBodyGrantTypeValue$,#strBodyScope#=$strBodyScope$,#strScopeRange#=$strScope_DeviceInfo$,#strProductID#=$strProductID$
+get	apicalls	gwstate										#returnCode#=502,#except#=false,#method#=get,#AToken#=$AccToken$,#strNDAPIServer#=$strNDAPIServer$,#strProductID#=$strProductID$,#strHeaderAutho#=$strSymbols_HeaderAutho$,#strParame_ProID#=$strParame_ProID$,#strAuthoType#=$strAuthoType$,#strNDAPIServerPath#=$strNDAPIServerPath$,#strGWState#=$strGWState$
 end

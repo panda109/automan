@@ -89,8 +89,11 @@ class apicalls(object):
             elif dicParm['returnCode'] == str(405) and objResponse.status_code == 405:
                 print('#405 Method Not Allowed')
                 pass
+            elif dicParm['returnCode'] == str(0):
+                #因為有些test case沒有return code，所以先將returnCode預設為0
+                pass
             else:
-                print("else return:", objResponse.status_code)
+                raise error.equalerror()
             
         except Exception as exceptionError:
             #raise error.notfind()
@@ -163,9 +166,10 @@ class apicalls(object):
                 print('#404 Not Found: Requesting resource not found')
             elif dicParm['returnCode'] == str(502) and objGWMResponse.status_code == 502:
                 print('#502 Bad Gateway')
-
+            elif dicParm['returnCode'] == str(0):
+                pass
             else:
-                print("else return:", objGWMResponse.status_code)
+                raise error.equalerror()
             
         except Exception as exceptionError:
             
@@ -251,8 +255,10 @@ class apicalls(object):
                 print('#404 Not found: Requesting resource not found')
             elif dicParm['returnCode'] == str(502) and objGWMResponse.status_code == 502:
                 print('#502 Bad Gateway')
+            elif dicParm['returnCode'] == str(0):
+                pass
             else:
-                print("else return:", objGWMResponse.status_code)
+                raise error.equalerror()
             
         except Exception as exceptionError:
             print("Exception---->")

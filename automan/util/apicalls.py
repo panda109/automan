@@ -55,17 +55,22 @@ class apicalls(object):
             
             dicHeader = {dicParm['strHeaderAutho']:strFinalAutho, dicParm['strHeaderContentType']:dicParm['strHeaderConTypeValue']}
             dicBody = {dicParm['strBodyGrantType']:dicParm['strBodyGrantTypeValue'], dicParm['strBodyScope']:dicParm['strScopeRange']}
-            objResponse = requests.post(dicParm['strURL'], data=dicBody, headers=dicHeader)
+
+            if dicParm['method'] == 'get':
+                objResponse = requests.get(dicParm['strURL'], data=dicBody, headers=dicHeader)
+            elif dicParm['method'] == 'post':
+                objResponse = requests.post(dicParm['strURL'], data=dicBody, headers=dicHeader)
             
-            
-            dicResponse = objResponse.json()
-            
-            print("return code: ->")
-            print(objResponse.status_code)
-            print(objResponse.text)
+            #objResponse = requests.post(dicParm['strURL'], data=dicBody, headers=dicHeader)
+            #print('objResponse: ',objResponse)
+            #print(objResponse.text)
             #print(objResponse.status_code)
+            #print(type(objResponse))
+            #dicResponse = objResponse.json()
+            #print(dicResponse)
             
             if dicParm['returnCode'] == str(200):
+                dicResponse = objResponse.json()
                 if objResponse.status_code != 200:
                     raise error.equalerror()
                 elif dicResponse["expires_in"] != 3600:
@@ -76,13 +81,20 @@ class apicalls(object):
                     return dicResponse["access_token"]
                 pass
             elif dicParm['returnCode'] == str(400) and objResponse.status_code == 400:
+                print('#400 Bad Request: Problem with the request')
+                pass
+            elif dicParm['returnCode'] == str(403) and objResponse.status_code == 403:
+                print('#403 Forbidden: Not authorized to access the resource')
+                pass
+            elif dicParm['returnCode'] == str(405) and objResponse.status_code == 405:
+                print('#405 Method Not Allowed')
                 pass
             else:
                 print("else return:", objResponse.status_code)
             
         except Exception as exceptionError:
             #raise error.notfind()
-            print("$$$$$Exception error$$$$$")
+            print("Exception---->")
             print(exceptionError)
             raise error.equalerror()
         
@@ -92,21 +104,43 @@ class apicalls(object):
         dicParm = dict(value_dict)
         #apicalls.pid_format_check(self, dicParm['strProductID'])
         try:
-            strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath'] % dicParm['strProductID']
+            if dicParm['strNDAPIServerPath'].isspace() == True or dicParm['strNDAPIServerPath'] == "":
+                #print(dicParm['strNDAPIServerPath'])
+                strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath']
+                #print(strGWM_URL)
+            elif dicParm['strNDAPIServerPath'] != '/v1/devices/%s/states':
+                strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath'] + '%s' % dicParm['strProductID']
+                pass
+            else:
+                #print(dicParm['strNDAPIServerPath'])
+                strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath'] % dicParm['strProductID']
+                #print(strGWM_URL)
+                
+            #strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath'] % dicParm['strProductID']
             strGWM_Autho = '%s %s' % (dicParm['strAuthoType'],dicParm['AToken'])
             
             dicGWM_Header = {dicParm['strHeaderAutho']:strGWM_Autho}
             dicGWM_Params={dicParm['strParame_ProID']:dicParm['strProductID']}
-            objGWMResponse = requests.get(strGWM_URL, params=dicGWM_Params, headers=dicGWM_Header)
-            dicGWMResponse = objGWMResponse.json()
-            print(objGWMResponse)
-            print("return code: ->")
-            print(objGWMResponse.text)
-            print(objGWMResponse.status_code)
-            print("return code: ->",objGWMResponse.status_code)
+            
+            if dicParm['method'] == 'get':
+                objGWMResponse = requests.get(strGWM_URL, params=dicGWM_Params, headers=dicGWM_Header)
+            elif dicParm['method'] == 'post':
+                objGWMResponse = requests.post(strGWM_URL, params=dicGWM_Params, headers=dicGWM_Header)
+
+
+                
+            
+            #objGWMResponse = requests.get(strGWM_URL, params=dicGWM_Params, headers=dicGWM_Header)
+            
+            #print(objGWMResponse)
+            #print("return code: ->")
+            #print(objGWMResponse.text)
+            #print(objGWMResponse.status_code)
+            #print("return code: ->",objGWMResponse.status_code)
             #print("dicGWMResponse",dicGWMResponse)
             
             if dicParm['returnCode'] == str(200) and objGWMResponse.status_code == 200:
+                dicGWMResponse = objGWMResponse.json()
                 if dicGWMResponse["message"] != "success":
                     raise error.equalerror()
                 elif dicGWMResponse["data"]["state"] != dicParm['strGWState']:
@@ -122,13 +156,15 @@ class apicalls(object):
                 pass
             elif dicParm['returnCode'] == str(404) and objGWMResponse.status_code == 404:
                 print('#404 Not Found: Requesting resource not found')
+            elif dicParm['returnCode'] == str(502) and objGWMResponse.status_code == 502:
+                print('#502 Bad Gateway')
 
             else:
                 print("else return:", objGWMResponse.status_code)
             
         except Exception as exceptionError:
             
-            print("$$$$$Exception error$$$$$")
+            print("Exception---->")
             print(exceptionError)
             raise error.equalerror()
     
@@ -139,20 +175,46 @@ class apicalls(object):
         #apicalls.pid_format_check(self, dicParm['strProductID'])
         
         try:
-            strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath'] % dicParm['strProductID']
+            if dicParm['strNDAPIServerPath'].isspace() == True or dicParm['strNDAPIServerPath'] == "":
+                #print(dicParm['strNDAPIServerPath'])
+                strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath']
+                #print(strGWM_URL)
+            elif dicParm['strNDAPIServerPath'] != '/v1/devices/%s/accessories':
+                #print(dicParm['strNDAPIServerPath'])
+                strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath'] + '%s' % dicParm['strProductID']
+                #print(strGWM_URL)
+                pass
+            else:
+                #print(dicParm['strNDAPIServerPath'])
+                strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath'] % dicParm['strProductID']
+                #print(strGWM_URL)
+                
+                
+            #strGWM_URL = dicParm['strNDAPIServer'] + dicParm['strNDAPIServerPath'] % dicParm['strProductID']
             strGWM_Autho = '%s %s' % (dicParm['strAuthoType'],dicParm['AToken'])            
             dicGWM_Header = {dicParm['strHeaderAutho']:strGWM_Autho, dicParm['strContentType']: dicParm['strContentDescription']}
             dicGWM_Params={dicParm['strParame_ProID']:dicParm['strProductID']}
-            objGWMResponse = requests.get(strGWM_URL, params=dicGWM_Params, headers=dicGWM_Header)
             
-            dicGWMResponse = objGWMResponse.json()    
+            if dicParm['method'] == 'get':
+                objGWMResponse = requests.get(strGWM_URL, params=dicGWM_Params, headers=dicGWM_Header)
+            elif dicParm['method'] == 'post':
+                objGWMResponse = requests.post(strGWM_URL, params=dicGWM_Params, headers=dicGWM_Header)
             
-            print("return code: ->")
-            print(objGWMResponse.text)
-            print("return code: ->",objGWMResponse.status_code)
+            #print("return code: ->")
+            #print('objGWMResponse: ',objGWMResponse)
+            #print(objGWMResponse.text)
+            #print(objGWMResponse.status_code)
+            #print(type(objGWMResponse))
+            
+            #dicGWMResponse = objGWMResponse.json()    
+           
+            #print("return code: ->")
+            #print(objGWMResponse.text)
+            #print("return code: ->",objGWMResponse.status_code)
             
 
             if dicParm['returnCode'] == str(200):
+                dicGWMResponse = objGWMResponse.json() 
                 if objGWMResponse.status_code != 200:
                     raise error.equalerror()
                 else:
@@ -175,11 +237,13 @@ class apicalls(object):
                 pass
             elif dicParm['returnCode'] == str(404) and objGWMResponse.status_code == 404:
                 print('#404 Not found: Requesting resource not found')
+            elif dicParm['returnCode'] == str(502) and objGWMResponse.status_code == 502:
+                print('#502 Bad Gateway')
             else:
                 print("else return:", objGWMResponse.status_code)
             
         except Exception as exceptionError:
-            print("$$$$$Exception error$$$$$")
+            print("Exception---->")
             print(exceptionError)
             raise error.equalerror()
         

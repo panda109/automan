@@ -8,7 +8,7 @@ from selenium import webdriver
 from appium import webdriver as appium
 from automan.tool.parse_file import Parse_file
 import os
-
+import platform
 class Browser(object):
     '''
     classdocs
@@ -22,9 +22,13 @@ class Browser(object):
             #enable multiple download
             #multi_dl_prefs = {}
             #multi_dl_prefs['profile.default_content_settings.multiple-automatic-downloads'] = 1
-            #options.add_experimental_option("prefs", multi_dl_prefs)                
-            driver_path = os.getcwd() + '/chromedriver'
+            #options.add_experimental_option("prefs", multi_dl_prefs)
+            if platform.system() == 'Darwin' :             
+                driver_path = os.getcwd() + '/chromedriver'
+            else: 
+                driver_path = os.getcwd() + '/chromedriver.exe'
             self.browser = webdriver.Chrome(driver_path , chrome_options=options)
+                
             self.browser.get(param)
 
         if browser == "firefox":
@@ -34,11 +38,11 @@ class Browser(object):
             self.browser.maximize_window()   
             self.browser.get(param)
 
-        if browser == "ie":
-            self.browser = webdriver.Browser()
-            self.browser.maximize_window()            
-            #print self.driver.get_window_size()
-            self.browser.get(param)
+        ##if browser == "ie":
+        #    self.browser = webdriver.Browser()
+        #    self.browser.maximize_window()            
+        #    #print self.driver.get_window_size()
+        #    self.browser.get(param)
 
         if browser == "app":
             #read from url in to desired_capabilities

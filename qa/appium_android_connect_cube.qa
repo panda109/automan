@@ -1,0 +1,106 @@
+ini					appium_android.ini
+init				browser							app	
+start
+
+click				browser.appium_android			setting					#setting_id#=$setting_id$
+#點選管理!!!!!
+
+click				browser.appium_android			new_device				#new_device_id#=$new_device_id$
+#點選新增裝置!!!!
+
+set					browser.appium_android			device_type				#deviceType_xpath#=$deviceType_xpath$
+#點選要新增的裝置(Cube)!!!!
+
+click				browser.appium_android			start					#start_id#=$start_id$
+#點選開始吧!!!
+
+click				browser.appium_android			next_step				#next_step_id#=$next_step_to_location_id$
+#點選下一步!!!!
+
+set					browser.appium_android			location				#location_id#=$location_other_id$
+#設定位置為其他!!!
+
+set					browser.appium_android			location_name			#location_name_textbox_id#=$location_name_textbox_id$,#location_name#=$location_name$
+#設定位置名稱!!!
+
+click				browser.appium_android			enter
+#收起鍵盤!!!
+
+click				browser.appium_android			next_step				#next_step_id#=$next_step_to_confirm_light_id$
+#點選下一步到確認燈號!!!
+
+click				browser.appium_android			next_step				#next_step_id#=$next_step_to_start_scan_id$
+#點選下一步到準備開始掃描!!!
+
+click				browser.appium_android			start_scan				#start_scan_id#=$start_scan_id$
+#點選開始掃描!!!
+
+sleep				3
+
+click				browser.appium_android			manual_input			#manual_input_id#=$manual_input_id$
+#點選手動輸入!!!!!
+
+set					browser.appium_android			device_id				#device_textbox_id#=$device_textbox_id$,#deviceID#=$deviceID$
+#輸入產品序號!!!!!
+
+click				browser.appium_android			enter
+#收起鍵盤!!!!
+
+click				browser.appium_android			next_step				#next_step_id#=$next_step_to_wifi_setting_id$
+#點選下一步到設定wifi!!!!
+
+sleep				15
+#等待連線
+
+set					browser.appium_android			admin_psw				#psw_textbox_xpath#=$psw_textbox_xpath$,#psw#=$psw$
+#輸入密碼!!!!!
+
+set					browser.appium_android			admin_psw				#psw_textbox_xpath#=$pswagain_textbox_xpath$,#psw#=$psw$
+#再次輸入密碼!!!!!
+
+click				browser.appium_android			enter
+#收起鍵盤!!!!!
+
+click				browser.appium_android			next_step				#next_step_id#=$confirm_id$
+#點選下一步到設定wifi!!!!
+
+sleep				15
+#等待連結
+
+set					browser.appium_android			test_wifi				#wifi_name#=$wifi_name$
+#set					browser.appium_android			wifi					#wifi_name#=$wifi_name$,#wifi_list_xpath#=$wifi_list_xpath$
+#選擇wifi!!!!
+
+set					browser.appium_android			wifi_psw				#wifi_psw_textbox_id#=$wifi_psw_textbox_id$,#wifipsw#=$wifipsw$
+#輸入wifi密碼!!!
+
+click				browser.appium_android			enter
+#收起鍵盤!!!!
+
+sleep				3
+
+
+click				browser.appium_android			next_step				#next_step_id#=$wifipsw_next_step$
+#點選下一步!!!
+
+sleep				10
+#等待
+
+click				browser.appium_android			confirm					#confirm_id#=$connected_confirm_id$
+#點選wifi跳出視窗確定
+
+#verify				browser.appium_android			connect					#setting_id#=$setting_id$,#device_list_id#=$device_list_id$,#cubeicon_id#=$cubeicon_id$
+#確認是否連結上
+
+sleep				5
+
+end
+
+
+
+
+
+
+
+
+

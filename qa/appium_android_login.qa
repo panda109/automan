@@ -1,0 +1,42 @@
+ini				appium_android_login.ini
+init			browser								app	
+start
+
+
+click			browser.dustin_appium				setting				#setting_id#=$setting_id$
+#點選管理
+
+click			browser.dustin_appium				info				#info_id#=$info_id$
+#點選人像
+
+sleep			3
+#等待
+
+click			browser.dustin_appium				logout				#logout_id#=$logout_id$
+點選登出
+
+sleep			3
+#等待
+
+set				browser.dustin_appium				email				#email#=$email$,#email_xpath#=$email_xpath$
+#填入帳號
+
+set				browser.dustin_appium				psw					#password#=$password$,#psw_xpath#=$psw_xpath$
+#填入密碼
+
+click			browser.dustin_appium				login				#login_id#=$login_id$
+#點選登入
+
+sleep			5
+#等待
+
+verify			browser.dustin_appium				login				#pageName_xpath#=$pageName_xpath$
+驗證是否登入
+
+sleep			3
+
+end
+
+
+
+

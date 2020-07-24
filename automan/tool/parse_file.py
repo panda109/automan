@@ -18,7 +18,7 @@ class Parse_file(object):
         '''
     def parse_suite_log(self,log_list,testsuite,testcasename):
         #create suite folder 
-        fhd= open(os.path.joine(os.getcwd() , 'log' , str(testsuite)) + os.sep +str(testcasename)+'.log','w')
+        fhd= open(os.path.join(os.getcwd() , 'log' , str(testsuite)) + os.sep +str(testcasename)+'.log','w')
         for logs in log_list:
             print (logs)
             fhd.write(logs[0] +' '+ logs[1]+'\n')
@@ -105,8 +105,10 @@ class Parse_file(object):
                     lines = dirname + os.sep + filename
                     print(lines)
                     for line in open(lines):
-                        temp = str(line).strip().split('=')[1]
+                        temp = "=".join(str(line).strip().split('=')[1:])
+                        #print(temp)
                         temp = self.modify(temp)
+                        print(temp)
                         system[str(line).strip().split('=')[0]] = temp
             except:
                 pass

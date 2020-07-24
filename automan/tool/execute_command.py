@@ -84,7 +84,7 @@ class Execute_command(object):
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
                     self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "app":
-                    self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
+                    self.browser = Browser(systemini['app_device'],command[3].lower()).browser
                 else:
                     #print (command)
                     ob = self.userclass.class_object[self.get_objectname(command)]

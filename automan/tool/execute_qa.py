@@ -129,7 +129,7 @@ class Execute_qa(object):
             SaveAs = os.path.join(SaveDirectory,'log' , qas ,   self.nowcase , time.strftime('%Y_%m_%d_%H_%M_%S')) + '.jpg'
             im=ImageGrab.grab()
             time.sleep(2)
-            ImageGrab.grab_to_file(SaveAs)
+            im.save(SaveAs)
             
     def execute_suite_session(self):        
         result=1

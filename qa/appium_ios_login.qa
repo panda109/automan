@@ -1,36 +1,40 @@
 ini			appium_ios.ini
-init			browser								app	
+init			browser					app	
 start
 
 
-click			browser.appium_ios				setting				#xpath#=setting_xpath
+click			browser.appium_ios	element		#xpath#=setting_xpath
 #manage tab
 
-click			browser.appium_ios				info				#xpath#=info_xpath
+click			browser.appium_ios	element		#xpath#=info_xpath
 #persona
 
 sleep			3
 
 
-click			browser.appium_ios				logout				#xpath#=logout_xpath
+click			browser.appium_ios	element		#xpath#=logout_xpath
 #logout
 
 sleep			3
 
 
-set				browser.appium_ios				email		#email#=$email$,#xpath#=email_xpath
+set			browser.appium_ios	element  			#input#=$email$,#xpath#=email_xpath
 #input email
 
-set			browser.appium_ios				psw			#password#=$password$,#xpath#=psw_xpath
+set			browser.appium_ios	element		#input#=$password$,#xpath#=psw_xpath
 #input password
 
-click			browser.appium_ios				login				#xpath#=login_xpath
+hide			browser.appium_ios	keyboard
+
+sleep 3
+
+click			browser.appium_ios	element		#xpath#=login_xpath
 #login 
 
 sleep			10
 
 
-verify			browser.appium_ios				login				#xpath#=pageName_xpath
+verify			browser.appium_ios	element		#xpath#=landingpage_xpath
 #verify landing page
 
 sleep			3

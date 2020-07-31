@@ -103,12 +103,12 @@ class Parse_file(object):
             try:
                 if open(dirname + os.sep + filename):
                     lines = dirname + os.sep + filename
-                    print(lines)
+                    #print(lines)
                     for line in open(lines):
                         temp = "=".join(str(line).strip().split('=')[1:])
                         #print(temp)
                         temp = self.modify(temp)
-                        print(temp)
+                        #print(temp)
                         system[str(line).strip().split('=')[0]] = temp
             except:
                 pass

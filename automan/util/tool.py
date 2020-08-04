@@ -43,6 +43,7 @@ class Tool(object):
         raise error.notfind()
     
     def dir_set(self,value_dict):
+        print("test")
         pass
     
     def dir_verify(self,value_dict):

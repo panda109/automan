@@ -19,7 +19,7 @@ class File(object):
         '''
         Constructor
         '''
-     def shellcmd_exec(self,dict):
+    def shellcmd_exec(self,dict):
         try:
             os.system(dict['command'])
             return 0
@@ -59,13 +59,6 @@ class File(object):
             return 1
 
     def download_exec(self,dict):
-        try:
-            os.system(dict['command'])
-            return 0
-        except:
-            return 1
-
-    def copy_exec(self,dict):
         try:
             os.system(dict['command'])
             return 0

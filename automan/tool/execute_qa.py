@@ -98,6 +98,10 @@ class Execute_qa(object):
             elif command[1] == 'end' : 
                 if str(self.systemini['screenshot'])=='force'  :
                     self.screenshot()
+            
+            if result == 1 and str(self.systemini['keepgoon'])=='no':
+                break
+
           
         status = self.log.finall_status()
         #print status
@@ -131,11 +135,8 @@ class Execute_qa(object):
             time.sleep(2)
             im.save(SaveAs)
             
-            
-            
-            
     def execute_suite_session(self):        
-        result=1
+        result=0
         print(self.suite_session[0])
         command = ""
         for command in self.suite_session[1:]:
@@ -146,9 +147,9 @@ class Execute_qa(object):
             
             if result == 0:
                 self.log.parse_log(result,command)
-                return
-
-        self.log.parse_log(result,command)
+            if result == 1 and str(self.systemini['keepgoon'])=='no':
+                self.log.parse_log(result,command)
+                break
         return  result
             
     def execute_until_session(self):

@@ -7,6 +7,7 @@ Created on Mon Jul 22 14:42:29 2020
 from appium import webdriver
 from time import sleep
 import automan.tool.error as error
+from appium.webdriver.common.touch_action import TouchAction
 import os
 import configparser
 from selenium.webdriver.support.ui import WebDriverWait
@@ -18,7 +19,7 @@ class appium_ios(object):
         try:
             self.config = configparser.ConfigParser()
             self.config.read(os.path.join(os.getcwd() , 'ini', "ui_ios.conf"),encoding="utf-8")
-            print(self.config.get('xpath','landingpage_xpath'))
+            #print(self.config.get('xpath','landingpage_xpath'))
         except :
             raise error.notfind()
     
@@ -40,7 +41,13 @@ class appium_ios(object):
             textbox.send_keys(dicParm['input'])
     
     def keyboard_hide(self, browser):
-            browser.hide_keyboard()
+            try:
+                #browser.hide_keyboard('Done')
+                TouchAction(browser).tap(x=375, y=487).perform()
+                print(browser.is_keyboard_shown())
+            except:
+                print('Keyboard not hide ')
+                raise error.notfind()
     
     def wifi_set(self, browser, value_dict):
             dicParm = dict(value_dict)
@@ -61,19 +68,23 @@ class appium_ios(object):
     def test_wifi_set(self, browser, value_dict):
             dicParm = dict(value_dict)
             try:
-                wifi_btn = browser.find_element_by_xpath('//*[@text="%s"]' % config.get("xpath", dicParm['xpath']))
+                wifi_btn = self.locate(browser,value_dict)
+                print(wifi_btn)
                 wifi_btn.click()
             except:
                 raise error.equalerror()
     
-    def connect_verify(self, browser, value_dict):
+    def alert_click(self, browser, value_dict):
             dicParm = dict(value_dict)
-            lastPG_btn = browser.find_element_by_xpath(self.config.get("xpath", dicParm['xpath'])).click()
-            device_list_btn = browser.find_element_by_xpath(self.config.get("xpath", dicParm['xpath']))
-            device_list_btn.click()
             try:
-                cubeicon = browser.find_element_by_xpath(self.config.get("xpath", dicParm['xpath']))
+                alert_btn = browser.execute_script('mobile: alert', {'action': 'getButtons'})
+                #print(alert_btn[1])
+                ret = browser.execute_script('mobile: alert',{'action': 'accept'})
+                #print(ret)
+                #browser.switch_to.context('Alert1')
+                #browser.find_element_by_xpath(config.get("xpath", dicParm['xpath'])).click()
             except:
+                #print(ret)
                 raise error.notfind()
     
     def element_verify(self, browser, value_dict):

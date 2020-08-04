@@ -10,9 +10,7 @@ import os
 import time
 from automan.tool.execute_command import Execute_command
 from automan.tool.log import Log
-from automan.ui.browser import Browser
 from automan.tool.parse_file import Parse_file
-import datetime
 import pyscreenshot as ImageGrab
 
 class Execute_qa(object):

@@ -10,6 +10,7 @@ import os
 import time
 from automan.tool.execute_command import Execute_command
 from automan.tool.log import Log
+from automan.ui.browser import Browser
 from automan.tool.parse_file import Parse_file
 import datetime
 import pyscreenshot as ImageGrab
@@ -108,6 +109,7 @@ class Execute_qa(object):
             print ("[VP] = " + 'PASS\n\n')
 
     def screenshot(self):
+        self.systemini = Parse_file().get_ini('system.ini')
         if len(self.qa_list) == 1 :
             SaveDirectory = os.getcwd()
             SaveAs = os.path.join(SaveDirectory,'log'  , self.qa_file.split(".")[0] , time.strftime('%Y_%m_%d_%H_%M_%S')) + '.jpg'
@@ -130,6 +132,9 @@ class Execute_qa(object):
             im=ImageGrab.grab()
             time.sleep(2)
             im.save(SaveAs)
+            
+            
+            
             
     def execute_suite_session(self):        
         result=1

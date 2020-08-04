@@ -2,6 +2,6 @@
 #ini			test.ini
 init		browser			chrome		
 start
-set			ie.Google		textbox_search				$test1$ $test2$
-click		ie.Google		button_error
+set			browser.google		textbox_search				#key#=aaa
+click		browser.google		button_error
 end

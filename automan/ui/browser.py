@@ -13,7 +13,7 @@ class Browser(object):
     '''
     classdocs
     '''
-
+    
     def __init__(self,param,browser):
         if browser  == "chrome":
             options = webdriver.ChromeOptions()
@@ -55,8 +55,7 @@ class Browser(object):
                     dc[str(line).strip().split('=')[0]] = str(line).strip().split('=')[1]
             self.browser = appium.Remote('http://127.0.0.1:%s/wd/hub' % dc['port'], desired_capabilities=dc)
         
-    def getie(self):
-        return self.browser
-
-    def delie(self):
-        self.browser.quit()
+    #def appscreenshot(self):
+    #    print("1211321")
+    #    screenshotBase64 = self.browser.get_screenshot_as_base64()
+    #    self.browser.push_file('./log/test.png', screenshotBase64)

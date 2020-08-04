@@ -20,3 +20,6 @@ class asus(object):
         
     def page_back(self,browser):
         browser.back()
+
+    def error_test(self,browser):
+        return 1

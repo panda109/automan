@@ -11,7 +11,7 @@ import jpype
 from jpype import *  
 from pickle import NONE
 import automan.tool.error as error
-from _overlapped import NULL
+#from _overlapped import NULL
 
 class Sikuli(object):
     def __init__(self):
@@ -19,7 +19,7 @@ class Sikuli(object):
         Constructor
         '''
         jvmPath = getDefaultJVMPath()
-        jpype.startJVM(jvmPath, '-ea', r'-Djava.class.path=sikulixapi.jar' , convertStrings=False)
+        jpype.startJVM(jvmPath, '-ea', r'-Djava.class.path=sikulixapi_mac.jar' , convertStrings=False)
         #self.app = JClass('org.sikuli.script.App')
         Screen = JClass('org.sikuli.script.Screen')
         self.screen = Screen()

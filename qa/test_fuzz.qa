@@ -1,0 +1,15 @@
+ini		fuzzer.ini
+
+start
+
+
+run	fuzzer.uri_fuzzing		#method#=PUT,#uri#=$ioe_uri_1$ , #uri_key#=pid , #attack#=xss
+
+run	fuzzer.header_fuzzing		#method#=PUT,#uri#=$ioe_uri_2$ ,#header_data#=, #header_key#=, #attack#=xss
+
+run	fuzzer.body_fuzzing		#method#=PUT,#uri#=$ioe_uri_3$ ,#body_data#=,#body_key#=, #attack#=xss
+
+
+
+
+end

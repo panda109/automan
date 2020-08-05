@@ -137,7 +137,7 @@ class Execute_qa(object):
             
     def execute_suite_session(self):        
         result=0
-        print(self.suite_session[0])
+        #print(self.suite_session[0])
         command = ""
         for command in self.suite_session[1:]:
             temp_list = []
@@ -154,7 +154,7 @@ class Execute_qa(object):
             
     def execute_until_session(self):
         result=1
-        print(self.until_session[0])
+        #print(self.until_session[0])
         if self.until_session[0][3].find("!loop!") != -1:
             loop = self.until_session[0][3].split('=')[1]
             command = ""

@@ -1,6 +1,6 @@
 start
 init		browser			app
-test		browser.asus	error
+test		browser.iphone	error
 close		browser
 sleep		5
 end

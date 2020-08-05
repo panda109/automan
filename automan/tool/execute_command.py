@@ -76,6 +76,8 @@ class Execute_command(object):
                     ob = self.userclass.class_object[self.get_objectname(command)]
                     defname = self.get_defname(systemini,command)
                     ret = eval(defname)
+                    if ret == 1 :
+                        self.browser.save_screenshot('./log/app.png')
             elif list(command).__len__() == 5:
                 if command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "chrome":
                    self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
@@ -91,6 +93,8 @@ class Execute_command(object):
                     defname = self.get_defname(systemini,command)
                     #print (defname)
                     ret = eval(defname)
+                    if ret == 1 :
+                        self.browser.save_screenshot('./log/app.png')        
             elif list(command).__len__() == 6:
                 pass
             if str(command[1]).find('$=get')>0:
@@ -122,7 +126,7 @@ class Execute_command(object):
     def get_objectname(self,command):
         
         if str(command[2]).find('browser.')==0:
-            print (str(str(command[2]).split('.')[1]).lower())
+            #print (str(str(command[2]).split('.')[1]).lower())
             return str(str(command[2]).split('.')[1]).lower()
         else:
             return str(command[2]).lower()

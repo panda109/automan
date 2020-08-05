@@ -6,7 +6,7 @@ Created on 2010/12/22
 Add print screen (Kevin Chang 2015/06/17)
 '''
 import os
-
+import shutil
 import time
 from automan.tool.execute_command import Execute_command
 from automan.tool.log import Log
@@ -114,12 +114,14 @@ class Execute_qa(object):
         self.systemini = Parse_file().get_ini('system.ini')
         if len(self.qa_list) == 1 :
             SaveDirectory = os.getcwd()
-            SaveAs = os.path.join(SaveDirectory,'log'  , self.qa_file.split(".")[0] , time.strftime('%Y_%m_%d_%H_%M_%S')) + '.jpg'
+            SaveAs = os.path.join(SaveDirectory,'log'  , self.qa_file.split(".")[0] , time.strftime('%Y_%m_%d_%H_%M_%S'))
             im=ImageGrab.grab()
             time.sleep(2)
             #print (SaveAs)
-            im.save(SaveAs)
+            im.save(SaveAs+'.jpg')
             #ImageGrab.grab_to_file(SaveAs)
+            shutil.copy('./log/app.png',SaveAs+'.png')
+
         else:
             self.nowcase = self.nowcase.rstrip(".qa")
             self.nowcase = self.nowcase.lstrip(os.path.join(os.getcwd , "qa"))
@@ -130,12 +132,12 @@ class Execute_qa(object):
                 
             SaveDirectory = os.getcwd()
             os.mkdir(os.path.join(SaveDirectory , "log" , qas ,   self.nowcase ))
-            SaveAs = os.path.join(SaveDirectory,'log' , qas ,   self.nowcase , time.strftime('%Y_%m_%d_%H_%M_%S')) + '.jpg'
+            SaveAs = os.path.join(SaveDirectory,'log' , qas ,   self.nowcase , time.strftime('%Y_%m_%d_%H_%M_%S'))
             im=ImageGrab.grab()
             time.sleep(2)
-            im.save(SaveAs)
-            
-    def execute_suite_session(self):        
+            im.save(SaveAs+'.jpg')
+            shutil.copy('./log/app.png',SaveAs+'.png')
+    def execute_suite_session(self):
         result=0
         #print(self.suite_session[0])
         command = ""

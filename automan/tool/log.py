@@ -27,7 +27,7 @@ class Log(object):
             print ("Name is xxxx.qa -> not xxxx")
         else:
             try:
-                print("111",dir)
+                #print("111",dir)
                 self.del_folder(dir)
                 os.mkdir(dir)
             except:

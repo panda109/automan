@@ -4,9 +4,9 @@ Created on 2020/4/16
 @author: helmut liu
 
 '''
-from saker.fuzzers.fuzzer import Fuzzer
+#from saker.fuzzers.fuzzer import Fuzzer
 from saker.brute.brute  import Brute
-from saker.brute.basicAuth import BasicAuth
+#from saker.brute.basicAuth import BasicAuth
 from saker.handler.headerHandler import HeaderHandler
 import os
 import pycurl
@@ -80,9 +80,6 @@ class fuzzer(object):
             header_data= fuzzkey+':'+ payload
             rep= request_sent(token, uri,scheme, header_data, '')
 
-
-
-
     def body_fuzzing_run(self, value_dict):
         dicParm = dict(value_dict)
          
@@ -108,22 +105,6 @@ class fuzzer(object):
         
         '''
         '''  
-    
-    def header_function(header_line):
-    # HTTP standard specifies that headers are encoded in iso-8859-1.
-    # On Python 2, decoding step can be skipped.
-    # On Python 3, decoding step is required.
-        header_line = header_line.decode('iso-8859-1')
-         
-        if ':' not in header_line:
-            return
-
-        name, value = header_line.split(':', 1)
-        name = name.strip().lower()
-        value = value.strip()
-
-        headers[name] = value
-
     def request_auth(self):
         '''
         Retrieve access token from oauth 
@@ -135,12 +116,16 @@ class fuzzer(object):
         b64_auth = base64.b64encode(enc_auth)
         print(b64_auth.decode('utf-8'))
         head_auth = "Authorization : Basic " + str(b64_auth.decode('utf-8'))
-        body_auth = []
-        body_auth.append('grant_type='+self.currentlyini['grant_type'])
-        body_auth.append('client_id='+self.currentlyini['client_id'])
+        hHdlr = HeaderHandler()
+        hHdlr.set('Authorization', 'Basic ' + str(b64_auth.decode('utf-8')))
+        hHdlr.set('Content-Type', 'application/x-www-form-urlencoded')
+        
+        body_auth = {}
+        body_auth['grant_type']= self.currentlyini['grant_type']
+        body_auth['client_id']=self.currentlyini['client_id']
 
-        res = self.request_sent('', uri,'POST', head_auth, body_auth)
-        print(json.loads(res))
+        res = self.request_sent('', uri,'POST', hHdlr.headers, body_auth)
+        print(json.loads(res)['access_token'])
         #return json.loads(res)['access_token']
 
     def get_payload(self,cfuzz):
@@ -166,13 +151,13 @@ class fuzzer(object):
             
             return payload
 
-    def request_sent(self,token='', plUri='' ,plScheme='GET', plHead='', plBody=''):
+    def request_sent(self,token='', plUri='' ,plScheme='GET', plHead=[], plBody=''):
         import certifi
         
         dataBuf = BytesIO()
         req = pycurl.Curl()
-        hList = ''
-        headers=['content-type:application/x-www-form-urlencoded','cache-control: no-cache']
+        #hList = ''
+        #headers=['content-type:application/x-www-form-urlencoded','cache-control: no-cache']
         
         if plScheme == 'POST' :
             print(plBody)
@@ -185,15 +170,16 @@ class fuzzer(object):
             
         req.setopt(req.URL, plUri)
         req.setopt(req.CAINFO, certifi.where())
-        
+        #print(plHead)
         #for i in range(len(plHead.split(','))):
         #      header.append(plHead.split(',')[i])
-        headers.append(plHead)
-        req.setopt(req.HTTPHEADER, headers)
+        #headers.append(plHead)
+        if len(plHead) > 0 :
+            req.setopt(req.HTTPHEADER, [k+':'+v for k,v in plHead.items()])
         if len(token) > 0:
             req.setopt(req.XOAUTH2_BEARER,token)
         req.setopt(req.WRITEDATA, dataBuf)
-        print(req.POSTFIELDS)
+        
         
         try:
           req.perform()

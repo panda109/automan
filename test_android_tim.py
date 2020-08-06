@@ -5,6 +5,7 @@ Created on 2011/2/14
 '''
 import time
 from appium import webdriver
+from automan.util.fuzzer import fuzzer 
 
 class test_web(object):
     '''
@@ -23,9 +24,13 @@ class test_web(object):
         dc['app'] = "c:\\Android\\ApiDemos-debug.apk"
         dc['autoAcceptAlerts'] = True
 
-        driver = webdriver.Remote('http://127.0.0.1:4725/wd/hub', desired_capabilities=dc)
-        el = driver.find_element_by_id('android:id/text1')
-        el.click()
-        driver.quit()
+        f = fuzzer()
+        
+        #f.scan_api()
+        f.request_auth()
+        #driver = webdriver.Remote('http://127.0.0.1:4725/wd/hub', desired_capabilities=dc)
+        #el = driver.find_element_by_id('android:id/text1')
+        #el.click()
+        #driver.quit()
         
         

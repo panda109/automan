@@ -65,20 +65,44 @@ class fuzzer(object):
         '''
         uri = dicParm['uri']
         scheme = dicParm['method']
-        header_data = dicParm['header_data']
-        fuzzkey = dicParm['header_key']
+        kHeader = dicParm['hdrkey']
+        vHeader = dicParm['hdrvalue']
         cfuzz = dicParm['attack']
+
         #a list of fuzzed payload
         fPayload = self.get_payload(cfuzz.lower())
         
         #first normal request 
-        token = request_auth()
-        request_sent(token, uri,scheme, header_data, '')
+        token = self.request_auth()
+
+        hHdlr = HeaderHandler()
+        hHdlr.set('Authorization', 'Bearer ' + token)
+        hHdlr.set('Content-Type', 'application/json')
+        hHdlr.set(kHeader, vHeader)
+        #print(hHdlr.headers)
+        res = self.request_sent(uri ,scheme, hHdlr.headers, '')
+        
+        status = res['code']
+        time = res['total time']
+        rep = res['response']
+        print(status)
+        print(json.loads(rep))
+        #print(hHdlr.headers)
         #followed fuzz requests
         for payload in fPayload:
-            
-            header_data= fuzzkey+':'+ payload
-            rep= request_sent(token, uri,scheme, header_data, '')
+            hHdlr.set(kHeader,payload)
+            print(hHdlr.headers)
+            try:
+               res = self.request_sent(uri ,scheme, hHdlr.headers, '')
+               
+            except:
+                 print('failed to sent fuzzing requests')
+            if res['code'] == 200:
+                 status = res['code']
+                 rep = res['response']
+                 print(payload)
+
+
 
     def body_fuzzing_run(self, value_dict):
         dicParm = dict(value_dict)
@@ -107,7 +131,8 @@ class fuzzer(object):
         '''  
     def request_auth(self):
         '''
-        Retrieve access token from oauth 
+        Retrieve access token from oauth
+        Update id , secret in fuzzer.ini for different user/application/project
         '''
         uri = self.currentlyini['nd_oauth2_uri']
         id = self.currentlyini['iij_key_id']
@@ -115,7 +140,6 @@ class fuzzer(object):
         enc_auth = (id +':'+ secret).encode('utf-8')
         b64_auth = base64.b64encode(enc_auth)
         print(b64_auth.decode('utf-8'))
-        head_auth = "Authorization : Basic " + str(b64_auth.decode('utf-8'))
         hHdlr = HeaderHandler()
         hHdlr.set('Authorization', 'Basic ' + str(b64_auth.decode('utf-8')))
         hHdlr.set('Content-Type', 'application/x-www-form-urlencoded')
@@ -124,9 +148,10 @@ class fuzzer(object):
         body_auth['grant_type']= self.currentlyini['grant_type']
         body_auth['client_id']=self.currentlyini['client_id']
 
-        res = self.request_sent('', uri,'POST', hHdlr.headers, body_auth)
-        print(json.loads(res)['access_token'])
-        #return json.loads(res)['access_token']
+        res = self.request_sent( uri,'POST', hHdlr.headers, body_auth)
+        token = json.loads(res['response'])['access_token']
+        #print(json.loads(res)['access_token'])
+        return token
 
     def get_payload(self,cfuzz):
         payload=[]
@@ -139,7 +164,7 @@ class fuzzer(object):
                    print(lines)
                    try:
                        for line in open(lines):
-                           print(line)
+                           #print(line)
                            payload.append(line.strip())
                    except:
                         pass
@@ -151,7 +176,7 @@ class fuzzer(object):
             
             return payload
 
-    def request_sent(self,token='', plUri='' ,plScheme='GET', plHead=[], plBody=''):
+    def request_sent(self,plUri='' ,plScheme='GET', plHead=[], plBody=''):
         import certifi
         
         dataBuf = BytesIO()
@@ -176,9 +201,9 @@ class fuzzer(object):
         #headers.append(plHead)
         if len(plHead) > 0 :
             req.setopt(req.HTTPHEADER, [k+':'+v for k,v in plHead.items()])
-        if len(token) > 0:
-            req.setopt(req.XOAUTH2_BEARER,token)
+        
         req.setopt(req.WRITEDATA, dataBuf)
+        #req.setopt(req.VERBOSE,1)
         
         
         try:
@@ -205,9 +230,15 @@ class fuzzer(object):
         # Decode using the encoding we figured out.
         print(body.decode(encoding))        
         '''
-
-        print ("Response: ",req.getinfo(req.RESPONSE_CODE))
-        print ("Time taken: ",req.getinfo(req.TOTAL_TIME))
-        return dataBuf.getvalue()
         
+        print ("Response:{} Time taken: {}".format(req.getinfo(req.RESPONSE_CODE),req.getinfo(req.TOTAL_TIME)))
+        print ("Time taken: ",req.getinfo(req.PRIMARY_IP))
+        ret = {}
+        ret['code'] = req.getinfo(req.RESPONSE_CODE)
+        ret['total time']= req.getinfo(req.TOTAL_TIME)
+        ret['response']= dataBuf.getvalue()
+        dataBuf.close()
         req.close()
+
+        return ret
+        

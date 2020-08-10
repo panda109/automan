@@ -13,6 +13,7 @@ import pycurl
 import base64
 import json
 from urllib.parse import urlencode
+from urllib.parse import quote
 from automan.tool.parse_file import Parse_file
 #import automan.tool.error as error
 from io import BytesIO
@@ -27,11 +28,13 @@ class fuzzer(object):
         self.FuzzCategoryList=[]
         self.systemini = Parse_file().get_ini('system.ini')
         self.currentlyini = Parse_file().get_ini('fuzzer.ini')
+        print (os.path.join(os.getcwd(), 'ini','API','golden_sample.json'))
+        self.body_json = json.load(open(os.path.join(os.getcwd() , 'ini','API','golden_sample.json'))) 
         self.rootFuzzDB = self.systemini['fuzzdbroot']
         
         #if str(qa_filename).find('.txt') > 0:
         for dirname, dirnames, filenames in os.walk(self.rootFuzzDB):  
-                #add fuzz category name from fuzzdb directory structure
+                #add fuzz category name from fuzzdb directory structure under attack folder
                 #print(dirnames)
                 if len(dirnames) > 0: 
                     self.FuzzCategoryList.append(dirnames)                   
@@ -79,21 +82,22 @@ class fuzzer(object):
         hHdlr.set('Authorization', 'Bearer ' + token)
         hHdlr.set('Content-Type', 'application/json')
         hHdlr.set(kHeader, vHeader)
-        #print(hHdlr.headers)
-        res = self.request_sent(uri ,scheme, hHdlr.headers, '')
+        #print(hHdlr.headers['Content-Type'])
+        body_sample=json.dumps(self.body_json['data_retrieval'], indent=2, ensure_ascii=False)
+        res = self.request_sent(uri ,scheme, hHdlr.headers, body_sample)
         
         status = res['code']
         time = res['total time']
         rep = res['response']
         print(status)
-        print(json.loads(rep))
+        #print(json.loads(rep))
         #print(hHdlr.headers)
         #followed fuzz requests
         for payload in fPayload:
             hHdlr.set(kHeader,payload)
-            print(hHdlr.headers)
+            #print(hHdlr.headers)
             try:
-               res = self.request_sent(uri ,scheme, hHdlr.headers, '')
+               res = self.request_sent(uri ,scheme, hHdlr.headers, body_sample)
                
             except:
                  print('failed to sent fuzzing requests')
@@ -176,17 +180,21 @@ class fuzzer(object):
             
             return payload
 
-    def request_sent(self,plUri='' ,plScheme='GET', plHead=[], plBody=''):
+    def request_sent(self,plUri='' ,plScheme='GET', plHead=[], plBody=[]):
         import certifi
         
         dataBuf = BytesIO()
         req = pycurl.Curl()
         #hList = ''
         #headers=['content-type:application/x-www-form-urlencoded','cache-control: no-cache']
+        if 'json' in str(plHead['Content-Type']):
+            enc_body = plBody
+        elif 'urlencoded' in str(plHead['Content-Type']):
+            enc_body = urlencode(plBody)
         
         if plScheme == 'POST' :
-            print(plBody)
-            enc_body= urlencode(plBody)
+            #print(enc_body)
+            #enc_body= quote(plBody)
             req.setopt(req.POSTFIELDS, enc_body)
         elif plScheme == 'PUT':
             req.setopt(req.UPLOAD, 1)

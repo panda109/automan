@@ -5,6 +5,12 @@ Created on 2020/05/08
 @author: Shawn Lin
 '''
 import automan.tool.error as error
+import configparser,os.path
+from _operator import sub
+
+objConfig = configparser.ConfigParser()
+objConfig.read(os.path.join(os.getcwd(), 'ini', 'EcoTrans',"EcoTrans.conf"))
+
 
 class ioe_login(object):
     '''
@@ -14,12 +20,28 @@ class ioe_login(object):
        '''
        Constructor
        '''
-       pass
+    
+    def button_lang_click(self, browser, value_dict):
+        try:
+            dicParm = dict(value_dict)
+            """
+            objElem = browser.find_element_by_class_name("el-dropdown-menu el-popper")        
+            objElem.click()
+            time.sleep(3)
+            """
+            #objElem = browser.find_element_by_xpath(objConfig['web'][dicParm['xpath']])
+            objElem = browser.find_element_by_xpath("//*[contains(text(), %s)]" % dicParm['lang'])
+            objElem.click()
+            
+        except Exception as strError:
+            #raise error.notfind()
+            print('error',strError)
+        
 
     def textbox_username_set(self, browser, value_dict):
         try:
             dicParm = dict(value_dict)
-            objElem = browser.find_element_by_xpath("//input[@name='username']")
+            objElem = browser.find_element_by_xpath(objConfig['web'][dicParm['xpath']])
             objElem.send_keys(dicParm["key"] )
         except:
             raise error.notfind()
@@ -27,14 +49,15 @@ class ioe_login(object):
     def textbox_password_set(self, browser, value_dict):
         try:
             dicParm = dict(value_dict)
-            objElem = browser.find_element_by_xpath("//input[@name='password']")
+            objElem = browser.find_element_by_xpath(objConfig['web'][dicParm['xpath']])
             objElem.send_keys(dicParm["key"] )
         except:
             raise error.notfind()
         
-    def button_login_click(self, browser):
+    def button_login_click(self, browser, value_dict):
         try:
-            objElem = browser.find_element_by_xpath("(//button[@type='button'])[2]")
+            dicParm = dict(value_dict)
+            objElem = browser.find_element_by_xpath(objConfig['web'][dicParm['xpath']])
             objElem.click()
         except:
             raise error.notfind()
@@ -42,7 +65,7 @@ class ioe_login(object):
     def wpage_keyword_verify(self,browser,value_dict):
         try:
             dicParm = dict(value_dict)
-            objElem = browser.find_element_by_xpath('//div[@id="app"]/div[2]/div/div/section/div/div/div/div[1]')
+            objElem = browser.find_element_by_xpath(objConfig['web'][dicParm['xpath']])
             #print(objElem.get_attribute('title'))
             #print(objElem.size)
             #print("objElem.text",objElem.text.encode(encoding='utf-8'))

@@ -5,12 +5,12 @@ Created on 2010/12/10
 @author: panda.huang
 '''
 import time
-import os
 from automan.tool.parse_file import Parse_file
 from automan.tool.userclass import Userclass
 from automan.tool.modify_command import Modify_command
 from automan.tool.parse_name_value import Parse_name_value
 import automan.tool.error as error
+from automan.ui.browser import Browser
 
 
 class Execute_command(object):
@@ -80,7 +80,7 @@ class Execute_command(object):
                         self.browser.save_screenshot('./log/app.png')
             elif list(command).__len__() == 5:
                 if command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "chrome":
-                   self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
+                   self.browser = self.Browser(systemini[command[4].lower()],command[3].lower()).brower
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "firefox":
                     self.browser = Browser(systemini[command[4].lower()],command[3].lower()).browser
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "ie":
@@ -88,7 +88,6 @@ class Execute_command(object):
                 elif command[1] == 'init' and command[2] == 'browser' and command[3].lower() == "app":
                     self.browser = Browser(systemini['app_device'],command[3].lower()).browser
                 else:
-                    #print (command)
                     ob = self.userclass.class_object[self.get_objectname(command)]
                     defname = self.get_defname(systemini,command)
                     #print (defname)
@@ -137,19 +136,25 @@ class Execute_command(object):
             action = str(str(command[1]).split('=')[1]).strip()
         else:
             action = command[1]
+        if action == 'click':
+            function_name = 'click'
+        elif action == 'set':
+            function_name = 'set'
+        else:
+            function_name = command[3] + '_' + action
         
         if list(command).__len__() == 4:
             if str(command[2]).find('browser.')==0:
-                return 'ob.' + command[3] + '_' + action + '(self.browser)'
+                return 'ob.' + function_name + '(self.browser)'
             else:
-                return 'ob.' + command[3] + '_' + action + '()'
+                return 'ob.' + function_name + '()'
         elif list(command).__len__() == 5:
             param = Modify_command().replay_ini(systemini, self.currentlyini,str(command[4]))
             self.namevalue = Parse_name_value().parse_name_value(param)
             if str(command[2]).find('browser.')==0:
-                return 'ob.' + command[3] + '_' + action + '(self.browser,self.namevalue)'
+                return 'ob.' + function_name + '(self.browser,self.namevalue)'
             else:
-                return 'ob.' + command[3] + '_' + action + '('+'self.namevalue'+')'   
+                return 'ob.' + function_name + '('+'self.namevalue'+')'   
             
     def modify_currentlyini(self,key,value):
         #print (key)

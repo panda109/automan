@@ -1,9 +1,12 @@
 start
+
 init		browser	Chrome
-#print		browser.google	text_gmail
-#set			browser.google	textbox_search		#key#=test
+
 #click		browser.google	button_submit
-click		browser.google	button_error
+
+set			browser.google	search_new				#xpath_id#=google_search,#value#=123
+send		browser.google	button_search
 
 close		browser
+
 end

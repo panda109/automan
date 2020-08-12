@@ -28,20 +28,15 @@ class fuzzer(object):
         self.FuzzCategoryList=[]
         self.systemini = Parse_file().get_ini('system.ini')
         self.currentlyini = Parse_file().get_ini('fuzzer.ini')
-        print (os.path.join(os.getcwd(), 'ini','API','golden_sample.json'))
+        #print (os.path.join(os.getcwd(), 'ini','API','golden_sample.json'))
         self.body_json = json.load(open(os.path.join(os.getcwd() , 'ini','API','golden_sample.json'))) 
         self.rootFuzzDB = self.systemini['fuzzdbroot']
         
-        #if str(qa_filename).find('.txt') > 0:
         for dirname, dirnames, filenames in os.walk(self.rootFuzzDB):  
                 #add fuzz category name from fuzzdb directory structure under attack folder
                 #print(dirnames)
                 if len(dirnames) > 0: 
                     self.FuzzCategoryList.append(dirnames)                   
-                   
-        #elif str(qa_filename).find('.qa') > 0:
-        #    qa_list.append(self.get_qa_file(qa_filename))
-        #take first level directory name as category
         #print (self.FuzzCategoryList[0])
 
         
@@ -50,16 +45,71 @@ class fuzzer(object):
          
         '''
         Take param from qa file for testing url, parameter to be fuzzed and fuzz attack category
+        
+        for url like ndplay.nextdrive.io/nextdriveapi?xxx=yyy&zzz=<payload>, 
+        add the desired parameter at last of uri as fuzzed key/value
+        for url with path parameter /v1/gateways/%s/state , a replacement of %s within uri from qa file 
+
         #method# : GET,POST,PUT
         #uri# : tested web site url/api 
-        #uri_key#: key name of uri parameter or name of header
+        #urikey#: key name of uri parameter 
+        #urivalue#: normal value of urikey
         #attack#: fuzz attack category
         '''
+        uri = dicParm['uri']
+        scheme = dicParm['method']
+        kUri = dicParm['urikey']
+        vUri = dicParm['urivalue']
+        cfuzz = dicParm['attack']
+        #load payload data
+        fPayload = self.get_payload(cfuzz.lower())
+        
+        #first normal auth request 
+        token = self.request_auth()
+        
+        #triage different url parameter usage
+        if '/%s/' in uri:
+            uReq = uri % vUri
+        elif '?' in uri: 
+            uReq = uri.strip() + '&' + kUri + '=' + vUri
+        else:
+            uReq = uri.strip() + '?' + kUri + '=' + vUri 
+
+        print(uReq)
+        hHdlr = HeaderHandler()
+        hHdlr.set('Authorization', 'Bearer ' + token)
+        hHdlr.set('Content-Type', 'application/json')
+        #first normal request
+        body_sample=json.dumps(self.body_json['data_retrieval'], indent=2, ensure_ascii=False)
+        res = self.request_sent(uReq ,scheme, hHdlr.headers, body_sample)
+        
+        #status = res['code']
+        #time = res['total time']
+        rep = res['response']
+        print(rep)
+
+        for payload in fPayload:
+            
+            fzReq = uReq.replace(vUri, payload)
+            print(fzReq)
+            try:
+               res = self.request_sent(fzReq ,scheme, hHdlr.headers, body_sample)
+               
+            except:
+                 print('failed to sent fuzzing requests')
+            if res['code'] == 200:
+                 #status = res['code']
+                 #rep = res['response']
+                 print(payload)
+
+
     def header_fuzzing_run(self, value_dict):
         dicParm = dict(value_dict)
          
         '''
         Take param from qa file for testing url, parameter to be fuzzed and fuzz attack category
+        for modified http request headers
+
         #method# : GET,POST,PUT
         #uri# : tested web site url/api 
         #header_data#: normal header data
@@ -113,6 +163,8 @@ class fuzzer(object):
          
         '''
         Take param from qa file for testing url, parameter to be fuzzed and fuzz attack category
+        for modified http request body key value pairs, support json 
+
         #method# : GET,POST,PUT
         #uri# : tested web site url/api 
         #body_data#: key name of uri parameter or name of header
@@ -135,8 +187,8 @@ class fuzzer(object):
         '''  
     def request_auth(self):
         '''
-        Retrieve access token from oauth
-        Update id , secret in fuzzer.ini for different user/application/project
+        Retrieve access token from oauth2
+        Update url, user id , secret in fuzzer.ini for different user/application/project
         '''
         uri = self.currentlyini['nd_oauth2_uri']
         id = self.currentlyini['iij_key_id']
@@ -163,7 +215,7 @@ class fuzzer(object):
             print(filenames)              
             
             for filename in filenames:
-               if str(filename).find('.txt'):
+               if '.txt' in str(filename):
                    lines = dirname + os.sep + filename
                    print(lines)
                    try:
@@ -212,35 +264,13 @@ class fuzzer(object):
         
         req.setopt(req.WRITEDATA, dataBuf)
         #req.setopt(req.VERBOSE,1)
-        
-        
         try:
           req.perform()
         except:
           print("Fail to send request")
-        
-        '''     
-        encoding = None
-        if 'content-type' in headers:
-            content_type = headers['content-type'].lower()
-            match = re.search('charset=(\S+)', content_type)
-            if match:
-                encoding = match.group(1)
-                print('Decoding using %s' % encoding)
-        if encoding is None:
-        # Default encoding for HTML is iso-8859-1.
-        # Other content types may have different default encoding,
-        # or in case of binary data, may have no encoding at all.
-            encoding = 'iso-8859-1'
-            print('Assuming encoding is %s' % encoding)
-
-        body = buffer.getvalue()
-        # Decode using the encoding we figured out.
-        print(body.decode(encoding))        
-        '''
-        
+             
         print ("Response:{} Time taken: {}".format(req.getinfo(req.RESPONSE_CODE),req.getinfo(req.TOTAL_TIME)))
-        print ("Time taken: ",req.getinfo(req.PRIMARY_IP))
+        #print ("Time taken: ",req.getinfo(req.PRIMARY_IP))
         ret = {}
         ret['code'] = req.getinfo(req.RESPONSE_CODE)
         ret['total time']= req.getinfo(req.TOTAL_TIME)

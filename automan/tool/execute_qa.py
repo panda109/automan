@@ -99,7 +99,10 @@ class Execute_qa(object):
             elif command[1] == 'end' : 
                 if str(self.systemini['screenshot'])=='force'  :
                     self.screenshot()
-          
+                    
+            if result == 1 and str(self.systemini['keepgoon'])=='no':
+                          break
+        
         status = self.log.finall_status()
         #print status
         if status == False:

@@ -1,0 +1,103 @@
+ini					appium_ios.ini
+init				browser					app	
+start
+sleep 			2
+click				browser.appium_ios		element			#xpath#=setting_xpath
+
+click				browser.appium_ios			element			#xpath#=new_device_xpath
+
+click				browser.appium_ios			element			#xpath#=deviceType_1_xpath
+
+click				browser.appium_ios			element			#xpath#=start_xpath
+
+click				browser.appium_ios			element			#xpath#=next_step_to_location_xpath
+
+click				browser.appium_ios			element			#xpath#=location_other_xpath
+
+set				browser.appium_ios			element	#xpath#=location_name_textbox_xpath,#input#=$location_name$
+
+sleep 		2
+
+hide				browser.appium_ios			keyboard
+
+sleep	    2
+
+click				browser.appium_ios			element			#xpath#=next_step_to_location_xpath
+
+click				browser.appium_ios			element			#xpath#=next_step_to_confirm_light_xpath
+
+click				browser.appium_ios			element			#xpath#=next_step_to_start_scan_xpath
+
+
+sleep				5
+
+click				browser.appium_ios			element			#xpath#=manual_input_xpath
+
+set				browser.appium_ios			element			#xpath#=device_textbox_xpath,#input#=$deviceID2$
+
+sleep   	2
+
+hide				browser.appium_ios			keyboard
+
+click				browser.appium_ios			element			#xpath#=next_step_to_wifi_setting_xpath
+
+sleep				5
+
+click				browser.appium_ios			alert			#response#='Accept'
+
+sleep		17
+
+set				browser.appium_ios			element			#xpath#=psw_textbox_xpath,#input#=$psw$
+
+#hide				browser.appium_ios			keyboard
+
+set				browser.appium_ios			element			#xpath#=pswagain_textbox_xpath,#input#=$psw$
+
+sleep		2
+
+hide				browser.appium_ios			keyboard
+
+click				browser.appium_ios			element			#xpath#=confirm_xpath
+
+sleep		10
+
+#breakpoint wifi config
+
+click				browser.appium_ios            	element            	#xpath#=wifi_ssid_xpath
+
+sleep		2
+
+set				browser.appium_ios		element			#xpath#=wifi_psw_textbox_xpath,#input#=$wifipsw$
+
+sleep		2
+
+hide				browser.appium_ios			keyboard
+
+sleep		2
+
+click				browser.appium_ios			element			#xpath#=wifipsw_next_1_xpath
+
+sleep		30
+
+click				browser.appium_ios			alert			#xpath#=connected_confirm_xpath
+
+sleep		2
+
+click				browser.appium_ios			element			#xpath#=setting_xpath
+
+click				browser.appium_ios			element			#xpath#=device_list_xpath
+
+verify				browser.appium_ios			element			#xpath#=device_cube_icon_xpath
+
+sleep		3
+
+end
+
+
+
+
+
+
+
+
+

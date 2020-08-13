@@ -1,0 +1,46 @@
+ini			appium_ios.ini
+init			browser					app	
+start
+
+
+click			browser.appium_ios	element		#xpath#=setting_xpath
+#manage tab
+
+click			browser.appium_ios	element		#xpath#=info_xpath
+#persona
+
+sleep			3
+
+
+click			browser.appium_ios	element		#xpath#=logout_xpath
+#logout
+
+sleep			3
+
+
+set			browser.appium_ios	element  			#input#=$email$,#xpath#=email_xpath
+#input email
+
+set			browser.appium_ios	element		#input#=$password$,#xpath#=psw_xpath
+#input password
+
+hide			browser.appium_ios	keyboard
+
+sleep 3
+
+click			browser.appium_ios	element		#xpath#=login_xpath
+#login 
+
+sleep			10
+
+
+verify			browser.appium_ios	element		#xpath#=landingpage_xpath
+#verify landing page
+
+sleep			3
+
+end
+
+
+
+

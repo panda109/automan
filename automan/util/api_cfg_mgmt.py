@@ -11,7 +11,8 @@ import boto3
 import botocore
 from botocore import UNSIGNED
 from warrant.aws_srp import AWSSRP
-
+import time
+import subprocess
 
 class api_cfg_mgmt(object):
     '''
@@ -60,11 +61,13 @@ class api_cfg_mgmt(object):
             #strHeaderAuthoKey = 'accept', strHeaderAuthoValue = 'application/json'
             #strHeaderAutho = 'Authorization'
             #strHeaderContentTypeKey = 'Content-Type', strHeaderContentTypeValue = 'application/json'
+            
             dicBody = {
                     dicParm['strAWSTypeKey']: dicParm['strAWSTypeValue'],
                     dicParm['strTokenKey']: dicParm['strIDToken']
                 }
-            jsonBody = json.dumps(dicBody)
+            
+           
             #strAWSTypeKey = 'type', strAWSTypeValue = 'cognito'
             #strTokenKey = 'token', strIdToken same as id token, which got from idtoken_get func.
             if dicParm['strRemoveHeaderValue'] == 'none':
@@ -77,7 +80,7 @@ class api_cfg_mgmt(object):
             else:
                 del dicBody[dicParm['strRemoveBodyValue']]
             #for missing body info. test
-    
+            jsonBody = json.dumps(dicBody)
             if dicParm['method'] == 'post':
                 #correct
                 objResponse = requests.post(strExchange_URL, data = jsonBody, headers = dicHeader)
@@ -93,22 +96,22 @@ class api_cfg_mgmt(object):
             #print('!!!!!!!!!!!!!!!!!!', objResponse)
             if dicParm['returnCode'] == str(200):
                 dicResponse = objResponse.json()
-                '''
+                
                 print('$$$$$$$$$$$$$$$$$$$$$$$')
                 print(strExchange_URL)
                 print(dicHeader)
-                print(dicBody)
+                print(jsonBody)
                 print(objResponse)
                 print(dicResponse)
-                print(dicResponse['access_token'])
+                print(dicResponse['accessToken'])
                 print('$$$$$$$$$$$$$$$$$$$$$$$')
-                '''
+                
                 if objResponse.status_code != 200:
                     print(objResponse)
                     raise error.equalerror()
                 else:
                     #print('access token!!!!!!!!!!!!!!!!!\n',dicResponse['access_token'])
-                    return dicResponse['access_token']
+                    return dicResponse['accessToken']
             elif dicParm['returnCode'] == str(401):
                 print(objResponse)
                 pass
@@ -136,6 +139,7 @@ class api_cfg_mgmt(object):
         
     
     def gwm_associate_get(self, value_dict):
+        matchFlag = False
         dicParm = dict(value_dict)
         try:
             if dicParm['NDAPIServerState'] == 'production':
@@ -156,8 +160,8 @@ class api_cfg_mgmt(object):
             #strHeaderAutho = 'Authorization'
             #strHeaderContentTypeKey = 'Content-Type', strHeaderContentTypeValue = 'application/json'
             dicGWMBody = {dicParm['strPIDKey_GwAs']: dicParm['strGWM_UUID_GwAs']}
-            jsonGWMBody = json.dumps(dicGWMBody)
-            #strPIDKey = 'profile_id'
+            
+            #strPIDKey = 'profileId'
             #strGWM_UUID is the gateway id which for testing
             if dicParm['strRemoveHeaderValue_GwAs'] == 'none':
                 pass
@@ -173,6 +177,7 @@ class api_cfg_mgmt(object):
             #print(strGWM_URL)
             #print(dicGWMHeader)
             #print(dicGWMBody)
+            jsonGWMBody = json.dumps(dicGWMBody)
             if dicParm['method'] == 'post':
                 #correct
                 objGWMResponse = requests.post(strGWM_URL, data = jsonGWMBody, headers = dicGWMHeader)
@@ -189,18 +194,46 @@ class api_cfg_mgmt(object):
             print('!!!!!!!!!!!!!!!!!!!', objGWMResponse)
             if dicParm['returnCode'] == str(200):
                 dicGWMResponse = objGWMResponse.json()
-                #print('$$$$$$$$$$$$$$$$$$$$$$$')
-                #print(strGWM_URL)
-                #print(dicGWMHeader)
-                #print(dicGWMBody)
-                #print(objGWMResponse)
-                #print(dicGWMResponse)
-                #print(dicGWMResponse['uuid'])
-                #print('$$$$$$$$$$$$$$$$$$$$$$$')
-                return dicGWMResponse['uuid']
-                if objGWMResponse.status_code != 200:
+                print('$$$$$$$$$$$$$$$$$$$$$$$')
+                print(strGWM_URL)
+                print(dicGWMHeader)
+                print(jsonGWMBody)
+                print(objGWMResponse)
+                print(dicGWMResponse)
+                print(dicGWMResponse['uuid'])
+                print('$$$$$$$$$$$$$$$$$$$$$$$')
+                #return dicGWMResponse['uuid']
+                if objGWMResponse.status_code == 200: 
+                    time.sleep(30)
+                    for count in range(0,20):
+                        print("try", count)
+                        objCmd = subprocess.Popen('adb shell', shell = True, stdin = subprocess.PIPE, stdout = subprocess.PIPE)
+                        objCmd.stdin.write('cat /data/cfg_mgmt/config.json\n'.encode('utf-8'))
+                        objCmd.stdin.write('reboot\n'.encode('utf-8'))
+                        objCmd.stdin.write('exit\n'.encode('utf-8'))
+                        strConfigFile, err = objCmd.communicate()
+                        strConfigFile = strConfigFile.decode('utf-8')
+                        dicConfigFile = eval(strConfigFile)
+                        if dicConfigFile['gateway']['gateway_uuid'] == dicGWMResponse['uuid']:
+                            matchFlag = True
+                            print('config.json and cloud match: config.json(gateway_uuid) = ', dicConfigFile['gateway']['gateway_uuid'])
+                            break
+                        else:
+                            pass
+                        print('Config.json: ', dicConfigFile)
+                        time.sleep(60)
+                elif objGWMResponse.status_code != 200:
                     print(objGWMResponse)
                     raise error.equalerror()
+                
+                if matchFlag == True:
+                    pass
+                elif matchFlag == False:         
+                    raise error.equalerror()
+                return dicGWMResponse['uuid']  
+                                 
+                    
+                    
             elif dicParm['returnCode'] == str(400):
                 print(objGWMResponse, ": Invalid parameter")
             elif dicParm['returnCode'] == str(401):
@@ -227,6 +260,7 @@ class api_cfg_mgmt(object):
         
 
     def gwm_dissociate_get(self, value_dict):
+        matchFlag = False
         dicParm = dict(value_dict)
         try:
             if dicParm['NDAPIServerState'] == 'production':
@@ -257,15 +291,44 @@ class api_cfg_mgmt(object):
             objGWMResponse = requests.delete(strGWM_URL, headers = dicGWMHeader)
             if dicParm['returnCode'] == str(200):
                 dicGWMResponse = objGWMResponse.json()
-                #print('$$$$$$$$$$$$$$$$$$$$$$$')
-                #print(dicGWMHeader)
-                #print(objGWMResponse)
-                #print(dicGWMResponse)
-                #print('$$$$$$$$$$$$$$$$$$$$$$$')
-                
+                print('$$$$$$$$$$$$$$$$$$$$$$$')
+                print(dicGWMHeader)
+                print(objGWMResponse)
+                print(dicGWMResponse)
+                print('$$$$$$$$$$$$$$$$$$$$$$$')
+                if objGWMResponse.status_code == 200:
+                    time.sleep(30)
+                    for count in range(0, 20):
+                        print('try', count)
+                        objCmd = subprocess.Popen('adb shell', shell = True, stdin = subprocess.PIPE, stdout = subprocess.PIPE)
+                        objCmd.stdin.write('cat /data/cfg_mgmt/config.json\n'.encode('utf-8'))
+                        objCmd.stdin.write('reboot\n'.encode('utf-8'))
+                        objCmd.stdin.write('exit\n'.encode('utf-8'))
+                        strConfigFile, err = objCmd.communicate()
+                        strConfigFile = strConfigFile.decode('utf-8')
+                        dicConfigFile = eval(strConfigFile)
+                        if dicConfigFile['gateway']['gateway_uuid'] == '':
+                            matchFlag = True
+                            print('config.json and cloud match: config.json(gateway_uuid) = ', dicConfigFile['gateway']['gateway_uuid'])
+                            break
+                        else:
+                            pass
+                        print('Config.json: ', dicConfigFile)
+                        time.sleep(60)
                 if objGWMResponse.status_code != 200:
                     print(objGWMResponse)
                     raise error.equalerror()
+                
+                
+                
+                if matchFlag == True:
+                    pass
+                elif matchFlag == False:         
+                    raise error.equalerror()
+                
+                
+                
+                
             elif dicParm['returnCode'] == str(401):
                 print(objGWMResponse, ": Unauthorized")
             elif dicParm['returnCode'] == str(403):

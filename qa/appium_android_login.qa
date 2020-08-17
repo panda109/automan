@@ -3,34 +3,34 @@ init			browser								app
 start
 
 
-click			browser.appium_android				setting				#xpath#=setting_xpath
+click			browser.appium_android				element				#xpath#=setting_xpath
 #點選管理
 
-click			browser.appium_android				info				#xpath#=info_xpath
+click			browser.appium_android				element				#xpath#=info_xpath
 #點選人像
 
 sleep			3
 #等待
 
-click			browser.appium_android				logout				#xpath#=logout_xpath
+click			browser.appium_android				element				#xpath#=logout_xpath
 點選登出
 
 sleep			3
 #等待
 
-set				browser.appium_android				email				#email#=$email$,#xpath#=email_xpath
+set				browser.appium_android				element				#inputField#=$email$,#xpath#=email_xpath
 #填入帳號
 
-set				browser.appium_android				psw					#password#=$password$,#xpath#=psw_xpath
+set				browser.appium_android				element				#inputField#=$password$,#xpath#=psw_xpath
 #填入密碼
 
-click			browser.appium_android				login				#xpath#=login_xpath
+click			browser.appium_android				element				#xpath#=login_xpath
 #點選登入
 
 sleep			5
 #等待
 
-verify			browser.appium_android				login				#xpath#=pageName_xpath
+verify			browser.appium_android				element				#xpath#=pageName_xpath
 驗證是否登入
 
 sleep			3

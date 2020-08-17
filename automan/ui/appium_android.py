@@ -9,6 +9,7 @@ from time import sleep
 import automan.tool.error as error
 import configparser
 import os
+import aircv as ac
 config = configparser.ConfigParser()
 config.read(os.path.join(os.getcwd(), 'ini', "appium_android.conf"))
 
@@ -16,81 +17,24 @@ class appium_android(object):
     
     def _init_(self):
         pass
-    def setting_click(self, browser, value_dict):
+    def element_click(self, browser, value_dict):
         dicParm = dict(value_dict)
-        
-        setting_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        setting_btn.click()
-    def info_click(self, browser, value_dict):
+        btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
+        btn.click()
+    def element_set(self, browser, value_dict):
         dicParm = dict(value_dict)
-        info_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        info_btn.click()
-    def logout_click(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        logout_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        logout_btn.click()
-    def email_set(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        email_textbox = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        email_textbox.clear()
-        email_textbox.send_keys(dicParm['email'])
-    def psw_set(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        psw_textbox = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        psw_textbox.send_keys(dicParm['password'])
-    def login_click(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        login_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        login_btn.click()
-    def login_verify(self, browser, value_dict):
+        textbox = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
+        textbox.clear()
+        textbox.send_keys(dicParm['inputField'])
+        #textbox.send_Keys(dicParm['inputField'])
+    def keyboard_hide(self, browser):
+        browser.hide_keyboard()
+    def element_verify(self, browser, value_dict):
         dicParm = dict(value_dict)
         try:
-            pageNameText = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
+            element = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
         except:
             raise error.notfind()
-    """------------------------------------------------------------"""
-    def new_device_click(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        new_device_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        new_device_btn.click()
-    def device_type_set(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        device_type_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        device_type_btn.click()
-    def start_click(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        start_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        start_btn.click()
-    def next_step_click(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        next_step_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        next_step_btn.click()
-    def location_set(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        location_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        location_btn.click()
-    def location_name_set(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        location_name_textbox = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        location_name_textbox.send_keys(dicParm['location_name'])
-    def enter_click(self, browser):
-        browser.hide_keyboard()
-    def start_scan_click(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        scan_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        scan_btn.click()
-    def manual_input_click(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        input_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        input_btn.click()
-    def device_id_set(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        device_id_textbox = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        device_id_textbox.send_keys(dicParm['deviceID'])
-    def admin_psw_set(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        psw_textbox = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        psw_textbox.send_keys(dicParm['psw'])
     def wifi_set(self, browser, value_dict):
         dicParm = dict(value_dict)
         try:
@@ -98,27 +42,80 @@ class appium_android(object):
             wifi_btn.click()
         except:
             raise error.equalerror()
-    def wifi_psw_set(self, browser, value_dict):
+    '''
+    def img_click(self, browser, value_dict):
         dicParm = dict(value_dict)
-        wifi_psw_textbox = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        wifi_psw_textbox.send_keys(dicParm['wifipsw'])
-    def confirm_click(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        confirm_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        confirm_btn.click()
-    def connect_step1_verify(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        setting_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        setting_btn.click()
-    def connect_step2_verify(self, browser, value_dict):
-        dicParm = dict(value_dict)
-        device_list_btn = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
-        device_list_btn.click()
-    def connect_final_verify(self, browser, value_dict):
-        dicParm = dict(value_dict)
+        path = os.path.join(os.getcwd(),'img',dicParm['imgname']) + '.png'
+        imgScreenShot = browser.get_screenshot_as_file(path)
+        imgsrc = ac.imread(path)
+        imgobj = ac.imread(dicParm['target'])
+        match_result = ac.find_template(imgsrc, imgobj, 0.5)
+        if match_result is not None:
+            imgsrc_height, imgsrc_width = (imgsrc.shape[0], imgsrc.shape[1])
+        print(match_result)
+        obj_x, obj_y = match_result['result']
+        print(browser.get_window_size())
         try:
-            cubeicon = browser.find_element_by_xpath(config.get("xpath", dicParm['xpath']))
+            browser.tap([(obj_x, obj_y), (obj_x, obj_y)], 100)
         except:
-            raise error.notfind()    
+            raise error.notfind()
+    '''   
+    
+    def img_verify(self, browser, value_dict):
+        dicParm = dict(value_dict)
+        path = os.path.join(os.getcwd(),'img',dicParm['imgname']) + '.png'
+        #print(path)
+        imgScreenShot = browser.get_screenshot_as_file(path)#對螢幕做節圖
+        imgsrc = ac.imread(path)#輸入節圖
+        imgobj = ac.imread(dicParm['target'])#輸入要找的目標
+        match_result = ac.find_template(imgsrc, imgobj, 0.5)#尋找目標
+        if match_result is not None:
+            imgsrc_height, imgsrc_width = (imgsrc.shape[0], imgsrc.shape[1])
+        print(match_result)
+
+        obj_x, obj_y = match_result['result']
+
+        print(browser.get_window_size())
+
+        try:
+
+            browser.tap([(obj_x, obj_y), (obj_x, obj_y)], 100)
+            
+        except:
+            raise error.notfind()
+
+    def img_click(self, browser, value_dict):
+        dicParm = dict(value_dict)
+        browser.update_settings({"getMatchedImageReslut": True})
+        img = browser.find_element_by_image(dicParm['target'])
+        img.click()
+    '''
+    def img_click(self, browser, value_dict):
+        dicParm = dict(value_dict)
+        imgsrc = ac.imread(dicParm['template'])
+        imgobj = ac.imread(dicParm['target'])
+        match_result = ac.find_template(imgsrc, imgobj, 0.5)
+        if match_result != None:
+            imgsrc_height, imgsrc_width = imgsrc.shape[0], imgsrc.shape[1]
+        print("imgsrc H: ", imgsrc_height)
+        print("imgsrc W: ", imgsrc_width)
+        obj_x, obj_y = match_result['result']
+        print("obj_x: ", obj_x)
+        print("obj_y: ", obj_y)
+        screen_width = browser.get_window_size()['width']
+        screen_height = browser.get_window_size()['height']
+        print('screen_width', screen_width)
+        print('screen_height', screen_height)
+        
+        position_x = int(obj_x / imgsrc_width * screen_width)
+        position_y = int(obj_y / imgsrc_height * screen_height)
+        print('position_x', position_x)
+        print('position_y', position_y)
+        browser.tap([(position_x, position_y), (position_x, position_y)], 100)
+    '''  
+        
+        
+        
+        
         
         

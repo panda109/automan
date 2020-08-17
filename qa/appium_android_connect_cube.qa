@@ -2,66 +2,66 @@ ini					appium_android_connect_cube.ini
 init				browser							app	
 start
 
-click				browser.appium_android			setting					#xpath#=setting_xpath
+click				browser.appium_android			element					#xpath#=setting_xpath
 #點選管理
 
-click				browser.appium_android			new_device				#xpath#=new_device_xpath
+click				browser.appium_android			element					#xpath#=new_device_xpath
 #點選新增裝置
 
-set					browser.appium_android			device_type				#xpath#=deviceType_xpath
+click				browser.appium_android			element					#xpath#=deviceType_xpath
 #點選要新增的裝置(Cube)
 
-click				browser.appium_android			start					#xpath#=start_xpath
+click				browser.appium_android			element					#xpath#=start_xpath
 #點選開始吧
 
-click				browser.appium_android			next_step				#xpath#=next_step_to_location_xpath
+click				browser.appium_android			element					#xpath#=next_step_to_location_xpath
 #點選下一步
 
-set					browser.appium_android			location				#xpath#=location_other_xpath
+click				browser.appium_android			element					#xpath#=location_other_xpath
 #設定位置為其他
 
-set					browser.appium_android			location_name			#xpath#=location_name_textbox_xpath,#location_name#=$location_name$
+set					browser.appium_android			element					#xpath#=location_name_textbox_xpath,#inputField#=$location_name$
 #設定位置名稱
 
-click				browser.appium_android			enter
+hide				browser.appium_android			keyboard
 #收起鍵盤
 
-click				browser.appium_android			next_step				#xpath#=next_step_to_confirm_light_xpath
+click				browser.appium_android			element					#xpath#=next_step_to_confirm_light_xpath
 #點選下一步到確認燈號
 
-click				browser.appium_android			next_step				#xpath#=next_step_to_start_scan_xpath
+click				browser.appium_android			element					#xpath#=next_step_to_start_scan_xpath
 #點選下一步到準備開始掃描
 
-click				browser.appium_android			start_scan				#xpath#=start_scan_xpath
+click				browser.appium_android			element					#xpath#=start_scan_xpath
 #點選開始掃描
 
 sleep				3
 
-click				browser.appium_android			manual_input			#xpath#=manual_input_xpath
+click				browser.appium_android			element					#xpath#=manual_input_xpath
 #點選手動輸入
 
-set					browser.appium_android			device_id				#xpath#=device_textbox_xpath,#deviceID#=$deviceID$
+set					browser.appium_android			element					#xpath#=device_textbox_xpath,#inputField#=$deviceID$
 #輸入產品序號
 
-click				browser.appium_android			enter
+hide				browser.appium_android			keyboard
 #收起鍵盤
 
-click				browser.appium_android			next_step				#xpath#=next_step_to_admin_setting_xpath
+click				browser.appium_android			element					#xpath#=next_step_to_admin_setting_xpath
 #點選下一步到設定wifi
 
 sleep				15
 #等待連線
 
-set					browser.appium_android			admin_psw				#xpath#=psw_textbox_xpath,#psw#=$psw$
+set					browser.appium_android			element					#xpath#=psw_textbox_xpath,#inputField#=$psw$
 #輸入密碼
 
-set					browser.appium_android			admin_psw				#xpath#=pswagain_textbox_xpath,#psw#=$psw$
-#再次輸入密碼
+set					browser.appium_android			element					#xpath#=pswagain_textbox_xpath,#inputField#=$psw$
+#再次輸入密碼	
 
-click				browser.appium_android			enter
+hide				browser.appium_android			keyboard
 #收起鍵盤
 
-click				browser.appium_android			next_step				#xpath#=next_step_to_wifi_setting_xpath
+click				browser.appium_android			element					#xpath#=next_step_to_wifi_setting_xpath
 #點選下一步到設定wifi
 
 sleep				10
@@ -72,29 +72,29 @@ set					browser.appium_android			wifi					#wifi_name#=$wifi_name$
 #選擇wifi
 sleep				3
 
-set					browser.appium_android			wifi_psw				#xpath#=wifi_psw_textbox_xpath,#wifipsw#=$wifipsw$
+set					browser.appium_android			element					#xpath#=wifi_psw_textbox_xpath,#inputField#=$wifipsw$
 #輸入wifi密碼
 
-click				browser.appium_android			enter
+hide				browser.appium_android			keyboard
 #收起鍵盤
 
-sleep				15
+sleep				5
 
 
-click				browser.appium_android			next_step				#xpath#=next_step_to_confirm_xpath
+click				browser.appium_android			element					#xpath#=next_step_to_confirm_xpath
 #點選下一步
 
 sleep				10
 #等待
 
-click				browser.appium_android			confirm					#xpath#=connected_confirm_xpath
+click				browser.appium_android			element					#xpath#=connected_confirm_xpath
 #點選wifi跳出視窗確定
 
 
 
-verify				browser.appium_android			connect_step1			#xpath#=setting_xpath
-verify				browser.appium_android			connect_step2			#xpath#=device_list_xpath
-verify				browser.appium_android			connect_final			#xpath#=cubeicon_xpath
+click				browser.appium_android			element					#xpath#=setting_xpath
+click				browser.appium_android			element					#xpath#=device_list_xpath
+verify				browser.appium_android			element					#xpath#=cubeicon_xpath
 #確認是否連結上
 
 

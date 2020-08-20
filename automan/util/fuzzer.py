@@ -167,10 +167,53 @@ class fuzzer(object):
 
         #method# : GET,POST,PUT
         #uri# : tested web site url/api 
-        #body_data#: key name of uri parameter or name of header
-        #body_key
+        #body_data#: sample body data
+        #body_key# : key name of request body
         #attack#: fuzz attack category
         '''
+        uri = dicParm['uri']
+        scheme = dicParm['method']
+        kBody = dicParm['bodykey']
+        vBody = dicParm['bodyvalue']
+        cfuzz = dicParm['attack']
+
+        #a list of fuzzed payload
+        fPayload = self.get_payload(cfuzz.lower())
+        
+        #first normal request 
+        token = self.request_auth()
+
+        hHdlr = HeaderHandler()
+        hHdlr.set('Authorization', 'Bearer ' + token)
+        hHdlr.set('Content-Type', 'application/json')
+        #hHdlr.set(kHeader, vHeader)
+        #print(hHdlr.headers['Content-Type'])
+        body_sample=json.dumps(self.body_json['data_retrieval'], indent=2, ensure_ascii=False)
+        
+        res = self.request_sent(uri ,scheme, hHdlr.headers, body_sample)
+        print(self.body_json['data_retrieval']['query'][0]['pid'])
+        tBody = body_sample.replace(self.body_json['data_retrieval']['query'][0]['pid'], vBody)
+
+        status = res['code']
+        time = res['total time']
+        rep = res['response']
+        
+        #print(tBody)
+        #print(hHdlr.headers)
+        #followed fuzz requests
+        for payload in fPayload:
+            fBody = tBody.replace(vBody, payload)
+            #print(hHdlr.headers)
+            try:
+               res = self.request_sent(uri ,scheme, hHdlr.headers, fBody)
+               
+            except:
+                 print('failed to sent fuzzing requests')
+            if res['code'] == 200:
+                 status = res['code']
+                 rep = res['response']
+                 print(payload)
+
     def scan_api(self,cfuzz='xss'):
         '''
         Specific fuzz category to load payload files beneath defined category

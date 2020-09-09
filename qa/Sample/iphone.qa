@@ -1,0 +1,12 @@
+start
+
+init		browser	Chrome
+
+#click		browser.iphone	button_submit
+
+#set			browser.iphone	search_new				#xpath_id#=test_id,#value#=123
+send		browser.iphone	button_search			#xpath_id#=test_id
+
+close		browser
+
+end

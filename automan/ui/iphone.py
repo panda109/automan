@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 import configparser
 import os
 config = configparser.ConfigParser()
-config.read(os.path.join(os.getcwd() , 'conf' , "iphone6.conf"),encoding="utf-8")
+config.read(os.path.join(os.getcwd() , 'conf' , "iphonetest.conf"),encoding="utf-8")
 
 class iphone(object):
     '''

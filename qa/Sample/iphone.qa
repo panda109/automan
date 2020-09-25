@@ -1,11 +1,11 @@
 start
 
-init		browser	Chrome
+init		browser	app
 
 #click		browser.iphone	button_submit
 
-#set			browser.iphone	search_new				#xpath_id#=test_id,#value#=123
-send		browser.iphone	button_search			#xpath_id#=test_id
+#set		browser.iphone	search_new				#xpath_id#=test_id,#value#=123
+set			browser.iphone	button_search			#xpath_id#=test_id
 
 close		browser
 

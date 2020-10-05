@@ -136,9 +136,10 @@ class Execute_command(object):
             action = str(str(command[1]).split('=')[1]).strip()
         else:
             action = command[1]
-        if action == 'click':
+            
+        if action == '~click':
             function_name = 'click'
-        elif action == 'set':
+        elif action == '~set':
             function_name = 'set'
         else:
             function_name = command[3] + '_' + action

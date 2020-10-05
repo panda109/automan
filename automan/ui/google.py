@@ -36,6 +36,20 @@ class google(object):
     #     elem.send_keys("中".decode('utf-8'))
     #===========================================================================
 
+
+    def search_new_2_set(self,browser,value_dict):
+        
+        xpath = value_dict['xpath_id']
+        print(xpath)
+        elem = browser.find_element_by_xpath(config.get('test', xpath))
+        elem.send_keys(value_dict['value'])
+    
+    def button_submit_2_click(self,browser,value_dict):
+        
+        xpath = value_dict['xpath_id']
+        elem = browser.find_element_by_xpath(config.get('test', xpath))
+        elem.click()
+
         
     def button_search_send(self,browser):
         elem = browser.find_element_by_name('q')

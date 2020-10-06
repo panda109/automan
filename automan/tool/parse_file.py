@@ -4,7 +4,7 @@ Created on 2010/12/10
 
 @author: panda.huang
 '''
-import os   
+import os
 import automan.tool.error as error
 
 class Parse_file(object):
@@ -16,6 +16,7 @@ class Parse_file(object):
         '''
         Constructor
         '''
+
     def parse_suite_log(self,log_list,testsuite,testcasename):
         #create suite folder 
         fhd= open(os.path.join(os.getcwd() , 'log' , str(testsuite)) + os.sep +str(testcasename)+'.log','w')
@@ -117,6 +118,7 @@ class Parse_file(object):
             print ("can't find "+filename)
             raise error.notfindinifile()
         else:
+            #for ele in system:
             print(system)
             return system
         

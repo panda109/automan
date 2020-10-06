@@ -1,3 +1,4 @@
+#coding=utf-8
 '''
 Created on 2010/12/28
 
@@ -20,9 +21,8 @@ class Tool(object):
         Constructor
         '''
     
-        
     def full_verify(self,value_dict):
-        print(value_dict["key"]==":")
+        print(value_dict["key"]=='：kkk')
         
     def file_exist_verify(self,value_dict):
         my_file = Path(value_dict["file"])

@@ -19,6 +19,11 @@ class Tool(object):
         '''
         Constructor
         '''
+    
+        
+    def full_verify(self,value_dict):
+        print(value_dict["key"]==":")
+        
     def file_exist_verify(self,value_dict):
         my_file = Path(value_dict["file"])
         if my_file.is_file() == True:

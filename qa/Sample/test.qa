@@ -2,6 +2,6 @@
 #init			browser				Chrome
 start
 #close			browser
-verify			Tool				file
-
+#verify			Tool				file
+verify			Tool				full		#key#=$full$
 end

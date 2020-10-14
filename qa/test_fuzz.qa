@@ -1,12 +1,12 @@
 ini		fuzzer.ini
 ini     gwstate.ini
 start
+#jsonfile=$cubeifms$,
 
+#run		fuzzer		header_fuzzing		#method#=POST,#uri#=$ioe_uri_2$,#hdrkey#=$header_key$,#hdrvalue#=$header_value$,#attack#=xss
 
-#run		fuzzer		header_fuzzing		#method#=POST,#uri#=$ioe_uri_2$,#hdrkey#=$header_key$,#hdrvalue#=$header_value$,#attack#=redirect
+#run		fuzzer		uri_fuzzing		#method#=POST,#uri#=$ioe_uri_2$,#urikey#=$uriKname$,#urivalue#=$uriKvalue$,#attack#=xss
 
-#run		fuzzer		uri_fuzzing		#method#=POST,#uri#=$ioe_uri_2$,#urikey#=$uriKname$,#urivalue#=$uriKvalue$,#attack#=redirect
-
-run		fuzzer		body_fuzzing		#method#=POST,#uri#=$ioe_uri_2$,#bodykey#=$json_key$,#bodyvalue#=$json_value$,#attack#=redirect
+run		fuzzer		body_fuzzing		#jsonfile#=$cubeifms$,#bodycommand#=G07,#method#=POST,#uri#=$ioe_uri_2$,#bodykey#=$json_key$,#bodyvalue#=$json_value$,#attack#=redirect
 
 end

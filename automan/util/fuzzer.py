@@ -156,7 +156,48 @@ class fuzzer(object):
                  rep = res['response']
                  print(payload)
 
+    def jsonbody_fuzzing_run(self, value_dict):
+        dicParm = dict(value_dict)
+         
+        '''
+        Take param from qa file for testing url, parameter to be fuzzed and fuzz attack category
+        for modified http request body key value pairs, support json 
 
+        #method# : GET,POST,PUT
+        #uri# : tested web site url/api 
+        #body_data#: sample body data
+        #body_key# : key name of request body
+        #attack#: fuzz attack category
+        '''
+        #uri = dicParm['uri']
+        #scheme = dicParm['method']
+        json_file = dicParm['jsonfile']
+        json_body = dicParm['bodycommand']
+        #kBody = dicParm['bodykey']
+        #vBody = dicParm['bodyvalue']
+        #cfuzz = dicParm['attack']
+
+        fJson = json.load(open(os.path.join(os.getcwd() , 'ini','API',json_file)))
+        body_sample=json.dumps(fJson[json_body], indent=2, ensure_ascii=False)
+        dicParm['bodysample']= body_sample
+        #a list of fuzzed payload
+        #first normal request 
+        #token = self.request_auth()
+
+        #hHdlr = HeaderHandler()
+        #hHdlr.set('Authorization', 'Bearer ' + token)
+        #hHdlr.set('Content-Type', 'application/json')
+        #hHdlr.set(kHeader, vHeader)
+        #print(hHdlr.headers['Content-Type'])
+        
+        
+        #res = self.request_sent(uri ,scheme, hHdlr.headers, body_sample)
+        print(body_sample)
+        print(fJson[json_body]['target'][0]['pid'])
+        #print(self.body_json['data_retrieval']['query'][0]['pid'])
+        #tBody = body_sample.replace(self.body_json['data_retrieval']['query'][0]['pid'], vBody)
+        #self.body_fuzzing_run(self,dicParm[])
+    
 
     def body_fuzzing_run(self, value_dict):
         dicParm = dict(value_dict)
@@ -176,8 +217,22 @@ class fuzzer(object):
         kBody = dicParm['bodykey']
         vBody = dicParm['bodyvalue']
         cfuzz = dicParm['attack']
+        #json_file = dicParm['jsonfile']
+        json_body = dicParm['bodycommand']
+        
+        if  'jsonfile' in dicParm :
+            fJson = json.load(open(os.path.join(os.getcwd() , 'ini','API', dicParm['jsonfile'])))
+            print(fJson)
+            body_sample = json.dumps(fJson[json_body], indent=2, ensure_ascii=False)
+            body_value = fJson[json_body][kBody]
+            
+        else :
+            body_sample = json.dumps(self.body_json['data_retrieval'], indent=2, ensure_ascii=False)
+            body_value = self.body_json['data_retrieval']['query'][0]['pid']
 
-        #a list of fuzzed payload
+        print(body_sample)
+        print(body_value)
+        #a l ist of fuzzed payload
         fPayload = self.get_payload(cfuzz.lower())
         
         #first normal request 
@@ -188,11 +243,11 @@ class fuzzer(object):
         hHdlr.set('Content-Type', 'application/json')
         #hHdlr.set(kHeader, vHeader)
         #print(hHdlr.headers['Content-Type'])
-        body_sample=json.dumps(self.body_json['data_retrieval'], indent=2, ensure_ascii=False)
+        
         
         res = self.request_sent(uri ,scheme, hHdlr.headers, body_sample)
-        print(self.body_json['data_retrieval']['query'][0]['pid'])
-        tBody = body_sample.replace(self.body_json['data_retrieval']['query'][0]['pid'], vBody)
+        
+        tBody = body_sample.replace(body_value, vBody)
 
         status = res['code']
         time = res['total time']
@@ -212,7 +267,8 @@ class fuzzer(object):
             if res['code'] == 200:
                  status = res['code']
                  rep = res['response']
-                 print(payload)
+                 print(rep)
+                 
 
     def scan_api(self,cfuzz='xss'):
         '''

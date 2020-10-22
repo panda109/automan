@@ -90,7 +90,7 @@ class Execute_command(object):
                 else:
                     ob = self.userclass.class_object[self.get_objectname(command)]
                     defname = self.get_defname(systemini,command)
-                    print (defname)
+                    #print (defname)
                     ret = eval(defname)
                     if ret == 1 :
                         self.browser.save_screenshot('./log/app.png')        

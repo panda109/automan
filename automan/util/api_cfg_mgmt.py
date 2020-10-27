@@ -13,6 +13,7 @@ from botocore import UNSIGNED
 from warrant.aws_srp import AWSSRP
 import time
 import subprocess
+import websocket
 
 
 
@@ -28,7 +29,6 @@ class api_cfg_mgmt(object):
     def idtoken_get(self, value_dict):
         dicParm = dict(value_dict)   
         strAWSRegion = dicParm['strUserPoolID'].split('_')[0]
-        print(strAWSRegion)
         try:
             client = boto3.client('cognito-idp', region_name=strAWSRegion, config = botocore.client.Config(signature_version = UNSIGNED))
             objAWS = AWSSRP(
@@ -41,8 +41,12 @@ class api_cfg_mgmt(object):
             dicToken = objAWS.authenticate_user()
             strIDToken = dicToken['AuthenticationResult']['IdToken']
             print(strIDToken)
-        except:
-            raise error.equalerror()   
+        except Exception as exceptionError:
+            #raise error.equalerror()
+            print("Exception---->")
+            print(exceptionError)
+            #raise error.equalerror()
+            raise error.equalerror() 
         return strIDToken
     
     def ndtoken_get(self, value_dict):
@@ -51,7 +55,7 @@ class api_cfg_mgmt(object):
             if dicParm['NDAPIServerState'] == 'production':
                 strNDAPIServer = dicParm['strNDAPIServerHead'] + dicParm['strNDAPIServerTail']
             elif dicParm['NDAPIServerState'] == 'staging':
-                strNDAPIServer = dicParm['strNDAPIServerHead'] + '-stg' + dicParm['strNDAPIServerTail']    
+                strNDAPIServer = dicParm['strNDAPIServerHead'] + '-qa' + dicParm['strNDAPIServerTail']    
             strExchange_URL = strNDAPIServer + dicParm['strNDAPIServerExchangePath']  
             #strNDAPIServerPath = /v1/oauth2/tokens/exchange
             #strFinalAutho = '%s %s' % (dicParm['strPrefixOfAutho'], dicParm['strIDToken'])
@@ -66,10 +70,11 @@ class api_cfg_mgmt(object):
             
             dicBody = {
                     dicParm['strAWSTypeKey']: dicParm['strAWSTypeValue'],
-                    dicParm['strTokenKey']: dicParm['strIDToken']
+                    dicParm['strTokenKey']: dicParm['strIDToken'],
+                    'appUuid': '123123dfsdf34234'
                 }
             
-           
+            
             #strAWSTypeKey = 'type', strAWSTypeValue = 'cognito'
             #strTokenKey = 'token', strIdToken same as id token, which got from idtoken_get func.
             if dicParm['strRemoveHeaderValue'] == 'none':
@@ -147,7 +152,7 @@ class api_cfg_mgmt(object):
             if dicParm['NDAPIServerState'] == 'production':
                 strNDAPIServer = dicParm['strNDAPIServerHead'] + dicParm['strNDAPIServerTail']
             elif dicParm['NDAPIServerState'] == 'staging':
-                strNDAPIServer = dicParm['strNDAPIServerHead'] + '-stg' + dicParm['strNDAPIServerTail']  
+                strNDAPIServer = dicParm['strNDAPIServerHead'] + '-qa' + dicParm['strNDAPIServerTail']  
             strGWM_URL = strNDAPIServer + dicParm['strNDAPIServerPath_GwAs'] 
             #strNDAPIServerPath = ​/v1​/associations/gateways
             strGWM_Autho = '%s %s' % (dicParm['strAuthoType_GwAs'], dicParm['strNDToken'])
@@ -268,7 +273,7 @@ class api_cfg_mgmt(object):
             if dicParm['NDAPIServerState'] == 'production':
                 strNDAPIServer = dicParm['strNDAPIServerHead'] + dicParm['strNDAPIServerTail']
             elif dicParm['NDAPIServerState'] == 'staging':
-                strNDAPIServer = dicParm['strNDAPIServerHead'] + '-stg' + dicParm['strNDAPIServerTail']  
+                strNDAPIServer = dicParm['strNDAPIServerHead'] + '-qa' + dicParm['strNDAPIServerTail']  
             strGWM_URL = strNDAPIServer + dicParm['strNDAPIServerPath_GwDs'] % dicParm['strGWM_UUID']
             #strNDAPIServerPath = /v1/associations/gateways/%s
             #strGWM_UUID is the gateway id which for testing
@@ -357,7 +362,7 @@ class api_cfg_mgmt(object):
             if dicParm['NDAPIServerState'] == 'production':
                 strNDAPIServer = dicParm['strNDAPIServerHead'] + dicParm['strNDAPIServerTail']
             elif dicParm['NDAPIServerState'] == 'staging':
-                strNDAPIServer = dicParm['strNDAPIServerHead'] + '-stg' + dicParm['strNDAPIServerTail']  
+                strNDAPIServer = dicParm['strNDAPIServerHead'] + '-qa' + dicParm['strNDAPIServerTail']  
             strDEV_URL = strNDAPIServer + dicParm['strNDAPIServerPath_DevAs']
             #strNDAPIServerPath = /v1/associations/devices
             strDEV_Autho = '%s %s' % (dicParm['strAuthoType_DevAs'], dicParm['strNDToken'])
@@ -459,7 +464,7 @@ class api_cfg_mgmt(object):
             if dicParm['NDAPIServerState'] == 'production':
                 strNDAPIServer = dicParm['strNDAPIServerHead'] + dicParm['strNDAPIServerTail']
             elif dicParm['NDAPIServerState'] == 'staging':
-                strNDAPIServer = dicParm['strNDAPIServerHead'] + '-stg' + dicParm['strNDAPIServerTail']  
+                strNDAPIServer = dicParm['strNDAPIServerHead'] + '-qa' + dicParm['strNDAPIServerTail']  
             strDEV_URL = strNDAPIServer + dicParm['strNDAPIServerPath_DevDs'] % dicParm['strDEV_UUID']
             #strNDAPIServer = https://api-eg3.nextdrive.io or add -stg, -dev behind eg3
             #strNDAPIServerPath = /v1/associations/devices/%s
@@ -510,6 +515,40 @@ class api_cfg_mgmt(object):
                 pass
             else:
                 raise error.equalerror() 
+            
+    """---------------------------------------------------------------------------------"""   
+    def on_message(self, ws, message):
+        print('on_message')
+        print(ws)
+        print(message)
+        print('----------')
         
+    def on_error(self, ws, error):
+        print('on_error')
+        print(ws)
+        print('----------')
         
+    def on_close(self, ws):
+        print('on_clolse')
+        print(ws)
+        print('--- closed ---')
+        
+    def device_list_get(self, value_dict):
+        dicParm = dict(value_dict)
+        strUrl = 'wws://websocket-stg.nextdrive.io/register'
+        dicData = {
+                dicParm['strTypeKey']: dicParm['strTypeValue'],
+                dicParm['strAppIdKey']: dicParm['strAppIdValue'],
+                dicParm['strSessionIdKey']: dicParm['strSessionIdValue'],
+                dicParm['strDatakey']: {
+                        dicParm['strVersionKey']: dicParm['strVersionValue'],
+                        dicParm['strServiceKey']: dicParm['strServiceValye'],
+                        dicParm['strGwUuidKey']: dicParm['strGwUuidValue']
+                    }
+            }
+        dicHeader = {
+                dicParm['strTypeKey']: dicParm['strTypeValue'],
+                dicParm['strCertKey']: dicParm['strCertValye'],
+                dicParm['strAppUuidKey']: dicParm['strAppUuidValue']
+            }
         

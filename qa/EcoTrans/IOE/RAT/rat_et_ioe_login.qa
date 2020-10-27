@@ -2,9 +2,11 @@ ini	ioe_testing_data.ini
 
 start
 init	browser	Chrome
-set		browser.ioe_login	textbox_username		#key#=$username_correct$
-set		browser.ioe_login	textbox_password		#key#=$password_correct$
-click	browser.ioe_login	button_login
+click	browser.ioe_login	button_lang	#xpath#=language_xpath,#lang#=language_text
+sleep	3
+set		browser.ioe_login	textbox_username		#key#=$username_correct$,#xpath#=username_xpath
+set		browser.ioe_login	textbox_password		#key#=$password_correct$,#xpath#=password_xpath
+click	browser.ioe_login	button_login	#xpath#=submit_xpath
 sleep	10
-verify	browser.ioe_login	wpage_keyword	#key#=$expected_result_login_success$
+verify	browser.ioe_login	wpage_keyword	#key#=$expected_result_login_success$,#xpath#=login_verify_xpath
 end

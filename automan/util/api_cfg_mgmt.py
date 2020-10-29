@@ -212,7 +212,7 @@ class api_cfg_mgmt(object):
                 #return dicGWMResponse['uuid']
                 if objGWMResponse.status_code == 200: 
                     time.sleep(30)
-                    for count in range(0,20):
+                    for count in range(0,10):
                         print("try", count)
                         objCmd = subprocess.Popen('adb shell', shell = True, stdin = subprocess.PIPE, stdout = subprocess.PIPE)
                         objCmd.stdin.write('cat /data/cfg_mgmt/config.json\n'.encode('utf-8'))
@@ -305,7 +305,7 @@ class api_cfg_mgmt(object):
                 print('$$$$$$$$$$$$$$$$$$$$$$$')
                 if objGWMResponse.status_code == 200:
                     time.sleep(30)
-                    for count in range(0, 20):
+                    for count in range(0, 10):
                         print('try', count)
                         objCmd = subprocess.Popen('adb shell', shell = True, stdin = subprocess.PIPE, stdout = subprocess.PIPE)
                         objCmd.stdin.write('cat /data/cfg_mgmt/config.json\n'.encode('utf-8'))
@@ -398,8 +398,8 @@ class api_cfg_mgmt(object):
             #for missing header info. test
             if dicParm['strRemoveBodyValue_DevAs'] == 'none':
                 pass
-            elif dicParm['strRemoveBodyValue_DevAs'] == 'mac_address':
-                del dicDEVBody['attributes']['mac_address']
+            elif dicParm['strRemoveBodyValue_DevAs'] == 'macAddress':
+                del dicDEVBody['attributes']['macAddress']
             else:
                 del dicDEVBody[dicParm['strRemoveBodyValue_DevAs']]
             #for missing body info. test

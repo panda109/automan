@@ -19,6 +19,7 @@ encoding//automan/ui/google.py=utf-8
 encoding//automan/ui/ioe_login.py=utf-8
 encoding//automan/ui/iphone.py=utf-8
 encoding//automan/ui/login.py=utf-8
+encoding//automan/util/api_cfg_mgmt.py=utf-8
 encoding//automan/util/fb.py=big5
 encoding//automan/util/ocr.py=utf-8
 encoding//automan/util/pyvmomi.py=utf-8

@@ -40,13 +40,14 @@ class api_cfg_mgmt(object):
                 )
             dicToken = objAWS.authenticate_user()
             strIDToken = dicToken['AuthenticationResult']['IdToken']
-            print(strIDToken)
+            #print(strIDToken)
         except Exception as exceptionError:
             #raise error.equalerror()
             print("Exception---->")
             print(exceptionError)
             #raise error.equalerror()
-            raise error.equalerror() 
+            raise error.equalerror()
+        
         return strIDToken
     
     def ndtoken_get(self, value_dict):
@@ -304,24 +305,27 @@ class api_cfg_mgmt(object):
                 print(dicGWMResponse)
                 print('$$$$$$$$$$$$$$$$$$$$$$$')
                 if objGWMResponse.status_code == 200:
-                    time.sleep(30)
-                    for count in range(0, 10):
-                        print('try', count)
-                        objCmd = subprocess.Popen('adb shell', shell = True, stdin = subprocess.PIPE, stdout = subprocess.PIPE)
-                        objCmd.stdin.write('cat /data/cfg_mgmt/config.json\n'.encode('utf-8'))
-                        objCmd.stdin.write('reboot\n'.encode('utf-8'))
-                        objCmd.stdin.write('exit\n'.encode('utf-8'))
-                        strConfigFile, err = objCmd.communicate()
-                        strConfigFile = strConfigFile.decode('utf-8')
-                        dicConfigFile = eval(strConfigFile)
-                        if dicConfigFile['gateway']['gateway_uuid'] == '':
-                            matchFlag = True
-                            print('config.json and cloud match: config.json(gateway_uuid) = ', dicConfigFile['gateway']['gateway_uuid'])
-                            break
-                        else:
-                            pass
-                        print('Config.json: ', dicConfigFile)
-                        time.sleep(60)
+                    pass
+                    #===========================================================
+                    # time.sleep(30)
+                    # for count in range(0, 10):
+                    #     print('try', count)
+                    #     objCmd = subprocess.Popen('adb shell', shell = True, stdin = subprocess.PIPE, stdout = subprocess.PIPE)
+                    #     objCmd.stdin.write('cat /data/cfg_mgmt/config.json\n'.encode('utf-8'))
+                    #     objCmd.stdin.write('reboot\n'.encode('utf-8'))
+                    #     objCmd.stdin.write('exit\n'.encode('utf-8'))
+                    #     strConfigFile, err = objCmd.communicate()
+                    #     strConfigFile = strConfigFile.decode('utf-8')
+                    #     dicConfigFile = eval(strConfigFile)
+                    #     if dicConfigFile['gateway']['gateway_uuid'] == '':
+                    #         matchFlag = True
+                    #         print('config.json and cloud match: config.json(gateway_uuid) = ', dicConfigFile['gateway']['gateway_uuid'])
+                    #         break
+                    #     else:
+                    #         pass
+                    #     print('Config.json: ', dicConfigFile)
+                    #     time.sleep(60)
+                    #===========================================================
                 if objGWMResponse.status_code != 200:
                     print(objGWMResponse)
                     raise error.equalerror()

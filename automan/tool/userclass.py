@@ -32,7 +32,7 @@ class Userclass(object):
         if  keyname in self.class_object.keys():
             pass
         else:
-            #print cmd
+            #print(cmd)
             exec( cmd )
             self.class_object[keyname] = eval(classname+'()')
         #print self.class_object

@@ -12,7 +12,7 @@ import configparser
 import os
 import configparser
 config = configparser.ConfigParser()
-config.read(os.path.join(os.getcwd() , 'ini') + "Path.conf",encoding="utf-8")
+config.read(os.path.join(os.getcwd() , 'ini' , "Path.conf"),encoding="utf-8")
 
 class login(object):
     '''

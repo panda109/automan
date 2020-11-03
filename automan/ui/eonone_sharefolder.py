@@ -13,7 +13,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import os
 import configparser
 config = configparser.ConfigParser()
-config.read(os.path.join(os.getcwd() , 'ini') + "Eonone.conf",encoding="utf-8")
+config.read(os.path.join(os.getcwd() , 'ini' , "Eonone.conf"),encoding="utf-8")
 
 
 class eonone_sharefolder(object):

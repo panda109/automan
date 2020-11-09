@@ -115,14 +115,32 @@ class Execute_qa(object):
             print ("[VP] = " + 'PASS\n\n')
 
     def tempcopy(self):
-        for file in next(os.walk(os.path.join(os.getcwd() , 'temp')))[2]:
-            source = (os.path.join(os.getcwd(),"temp",file))
-            #print(source)
-            SaveDirectory = os.getcwd()
-            dist = os.path.join(SaveDirectory,'log'  , self.qa_file.split(".")[0] ,file)
-            #print(dist)
-            shutil.copy(source , dist)
-            os.remove(source)
+        self.systemini = Parse_file().get_ini('system.ini')
+        if len(self.qa_list) == 1 :
+            for file in next(os.walk(os.path.join(os.getcwd() , 'temp')))[2]:
+                source = (os.path.join(os.getcwd(),"temp",file))
+                #print(source)
+                SaveDirectory = os.getcwd()
+                dist = os.path.join(SaveDirectory,'log'  , self.qa_file.split(".")[0] ,file)
+                #print(dist)
+                shutil.copy(source , dist)
+                os.remove(source)
+                
+        else:
+            self.nowcase = self.nowcase.rstrip(".qa")
+            qas = self.qa_file.split('.')[0]
+            if self.nowcase.find(os.sep) != -1 :
+                self.nowcase = self.nowcase.split(os.sep)[-1]
+            
+            for file in next(os.walk(os.path.join(os.getcwd() , 'temp')))[2]:
+                source = (os.path.join(os.getcwd(),"temp",file))
+                #print(source)
+                SaveDirectory = os.getcwd()
+                dist = os.path.join(SaveDirectory,'log' , qas  , self.nowcase ,file)
+                #print(dist)
+                shutil.copy(source , dist)
+                os.remove(source)
+                
 
     def screenshot(self):
         self.systemini = Parse_file().get_ini('system.ini')
@@ -138,11 +156,9 @@ class Execute_qa(object):
 
         else:
             self.nowcase = self.nowcase.rstrip(".qa")
-            self.nowcase = self.nowcase.lstrip(os.path.join(os.getcwd , "qa"))
             qas = self.qa_file.split('.')[0]
-
             if self.nowcase.find(os.sep) != -1 :
-                self.nowcase = self.nowcase.split(os.sep)[1]
+                self.nowcase = self.nowcase.split(os.sep)[-1]
                 
             SaveDirectory = os.getcwd()
             os.mkdir(os.path.join(SaveDirectory , "log" , qas ,   self.nowcase ))
@@ -151,6 +167,7 @@ class Execute_qa(object):
             time.sleep(2)
             im.save(SaveAs+'.jpg')
             shutil.copy('./log/app.png',SaveAs+'.png')
+            
     def execute_suite_session(self):
         result=0
         #print(self.suite_session[0])

@@ -21,7 +21,9 @@ class Tool(object):
         Constructor
         '''
     def file_create(self,value_dict):
-        value_dict['filename']
+        file = os.path.join(os.getcwd(),'temp',value_dict['value'])
+        print(file)
+        os.open(file,os.O_RDWR|os.O_CREAT)
         
     
     def full_verify(self,value_dict):

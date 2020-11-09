@@ -18,11 +18,7 @@ import shutil
 import os
 
 if __name__ == '__main__':
-    for file in next(os.walk(os.path.join(os.getcwd() , 'temp')))[2]:  
-        source = (os.path.join(os.getcwd(),"temp",file))
-        dist = (os.path.join(os.getcwd(),"temp1",file))
-        shutil.copy(source , dist)
-        os.remove(source)
+    os.open("./temp/test.txt",os.O_RDWR|os.O_CREAT)
         
         
 

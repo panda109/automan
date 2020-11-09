@@ -98,6 +98,10 @@ class Execute_qa(object):
             elif command[1] == 'end' : 
                 if str(self.systemini['screenshot'])=='force'  :
                     self.screenshot()
+                
+                if str(self.systemini['temp'])=='copy'  :
+                    #print("temp copy!!")
+                    self.tempcopy()
             
             if result == 1 and str(self.systemini['keepgoon'])=='no':
                 break
@@ -109,6 +113,16 @@ class Execute_qa(object):
             print ("[VP] = " + 'FAIL\n\n')
         else:
             print ("[VP] = " + 'PASS\n\n')
+
+    def tempcopy(self):
+        for file in next(os.walk(os.path.join(os.getcwd() , 'temp')))[2]:
+            source = (os.path.join(os.getcwd(),"temp",file))
+            #print(source)
+            SaveDirectory = os.getcwd()
+            dist = os.path.join(SaveDirectory,'log'  , self.qa_file.split(".")[0] ,file)
+            #print(dist)
+            shutil.copy(source , dist)
+            os.remove(source)
 
     def screenshot(self):
         self.systemini = Parse_file().get_ini('system.ini')

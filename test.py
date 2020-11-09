@@ -14,9 +14,17 @@ Created on 2010/12/20
 #      </testcase>
 #    </testsuite>
 #import Pillow
+import shutil
+import os
 
 if __name__ == '__main__':
-    pass
+    for file in next(os.walk(os.path.join(os.getcwd() , 'temp')))[2]:  
+        source = (os.path.join(os.getcwd(),"temp",file))
+        dist = (os.path.join(os.getcwd(),"temp1",file))
+        shutil.copy(source , dist)
+        os.remove(source)
+        
+        
 
 #define
 #testsuite

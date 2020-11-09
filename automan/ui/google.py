@@ -4,7 +4,7 @@ Created on 2010/12/10
 @author: panda.huang
 '''
 import automan.tool.error as error
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.keys import keys
 import configparser
 import os
 config = configparser.ConfigParser()

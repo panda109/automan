@@ -2,6 +2,6 @@
 #ini			test.ini
 init		browser			chrome		
 start
-set			browser.google		textbox_search				#key#=aaa
-click		browser.google		button_error
+~set			browser.google		textbox_search				#value#=aaa,#xpath_id#=google_search
+send		browser.google		button_error
 end

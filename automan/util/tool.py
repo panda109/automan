@@ -23,8 +23,8 @@ class Tool(object):
     def file_create(self,value_dict):
         file = os.path.join(os.getcwd(),'temp',value_dict['value'])
         print(file)
-        os.open(file,os.O_RDWR|os.O_CREAT)
-        
+        fd = os.open(file,os.O_RDWR|os.O_CREAT)
+        os.close(fd)
     
     def full_verify(self,value_dict):
         print(value_dict["key"]=='：kkk')

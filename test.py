@@ -5,27 +5,30 @@ Created on 2010/12/20
 
 @author: panda.huang
 '''
-#   <?xml version="1.0" encoding="US-ASCII"?>
-#    <testsuite tests="2" time="" failures="1" error="0" name="[09-07][16-44-18][device_list_1]]">
-#      <testcase time="0.0 sec" result="fail" name="test_db_1">
-#        <failure message="FAIL !!"/>
-#      </testcase>
-#      <testcase time="2.0 sec" result="pass" name="test_db">
-#      </testcase>
-#    </testsuite>
-#import Pillow
-import shutil
+#pip install pipwin
+#pipwin install pyaudio
+
+import speech_recognition
+import time
 import os
+import pyaudio
+import wave              #
 
 if __name__ == '__main__':
-    os.open("./temp/test.txt",os.O_RDWR|os.O_CREAT)
-        
-        
 
-#define
-#testsuite
+    r = speech_recognition.Recognizer()
+    with speech_recognition.Microphone() as source: 
 
-#testcase time result name
-#failure message
+        print("begin:")                        # print
+        r.adjust_for_ambient_noise(source)     #
+        audio = r.listen(source)
 
-#testsuite
+    try:
+        Text = r.recognize_google(audio, language="zh-TW")     
+
+    except r.UnknowValueError:
+        Text = "can't trans"
+    except r.RequestError as e:
+        Text = "can't trans{0}".format(e)
+
+    print( Text )

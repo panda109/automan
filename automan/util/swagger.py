@@ -22,7 +22,7 @@ class Swagger(object):
         pass
     
     def eis_health_get(self,dict_value):
-        response = requests.get("https://eis-api-qa.nextdrive.io/health")
+        response = requests.get(dict_value['url'])
         ret = response.json()
         if ret['status'] != dict_value['result']:
             raise error.notequalerror()
@@ -30,7 +30,7 @@ class Swagger(object):
     
     
     def ioe_health_get(self,dict_value):
-        response = requests.get("https://ioe-suite-api-qa.nextdrive.io/health")
+        response = requests.get(dict_value['url'])
         ret = response.json()
         if ret['status'] != dict_value['result']:
             raise error.notequalerror()

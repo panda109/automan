@@ -1,0 +1,9 @@
+ini		swagger.ini
+
+start
+
+verify	Swagger		eis_health	#result#=$eis$
+
+send	Fb			googlemessage	#message#="EIS health test finished!!"
+
+end

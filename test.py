@@ -7,28 +7,24 @@ Created on 2010/12/20
 '''
 #pip install pipwin
 #pipwin install pyaudio
-
-import speech_recognition
-import time
-import os
-import pyaudio
-import wave              #
+from httplib2 import Http
+from json import dumps
 
 if __name__ == '__main__':
+    
+    url = 'https://chat.googleapis.com/v1/spaces/AAAAfHdGUII/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=FWHoi6eGb0FW9KxtTg4YDfd-HpHAix1qF68IhqmCdso%3D'
+    bot_message = {
+        'text' : 'EIS Swagger test finished!!'}
 
-    r = speech_recognition.Recognizer()
-    with speech_recognition.Microphone() as source: 
+    message_headers = { 'Content-Type': 'application/json; charset=UTF-8'}
 
-        print("begin:")                        # print
-        r.adjust_for_ambient_noise(source)     #
-        audio = r.listen(source)
+    http_obj = Http()
 
-    try:
-        Text = r.recognize_google(audio, language="zh-TW")     
+    http_obj.request(
+        uri=url,
+        method='POST',
+        headers=message_headers,
+        body=dumps(bot_message),
+    )
 
-    except r.UnknowValueError:
-        Text = "can't trans"
-    except r.RequestError as e:
-        Text = "can't trans{0}".format(e)
 
-    print( Text )

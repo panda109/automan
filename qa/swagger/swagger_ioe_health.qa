@@ -2,9 +2,8 @@ ini		swagger.ini
 
 
 start
+$res$=get	Swagger		ioe_health	#result#=$ioe$
 
-verify	Swagger		ioe_health	#result#=$ioe$
-
-send	Fb			googlemessage	#message#="IOE health test finished!!"
+send		Fb			googlemessage	#message#=IOE health test finished : $res$
 
 end

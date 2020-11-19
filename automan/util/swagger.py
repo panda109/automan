@@ -21,20 +21,19 @@ class Swagger(object):
         '''
         pass
     
-    def eis_health_verify(self,dict_value):
+    def eis_health_get(self,dict_value):
         response = requests.get("https://eis-api-qa.nextdrive.io/health")
         ret = response.json()
         if ret['status'] != dict_value['result']:
             raise error.notequalerror()
-   
+        return("PASS")
     
     
-    def ioe_health_verify(self,dict_value):
+    def ioe_health_get(self,dict_value):
         response = requests.get("https://ioe-suite-api-qa.nextdrive.io/health")
         ret = response.json()
         if ret['status'] != dict_value['result']:
             raise error.notequalerror()
-    
-    
+        return("PASS")
 
 #{"status":"ok","info":{},"error":{},"details":{}}

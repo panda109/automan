@@ -1,0 +1,7 @@
+ini	system.ini
+
+start
+init	browser	chrome
+
+sleep	10
+end

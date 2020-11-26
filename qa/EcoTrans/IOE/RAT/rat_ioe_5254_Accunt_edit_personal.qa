@@ -1,0 +1,18 @@
+ini	system.ini
+
+start
+init	browser	chrome
+set		browser.ioe_login	textbox_username		#key#=$username_correct$
+set		browser.ioe_login	textbox_password		#key#=$password_correct$
+click	browser.ioe_faq		textbox_contactmail		#key#=$contactmail_send$
+#click	browser.ioe_login	button_login
+sleep	10
+click	browser.ioe_login	button_ecognie+
+click	browser.ioe_login	button_account	
+click	browser.ioe_login	button_personal
+click	browser.ioe_login	button_edit
+set		browser.ioe_login	button_fullname			#key#=$fullname_correct$
+set		browser.ioe_login	button_jobtitle			#key#=$jobtitle_correct$
+
+#verify	browser.ioe_login	wpage_keyword	#key#=$expected_result_login_success$
+end

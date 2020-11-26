@@ -1,0 +1,11 @@
+ini	system.ini
+
+start
+init	browser	chrome
+
+click	browser.ioe_privacy			button_privacy
+click	browser.ioe_agreements		button_agreement
+click	browser.ioe_cookie			button_cookie
+
+
+end

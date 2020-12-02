@@ -37,3 +37,6 @@ class iphone(object):
     
     def errorkey_test(self,browser,dict):
         return 1
+    
+    def screen_take(self,browser):
+        browser.save_screenshot('./log/app.png')

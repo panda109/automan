@@ -26,3 +26,5 @@ class notfind(Exception): pass
 class find(Exception): pass
 
 class notfindappfile(Exception): pass
+
+class notlessthan(Exception): pass

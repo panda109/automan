@@ -8,6 +8,7 @@ import automan.tool.error as error
 from automan.tool.verify import Verify
 from pathlib import Path
 import os.path
+import cv2 as CV2
 import configparser
 config = configparser.ConfigParser()
 config.read(os.path.join(os.getcwd() , 'ini' , 'Eonone.conf'),encoding="utf-8")
@@ -69,6 +70,41 @@ class Tool(object):
             raise error.notequalerror()
         except:
             raise error.nonamevalue()
+    def picture_verify(self,value_dict):
+        local_dict = dict(value_dict)
+        pic1 = local_dict['path']
+        pic2 = local_dict['source_path']
+        lessthan = local_dict['lessthan']
+        img1 = CV2.imread(pic1)
+        img2 = CV2.imread(pic2)
+        hash1 = self.dHash(img1)
+        hash2 = self.dHash(img2)
+        dhashvalue = self.cmpHash(hash1, hash2)
+        print(float(dhashvalue) , float(lessthan)) 
+        if (float(dhashvalue) > float(lessthan)) :
+            return 1
+        
+    def dHash(self, image):
+        img = CV2.resize(image, (9, 8), interpolation=CV2.INTER_CUBIC)
+        gray = CV2.cvtColor(img, CV2.COLOR_BGR2GRAY)
+        hash_str = ''
+        for i in range(8):
+            for j in range(8):
+                if gray[i, j] > gray[i, j + 1]:
+                    hash_str = hash_str + '1'
+                else:
+                    hash_str = hash_str + '0'
+        return hash_str
+
+
+    def cmpHash(self, hash1, hash2):
+        n = 0
+        if len(hash1) != len(hash2):
+            return -1
+        for i in range(len(hash1)):
+            if hash1[i] != hash2[i]:
+                n = n + 1
+        return n
         
     def getsystem(self,test):
         return '100'

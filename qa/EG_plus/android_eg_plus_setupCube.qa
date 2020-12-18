@@ -1,0 +1,145 @@
+init				browser									app	
+
+start
+
+sleep				3
+
+click				browser.android_eg_plus					element				#xpath#=devicePage
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Device_empty.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=addDevicePage
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Device_addDevice.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=addCube
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=setupNextBtn
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_PreparingForSetup_empty.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=prepareCheck1
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_PreparingForSetup_Check1stItem.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=prepareCheck2
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_PreparingForSetup_Check2ndItem.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=prepareCheck3
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_PreparingForSetup_Check3rdItem.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=preparePageNextBtn
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_PreparingForSetup_checkAllItem_pair.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+verify				browser.android_eg_plus					authority			#xpath#=authorityBox
+
+set					browser.android_eg_plus					bleCmd				#targetCubeName#=CubeJ-983c8f
+
+sleep				3
+
+click				browser.android_eg_plus					element				#xpath#=pairBtn
+#take				browser.iphone							screen
+
+verify				browser.android_eg_plus					cube				#targetCubeName#=CubeJ-983c8f,#cubeNameXpath#=cubeNameXpath,#searchAgainBtnXpath#=searchAgainBtnXpath
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_availableDevice.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=nextBtnXpath
+sleep				5
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_wifiList.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=addOtherBtn
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_wifi_none_not_set.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=wpaOption
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_wifi_WPA_not_set.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=wifiSsid
+
+tap					browser.android_eg_plus					input_location		#x_axis#=960,#y_axis#=360
+
+set					browser.android_eg_plus					element				#xpath#=wifiSsid,#strValue#=NextDriveQA
+
+click				browser.android_eg_plus					element				#xpath#=wifiPsw
+
+tap					browser.android_eg_plus					input_location		#x_axis#=960,#y_axis#=360
+
+set					browser.android_eg_plus					element				#xpath#=wifiPsw,#strValue#=NxdQ_Q7w
+
+hide				browser.android_eg_plus					keyboard
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_wifi_WPA_already_set.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=connectBtn
+#verify				browser.android_eg_plus					wifiConnectStatus	#wifiConnBtnxpath#=connectBtn,#wifiErrorBtnXpath#=wifiErrorBtnXpath
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_wifiConnecting.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+#sleep				10
+
+#take				browser.iphone							screen
+#$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+#$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_gatewayName_notSet.png
+#verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+set					browser.android_eg_plus					element				#xpath#=cubeName,#strValue#=QAcube
+
+hide				browser.android_eg_plus					keyboard
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_gatewayName_alreadySet.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=okBtn
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_setupComplete.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+click				browser.android_eg_plus					element				#xpath#=setupFinishBtn
+
+click				browser.android_eg_plus					element				#xpath#=goBackBtn
+
+verify				browser.android_eg_plus					gwSetup				#xpath#=cubeCard
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Device_GW.png
+verify				Tool									picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3
+
+end

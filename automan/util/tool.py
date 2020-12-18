@@ -9,6 +9,7 @@ from automan.tool.verify import Verify
 from pathlib import Path
 import os.path
 import cv2 as CV2
+#pip3 install opencv-python
 import configparser
 config = configparser.ConfigParser()
 config.read(os.path.join(os.getcwd() , 'ini' , 'Eonone.conf'),encoding="utf-8")
@@ -95,7 +96,6 @@ class Tool(object):
                 else:
                     hash_str = hash_str + '0'
         return hash_str
-
 
     def cmpHash(self, hash1, hash2):
         n = 0

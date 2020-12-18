@@ -34,7 +34,7 @@ class Parse_file(object):
             if len(line.strip()) > 1 and line[0] != '#' and str(line).strip().find('include') != 0:
                 qa.append(['main '+str(i)]+[str(x).strip() for x in str(line).strip().split('\t') if x != ''])
             elif len(line.strip()) > 1 and line[0] != '#' and str(line).strip().find('include') == 0 :
-                includename = line.strip().split('\t')[2]
+                includename = line.strip().split('\t')[-1]
                 include = self.parse_include(self.get_include_file(includename))
                 qa = qa + include
                 include = []

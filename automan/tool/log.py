@@ -129,7 +129,7 @@ class Log(object):
             print ("result = FAIL")
             print ("result code = " + str(result))
         print ('Stop : ' + time.ctime() +'\n')
-                   
+
     def finall_status(self):
         status = True
         for index in range(len(self.result)):

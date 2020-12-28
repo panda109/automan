@@ -1,0 +1,25 @@
+ini							dashboardEcocute.ini
+
+start
+
+$IDToken$=get				apiDdr			idToken							#test#=none
+
+$NDToken$=get				apiDdr			ndToken							#strIDToken#=$IDToken$,#returnCode#=200
+
+$listApiData$=get			apiDdr			generatedashboardsData			#strNDToken#=$NDToken$,#strMissingParam#=none,#str_device_uuid#=$strEcocuteUuid$
+
+$verifyCode$=get			apiDdr			dashboardsApi					#strApiData#=$listApiData$,#method#=get
+
+verify						apiDdr			returnCode						#returnCode#=200,#verifyCode#=$verifyCode$
+	
+get							apiDdr			DBconnect
+
+$dataFromDB$=get			apiDdr			queryData						#test#=none
+	
+verify						apiDdr			publishCode						#returnCode#=2011001,#dataFromDB#=$dataFromDB$,#str_device_uuid#=$strEcocuteUuid$
+
+get							apiDdr			closeDBConnection
+
+end
+
+

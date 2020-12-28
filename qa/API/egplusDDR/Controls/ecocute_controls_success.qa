@@ -1,0 +1,23 @@
+ini							controlsEcocute.ini
+start
+$IDToken$=get				apiDdr					idToken						#test#=none
+	
+$NDToken$=get				apiDdr					ndToken						#strIDToken#=$IDToken$,#returnCode#=200
+
+$listApiData$=get			apiDdr					generateControlsData		#strNDToken#=$NDToken$,#deviceType#=ecocute,#str_device_uuid#=$strEcocuteUuid$,#strMissingHeaderParam#=none,#strMissingBodyParam#=none
+	
+$verifyCode$=get			apiDdr					controlApi					#strApiData#=$listApiData$,#method#=put
+	
+verify						apiDdr					returnCode					#returnCode#=200,#verifyCode#=$verifyCode$
+	
+sleep						2	
+		
+get							apiDdr					DBconnect
+
+$dataFromDB$=get			apiDdr					queryData					#test#=none
+	
+verify						apiDdr					publishCode					#dataFromDB#=$dataFromDB$,#returnCode#=2011001,#str_device_uuid#=$strEcocuteUuid$
+
+get							apiDdr					closeDBConnection
+
+end

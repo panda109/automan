@@ -218,6 +218,37 @@ class android_eg_plus(object):
                     pass
         except:
             raise error.notfind()
+
+    def left_swipe(self, browser):
+        
+        size = browser.get_window_size()
+        width = size.get('width')
+        height = size.get('height')       
+        x1 = int(width * 0.9)
+        y1 = int(height * 0.5)
+        x2 = int(width * 0.1)
+        browser.swipe(x1, y1, x2, y1, 1000)
+    
+    def keyboard_hide(self, browser):
+        
+        browser.hide_keyboard()
+    
+    def email_addr_get(self, browser):
+        
+        ts = calendar.timegm(time.gmtime())
+        email_addr = "ndtestmail+{}@mailto.plus".format(ts)
+        return email_addr
+    
+    def verification_code_from_web_get(self, browser):
+    
+        vc.get_verification_code_from_web()
+        
+    def verification_code_from_file_get(self, browser):
+        
+        f = open(os.path.join(os.getcwd(), "verification_code.txt"),'r')
+        code = f.read()
+        f.close()
+        return code
         
  
             

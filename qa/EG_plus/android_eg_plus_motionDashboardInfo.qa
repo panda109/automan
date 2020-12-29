@@ -1,0 +1,79 @@
+###
+###
+###testcase:
+###4218	[EG_3.0][Device_Motion]Motion Pixi Dashboard info_1.Into Tab - Device - Motion Pixi
+###4220	[EG_3.0][Device_Motion]Motion Event chart_1.Into Tab - Device - Motion Pixi
+###4237	[EG_3.0][Device_Motion]Settings - Notifications_4.Save Settings
+###4546	[EG_3.0][Device_Motion]Push Notification_1. Notification ON
+
+
+init				browser							app	
+
+start
+
+sleep				10
+
+click				browser.android_eg_plus					element					#xpath#=devicePage
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic				#logFolderName#=android_eg_plus_motionDashboardInfo
+$sourcePic$=get		browser.android_eg_plus					sourcePic				#imgFileName#=Dashboard_already_binding_motion.png
+verify				verify_pic								picture					#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_motionDashboardInfo
+
+
+click				browser.android_eg_plus					element					#xpath#=motionSetting
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic				#logFolderName#=android_eg_plus_motionDashboardInfo
+$sourcePic$=get		browser.android_eg_plus					sourcePic				#imgFileName#=Dashboard_motion_setting.png
+verify				verify_pic								picture					#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_motionDashboardInfo
+
+
+click				browser.android_eg_plus					element					#xpath#=motionSettingNotifiBtn
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic				#logFolderName#=android_eg_plus_motionDashboardInfo
+$sourcePic$=get		browser.android_eg_plus					sourcePic				#imgFileName#=Dashboard_setting_noti_on.png
+verify				verify_pic								picture					#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_motionDashboardInfo
+
+
+click				browser.android_eg_plus					element					#xpath#=motionNotifSwitch
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic				#logFolderName#=android_eg_plus_motionDashboardInfo
+$sourcePic$=get		browser.android_eg_plus					sourcePic				#imgFileName#=Dashboard_setting_noti_off.png
+verify				verify_pic								picture					#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_motionDashboardInfo
+
+
+click				browser.android_eg_plus					element					#xpath#=motionNotifSaveBtn
+
+click				browser.android_eg_plus					element					#xpath#=motionDeviceCard
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic				#logFolderName#=android_eg_plus_motionDashboardInfo
+$sourcePic$=get		browser.android_eg_plus					sourcePic				#imgFileName#=Dashboard_motion_chart.png
+verify				verify_pic								picture					#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_motionDashboardInfo
+
+click				browser.android_eg_plus					element					#xpath#=motionChartReturnBtn
+
+click				browser.android_eg_plus					element					#xpath#=motionSetting
+
+click				browser.android_eg_plus					element					#xpath#=motionSettingNotifiBtn
+
+click				browser.android_eg_plus					element					#xpath#=motionNotifSwitch
+
+click				browser.android_eg_plus					element					#xpath#=motionNotifSaveBtn
+
+click				browser.android_eg_plus					element					#xpath#=motionSetting
+
+click				browser.android_eg_plus					element					#xpath#=motionRemoveBtn
+
+click				browser.android_eg_plus					element					#xpath#=servicePage
+click				browser.android_eg_plus					element					#xpath#=devicePage
+#update device dashboard
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic				#logFolderName#=android_eg_plus_motionDashboardInfo
+$sourcePic$=get		browser.android_eg_plus					sourcePic				#imgFileName#=Dashboard_motion_setting_remove_window.png
+verify				verify_pic								picture					#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_motionDashboardInfo
+
+click				browser.android_eg_plus					element					#xpath#=motionRemoveConfirmBtn
+take				browser.iphone							screen
+$targetPic$=get		browser.android_eg_plus					targetPic				#logFolderName#=android_eg_plus_motionDashboardInfo
+$sourcePic$=get		browser.android_eg_plus					sourcePic				#imgFileName#=Device_GW.png
+verify				verify_pic								picture					#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_motionDashboardInfo
+

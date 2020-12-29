@@ -14,7 +14,7 @@ import subprocess
 import automan.util.tool as tool
 
 config = configparser.ConfigParser()
-config.read(os.path.join(os.getcwd(), 'conf', "android_eg_plus.conf"))
+config.read(os.path.join(os.getcwd(), 'conf', "android_eg_plus.conf"), encoding="utf-8")
 
 class android_eg_plus(object):
     
@@ -93,21 +93,6 @@ class android_eg_plus(object):
         #print("=====> fileLocation")
         #print(fileLocation)
         return fileLocation 
-    
-    def wifiConnectStatus_verify(self, browser, dicValue):
-        dicParam = dict(dicValue)
-        wifiConnBtn = browser.find_element_by_xpath(config.get("xpath", dicParam["wifiConnBtnxpath"]))
-        wifiConnBtn.click()
-        time.sleep(10)
-        flag = True
-        try:
-            while flag:
-                errorBtn = browser.find_element_by_xpath(config.get("xpath", dicParam["wifiErrorBtnXpath"]))
-                errorBtn.click()
-                wifiConnBtn.click()
-                time.sleep(10)
-        except:
-            pass
 
     def authority_verify(self, browser, dicValue):
         #first time open app will ask permission
@@ -180,3 +165,59 @@ class android_eg_plus(object):
                     else:
                         pass
             time.sleep(1)
+            
+            
+    def noCubeFound_verify(self, browser, dicValue):
+        #for searching_cube
+        dicParam = dict(dicValue)
+
+        try:
+            while True:
+                searchAgainBtn = browser.find_element_by_xpath(config.get("xpath", dicParam["xpath"]))
+                searchAgainBtn.click()
+
+        except:
+            pass
+        
+    def up_swipe(self, browser):
+        size = browser.get_window_size()
+        fpWidth = size.get("width")
+        fpHeight = size.get("height")
+        x = int(fpWidth * 0.5)
+        y1 = int(fpHeight * 0.95)
+        y2 = int(fpHeight * 0.35)
+        browser.swipe(x, y1, x, y2, 3000)
+        
+        
+    def wifi_click(self, browser, dicValue):
+        dicParam = dict(dicValue)
+        listWifi = browser.find_elements_by_xpath(config.get("xpath", dicParam["xpath"]))
+        swipeFlag = True
+        swipeTime = 0
+        try:
+            while swipeFlag:
+                for i in range(1, len(listWifi)):
+                    strWifiItem = browser.find_element_by_xpath(config.get("xpath", dicParam["xpath"]) + "[{}]".format(i) + "/android.widget.TextView")
+                    strWifiSsid = strWifiItem.text
+                    print(strWifiSsid)
+                    if strWifiSsid == dicParam["wifiName"]:
+                        strWifiItem.click()
+                        swipeFlag = False
+                        break
+                    else:
+                        pass
+                if swipeFlag == True:
+                    self.up_swipe(browser)
+                    swipeTime = swipeTime + 1
+                    if swipeTime == 5:
+                        swipeFlad == False
+                        break
+                    else:
+                        pass
+                else:
+                    pass
+        except:
+            raise error.notfind()
+        
+ 
+            

@@ -1,0 +1,47 @@
+start
+init				browser								app	
+sleep				2
+#[TC-7398]
+take				browser.iphone						screen
+
+swipe				browser.android_eg_plus				left
+take				browser.iphone						screen
+
+swipe				browser.android_eg_plus				left
+take				browser.iphone						screen
+
+click				browser.android_eg_plus				element				#xpath#=loginPage_turn_on_button
+take				browser.iphone						screen
+
+click				browser.android_eg_plus				element				#xpath#=loginPage_already_have_an_account_button
+take				browser.iphone						screen
+
+set					browser.android_eg_plus				element				#xpath#=signinPage_email,#strValue#=eric.lee+99@nextdrive.io
+take				browser.iphone						screen
+
+set					browser.android_eg_plus				element				#xpath#=signinPage_password,#strValue#=link4581
+take				browser.iphone						screen
+
+click				browser.android_eg_plus				element				#xpath#=loginPage_signin_button
+take				browser.iphone						screen
+
+sleep				3
+
+click				browser.android_eg_plus				element				#xpath#=naviBar_device_button_jp
+take				browser.iphone						screen
+#$targetPic$=get	browser.android_eg_plus				targetPic			#logFolderName#=android_eg_plus_fuel_cell
+#$sourcePit$=get	browser.android_eg_plus				sourcePic			#imgFileName#=DevicePage_fuel_cell_panel.jpg
+#verify				Tool								picture				#path#=$targetPic$,#source_path#=$sourcePit$,#lessthan#=3
+
+#[TC-7400]
+click				browser.android_eg_plus				element				#xpath#=devicePage_first_device_more_button
+take				browser.iphone						screen
+
+click				browser.android_eg_plus				element				#xpath#=deviceSettingsPage_general_button
+take				browser.iphone						screen
+#$targetPic$=get	browser.android_eg_plus				targetPic			#logFolderName#=android_eg_plus_fuel_cell
+#$sourcePit$=get	browser.android_eg_plus				sourcePic			#imgFileName#=DevicePage_fuel_cell_settings_general_page.jpg
+#verify				Tool								picture				#path#=$targetPic$,#source_path#=$sourcePit$,#lessthan#=3
+
+close				browser
+end

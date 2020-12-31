@@ -1,23 +1,24 @@
+ini					cube_setup.ini
 init				browser									app	
 
 start
 
 sleep				3
 
-click				browser.android_eg_plus					element				#xpath#=accountpage
+click				browser.android_eg_plus					element				#xpath#=naviBar_account_button_jp
 take				browser.iphone							screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_account_logout
 $sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=account_page.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
 
-click				browser.android_eg_plus					element				#xpath#=logout
+click				browser.android_eg_plus					element				#xpath#=accountPage_logout_button
 take				browser.iphone							screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_account_logout
 $sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=logout_alerted.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
 
-click				browser.android_eg_plus					element				#xpath#=logout_ok
+click				browser.android_eg_plus					element				#xpath#=logoutAlert_logout_button
 take				browser.iphone							screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_account_logout
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=signin_page.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=signin.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout

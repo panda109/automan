@@ -11,7 +11,7 @@ import threading
 import os,requests
 import json,time
 from datetime import datetime
-def job(i,upload_period,running):
+def job(i,upload_period,running,datanumber):
 
     cube_pid = '10d07a5e-4632-011a-2830-0006d2xxxxxx'.replace('xxxxxx',str(100002+i))
     cube_uuid = '10d07a5e-4632-011a-2830-0006d2xxxxxx'.replace('xxxxxx',str(100002+i))
@@ -26,7 +26,7 @@ def job(i,upload_period,running):
         #get token from API
         token = get_token(cube_uuid)
         #print(token)
-        json_data = json.dumps(create_data(sm_uuid))
+        json_data = json.dumps(create_data(sm_uuid,datanumber))
         #try send spi to cloud
         upload_data(token,cube_uuid,json_data)
         #no exception : timeourt
@@ -48,21 +48,35 @@ def get_token(cube_uuid):
     ret = response.json()
     return(ret['data']['session'])
 
-def create_data(sm_uuid):
+def create_data(sm_uuid,datanumber):
 
-    timestamp = int(datetime.now().timestamp() * 1000)
-    value = float(format(random.random()*5,'.2f'))
-    jsondata =  { "data" :
-                    [{"device_uuid" : sm_uuid , 
-                     "data_uuid" : "c4093618-627a-4c99-b190-4845a98c9b1f",
-                     "value" : str(value),
-                     "raw_value" : "AAAAAAAAAAHuPleEzJ7exdldie",
-                     "tags" : "",
-                     "generated_time" : timestamp
-                     }]
-                 }      
+    dataarray = []
+    
+    for i in range(datanumber):
+        timestamp = int(datetime.now().timestamp() * 1000) + i * 10
+        value = float(format(random.random()*5,'.2f'))    
+        rd = {"device_uuid" : sm_uuid , 
+                         "data_uuid" : "c4093618-627a-4c99-b190-4845a98c9b1f",
+                         "value" : str(value),
+                         "raw_value" : "AAAAAAAAAAHuPleEzJ7exdldie",
+                         "tags" : "",
+                         "generated_time" : timestamp
+                         }
+        dataarray.append(rd)
+    for i in range(datanumber):
+        timestamp = int(datetime.now().timestamp() * 1000) + i * 10
+        value = float(format(random.random()*5,'.2f'))    
+        rd = {"device_uuid" : sm_uuid , 
+                         "data_uuid" : "cd405329-4bab-49a6-a4ee-3da4b0dbed1b",
+                         "value" : str(value),
+                         "raw_value" : "AAAAAAAAAAHuPleEzJ7exdldie",
+                         "tags" : "",
+                         "generated_time" : timestamp
+                         }
+        dataarray.append(rd)    
+    jsondata =  { "data" : dataarray }      
     #data = json.dumps(jsondata)
-    #print(data)
+    #print(jsondata)
     return jsondata
 
 if __name__ == '__main__':
@@ -73,14 +87,16 @@ if __name__ == '__main__':
     #50000 -> user
     #24X60 -> one day
     #10 -> upload data once 10 minutes
+    #10 -> 10*2 records into db
     argv = sys.argv[1:]
-    print("Thread number : "+argv[0],", Test runtime : "+ argv[1]+" minutes" , ", Upload period : " + argv[2]+" minutes")
+    print("Thread number : "+argv[0],", Test runtime : "+ argv[1]+" minutes" , ", Upload period : " + argv[2]+" minutes", ", records : 2*" + argv[3])
     threadnumber = int(argv[0])
     test_runtime = int(argv[1])
     upload_period = int(argv[2])
+    datanumber = int(argv[3])
     
     for i in range(threadnumber):
-        threads.append(threading.Thread(target = job, args = (i,upload_period,running,)))
+        threads.append(threading.Thread(target = job, args = (i,upload_period,running,datanumber,)))
         #print("thread : %i star." % i )  
         threads[i].start()
 

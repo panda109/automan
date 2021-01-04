@@ -1,12 +1,12 @@
 start
 
 init		browser	app
-include		keypair.sub
+#include		keypair.sub
 #click		browser.iphone	button_submit
 
 #set		browser.iphone	search_new				#xpath_id#=test_id,#value#=123
-#~click		browser.iphone	button_search			#xpath_id#=test_id
-
+~click		browser.iphone	button_search			#xpath_id#=test_id
+take		browser.iphone	screen
 close		browser
 
 end

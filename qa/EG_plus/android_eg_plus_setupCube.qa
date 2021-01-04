@@ -12,7 +12,7 @@ init				browser									app
 
 start
 
-sleep				3
+sleep				5
 
 click				browser.android_eg_plus					element				#xpath#=devicePage
 take				browser.iphone							screen
@@ -42,16 +42,16 @@ verify				browser.android_eg_plus					cubeRemove			#xpath#=noDeviceFoundPic
 
 
 sleep				45
-tap					browser.android_eg_plus					input_location		#x_axis#=960,#y_axis#=360
+tap					browser.android_eg_plus					input_location		#x_axis#=100,#y_axis#=100
 
 exec				File 									shellcmd			#command#=adb -s 0123456789ABCDEF shell "reboot"
 sleep				30
-tap					browser.android_eg_plus					input_location		#x_axis#=960,#y_axis#=360
+tap					browser.android_eg_plus					input_location		#x_axis#=100,#y_axis#=100
 exec				File 									shellcmd			#command#=adb -s $android_device_name$ shell "setprop persist.next.server.type qa"
 exec				File 									shellcmd			#command#=adb -s $android_device_name$ shell "reboot"
 
 sleep				30
-tap					browser.android_eg_plus					input_location		#x_axis#=960,#y_axis#=360
+tap					browser.android_eg_plus					input_location		#x_axis#=100,#y_axis#=100
 
 
 

@@ -1,0 +1,45 @@
+###
+### Project			: API-Service
+### Category		: RAT
+###	Test case		:
+### 	Device Operation - Device Control
+###
+###	Pre-condition	:
+###		1. Associated 1 ECN storage battery.
+###
+###	Request			:
+###	{       
+###		"scopes": [
+###		    {"operatingStatus": "{Refer to *1}"},
+###		    {"operationMode": "{Refer to *1}"}
+###		]
+###	}
+###
+###		*1:
+###			operatingStatus
+###				ON: 48, OFF: 49
+###			operationMode
+###				Rapid charging = 65, Charging = 66, Discharging = 67, Standby = 68, Test = 69, Automatic=70, Restart=72, Effective capacity recalculation processing =73, Other =64
+###
+###	Response		:
+###	{
+###	}
+###
+
+ini					API_Service.ini
+start
+$nd_token$=get		api_service		nd_token								#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get			api_service		device_control_url						#uuid#=$ecn_storage_battery_01_uuid$
+$header$=get		api_service		device_control_header					#token#=$nd_token$
+
+## Device control target: Storage battery
+$body$=get			api_service		device_control_sb_body					#scope#=operatingStatus;operationMode,#scope_value#=49;67
+$response$=get		api_service		HTTP_PUT_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		device_control_sb_response				#value#=$response$,#system_value#={},#criteria#==
+
+## Restore environment
+$body$=get			api_service		device_control_sb_body					#scope#=operatingStatus;operationMode,#scope_value#=$ecn_storage_battery_01_operatingStatus$;$ecn_storage_battery_01_operationMode$
+$response$=get		api_service		HTTP_PUT_response						#url#=$url$,#header#=$header$,#body#=$body$
+
+end

@@ -1,0 +1,31 @@
+###
+### Project			: API-Service
+### Category		: RAT
+###	Test case		:
+### 	Gateway Management - Gateway Status
+###
+###	Pre-condition	:
+###
+###	Request			:
+###
+###	Response		:
+###	{
+###		"name": "{gateway_name}",
+###		"model": "{gateway_model}",
+###		"fwVersion": "{gateway_firmware_version}",
+###		"onlineStatus": "{gateway_online_status}"
+###	}
+###		
+
+ini						API_Service.ini
+start
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$header$
+verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
+verify					api_service			gateway_status_name			#value#=$response$,#system_value#=$gateway_name$,#criteria#==
+verify					api_service			gateway_status_model		#value#=$response$,#system_value#=$gateway_model$,#criteria#==
+verify					api_service			gateway_status_fwVersion	#value#=$response$,#system_value#=$gateway_firmware_version$,#criteria#==
+verify					api_service			gateway_status_onlineStatus	#value#=$response$,#system_value#=$gateway_online_status$,#criteria#==
+end

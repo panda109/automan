@@ -1,10 +1,12 @@
 #ini		eonone.ini
 
 start
-init	browser					chrome
+init		browser						chrome
+~set		browser.seleniumide			textbox_search		#folder#=ini,#configfile#=seleniumide.conf,#xpath_id#=search1,#session#=login,#value#=test1
+sleep		2
 
-set		browser.google			textbox_search		#key#=hello
-click	browser.google			button_submit
-close	browser
+
+~set		browser.seleniumide			textbox_search		#folder#=ini,#configfile#=seleniumide.conf,#xpath_id#=search3,#session#=login,#value#=test3
+#close		browser
 
 end

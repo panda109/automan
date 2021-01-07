@@ -39,3 +39,6 @@ class seleniumide(object):
         xpath = value_dict['xpath_id']
         elem = browser.find_element_by_xpath(config.get(session, xpath))
         elem.click()
+    
+    def sendkey(self):
+        pass

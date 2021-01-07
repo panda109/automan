@@ -83,7 +83,7 @@ if __name__ == '__main__':
     running = threading.Event()
     running.set()
     threads = []
-    #50000 24X60 10
+    #50000 24X60 10 15
     #50000 -> user
     #24X60 -> one day
     #10 -> upload data once 10 minutes

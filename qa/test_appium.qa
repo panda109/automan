@@ -1,0 +1,13 @@
+start
+
+init		browser	app
+
+
+#~click		browser.appium			textbox_search		#folder#=ini,#configfile#=iphonetest.conf,#xpath_id#=test,#session#=test
+sleep		2
+~click		browser.appium			device				#folder#=ini,#configfile#=pixi2.conf,#xpath_id#=test,#session#=test
+
+#take		browser.appium	screen
+close		browser
+
+end

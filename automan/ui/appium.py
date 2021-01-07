@@ -36,7 +36,6 @@ class appium(object):
         config.read(os.path.join(os.getcwd() , folder , configfile),encoding="utf-8")
         session = value_dict['session']
         xpath = value_dict['xpath_id']
-        print(xpath)
         elem = browser.find_element_by_xpath(config.get(session, xpath))
         elem.click()
 

@@ -8,9 +8,8 @@ from selenium.webdriver.common.keys import Keys
 import configparser
 import os
 config = configparser.ConfigParser()
-config.read(os.path.join(os.getcwd() , 'conf' , "iphonetest.conf"),encoding="utf-8")
 
-class iphone(object):
+class appium(object):
     '''
     classdocs
     '''
@@ -22,14 +21,23 @@ class iphone(object):
    
    
     def set(self,browser,value_dict):
+        folder = value_dict['folder']
+        configfile = value_dict['configfile']
+        config.read(os.path.join(os.getcwd() , folder , configfile),encoding="utf-8")
+        session = value_dict['session']
         xpath = value_dict['xpath_id']
-        print(xpath)
-        elem = browser.find_element_by_xpath(config.get('test', xpath))
+        #print(config.get('login', xpath))
+        elem = browser.find_element_by_xpath(config.get(session, xpath))
         elem.send_keys(value_dict['value'])
     
     def click(self,browser,value_dict):
+        folder = value_dict['folder']
+        configfile = value_dict['configfile']
+        config.read(os.path.join(os.getcwd() , folder , configfile),encoding="utf-8")
+        session = value_dict['session']
         xpath = value_dict['xpath_id']
-        elem = browser.find_element_by_xpath(config.get('test', xpath))
+        print(xpath)
+        elem = browser.find_element_by_xpath(config.get(session, xpath))
         elem.click()
 
     def error_test(self,browser):

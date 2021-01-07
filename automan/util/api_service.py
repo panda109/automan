@@ -25,8 +25,11 @@ import automan.tool.error as error
 from automan.tool.verify import Verify
 import requests, base64, json, re, random
 import configparser
+import datetime
 import time
 import os
+from sshtunnel import SSHTunnelForwarder
+import psycopg2
 
 class api_service(object):
     def __init__(self):
@@ -1837,3 +1840,138 @@ class api_service(object):
             raise error.equalerror()
         except:
             pass
+    
+    def data_callback_verify(self, valueDict):
+        ## There are more than one data in data_callback response
+        ## step:
+        ## Get how many data in the response
+        ## verify the data which keys are correct and no missing
+        ## Required parameters:
+        ##    callbackData    -    Which comes form query_data_get func.
+        ##    requestBodyKey  -    ["deviceUuid", "model", "scope", "value", "generatedTime", "uploadedTime"]
+        dicParam = dict(valueDict)
+        rawData = eval(dicParam["callbackData"])
+        requestBodyKey = ["deviceUuid","model","scope","value","generatedTime","uploadedTime"]
+        try:
+            intDataLen = len(rawData)
+            print("total data: {}".format(intDataLen))
+            for i in range(intDataLen):
+                for j in range(len(rawData[i][0])):
+                    clsDataKeyValue = rawData[i][0][j].keys()
+                    listDataKeyValue = list(clsDataKeyValue)
+                    print(listDataKeyValue)
+                    #print("data", rawData[i][0][j])
+                    for x in range(len(listDataKeyValue)):
+                        if listDataKeyValue[x] in requestBodyKey:
+                            pass
+                        else:
+                            raise error.notequalerror()
+        except:
+            raise error.notfind()
+        
+    def query_data_get(self, valueDict):
+        ## Query data
+        ## str_target_table: Table name
+        ## str_select_item_sql: Input the table cloumn
+        ## str_query_start_time: Get data after str_query_start_time
+        ## str_query_start_time: One minute before the current time
+        ## Required parameters:
+        ## str_select_item_sql    -    received_data
+        ## str_table_name         -    datahook
+        ## str_ordering_column    -    created_on
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+        try:
+            str_select_item_sql = dicParam["str_select_item_sql"]
+            str_target_table = dicParam["str_table_name"]
+            str_ordering = dicParam["str_ordering_column"]
+            str_query_start_time = (datetime.datetime.now() + datetime.timedelta(minutes = -9) + datetime.timedelta(hours = -8)).strftime("%Y-%m-%d %H:%M:%S")
+            str_sql_cmd = "SELECT {0} FROM {1} WHERE {2} >= '{3}' order by {2} desc".format(str_select_item_sql, str_target_table, str_ordering, str_query_start_time)
+            self.cursor.execute(str_sql_cmd)
+            list_results = self.cursor.fetchall()
+            for list_no in range(len(list_results)):
+                print("Data {}: {}".format((list_no + 1), list_results[list_no]))
+                print(type(list_results[list_no]))
+            print(type(list_results))
+            return list_results
+        except Exception as e:
+            print("=====> Exception")
+            print(e)
+            raise error.equalerror()
+        
+    def data_upload_url_get(self, valueDict):
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+        try:
+            url = "https://device-data-qa.nextdrive.io/v1/devices/records"
+            pass
+        except:
+            raise error.nonamevalue()
+        return url
+    
+    def data_upload_header_get(self, valueDict):
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}        
+        try:
+            header = {
+                    "Content-Type"      : "application/json",
+                    "nextdrive-uuid"    : dicParam["cube_uuid"],
+                    "nextdrive-session" : dicParam["session_token"]
+                }
+        except:
+            raise error.nonamevalue()
+        return header
+        
+    def data_upload_session_token_get(self, valueDict):
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+        try:
+            request_header = {
+                    "authorization": "4581qalink_nxd^_^7w"
+                }
+            response = requests.get(("https://tools-qa.nextdrive.io/qa/v1/session/uuid/xxxx/expiration/4").replace("xxxx",dicParam["cube_uuid"]) , headers = request_header)
+            ret = response.json()
+            print(ret)
+        except:
+            raise error.notequalerror() 
+        return ret["data"]["session"]
+    def battery_data_created_get(self, valueDict):
+        ## Function: Created data
+        ## device_uuid: battery(051387a7-6d47-4490-a194-dfdfd3dfea4b) 
+        ## data_uuid: storedElectricity(974b9cc8-1de1-45e8-8d4d-f3c8f36e6cb1)
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+        timestamp = int(datetime.datetime.now().timestamp() * 1000)
+        value = random.randrange(100)
+        dataarray = []
+        data = {
+                "device_uuid"    : dicParam["device_uuid"],
+                "data_uuid"      : dicParam["data_uuid"],
+                "value"          : value,
+                "raw_value"      : "AAAAAAAAAAHuPleEzJ7exdldie",
+                "tag"            : "",
+                "generated_time" : timestamp
+            }
+        dataarray.append(data)
+        jsondata = {"data": dataarray}
+        print("Insert value: {}".format(value))
+        return jsondata
+    def data_upload_get(self, valueDict):
+        ###Function: upload data to cloud
+        qa_stg = valueDict["url"]
+        headers = valueDict["header"]
+        data = valueDict["data"]
+        dicHeaders = eval(headers)
+
+        response = requests.post(qa_stg, data = data, headers = dicHeaders)
+        print(response.text)
+        print(qa_stg)
+        print(data)
+        print(type(data))
+        print(dicHeaders)
+        print(type(dicHeaders))

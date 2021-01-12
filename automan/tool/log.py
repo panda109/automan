@@ -88,9 +88,9 @@ class Log(object):
                 qa_name = node.getAttribute("name")
                 qa_result = node.getAttribute("result")
                 if str(qa_result).lower() == 'pass':
-                    total_fail = total_fail
+                    total_pass = total_pass + 1
                 elif str(qa_result).lower() == 'fail':
-                    total_pass = total_pass + 1                             
+                    total_fail = total_fail + 1                             
                 qa_time = node.getAttribute("time")
                 total_runtime = total_runtime + float(qa_time)
                 testcase_logs = testcase_logs + [(qa_name,qa_result,qa_time)]

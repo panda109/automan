@@ -27,11 +27,12 @@ if __name__ == '__main__':
     print(xml)
     for suite in xml:
     # handle suites
-        print(suite)
+        #print(suite.result)
         for case in suite:
+            print(case.result)
         # handle cases
-            print(case)
-            print(case.index("pass"))
+            #print(case.getAttribute("result"))
+
     #qa_std = "https://{API_SEVER}/api/v1/subset/{subset}/projects/{projectName}/approval/{buildNumber}"
     #headers = {'Content-Type': 'application/json' , 'nextdrive-uuid' : cube_uuid , 'nextdrive-session' : token}
     #r = requests.post(qa_std, data = json_data , headers = headers )

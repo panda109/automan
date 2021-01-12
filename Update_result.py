@@ -11,28 +11,27 @@ https://{API_SEVER}/api/v1/subset/{subset}/projects/{projectName}/approval/{buil
   "qaApproval": "approved"             // {"approved" | "rejected"} 
 }
 '''
-import sys
-import junitparser
+import sys,time,requests
 from junitparser import JUnitXml
-from junitparser import Element, Attr, TestSuite
 
 if __name__ == '__main__':
     argv = sys.argv[1:]
-    print(argv[0],argv[1],argv[2],argv[3])
     project = argv[0]
     buildnumber = argv[1]
     subset = argv[2]
     logfile = argv[3]
     xml = JUnitXml.fromfile(logfile)
-    print(xml)
+    time.sleep(1)
+    res = "approved"
     for suite in xml:
-    # handle suites
-        #print(suite.result)
-        for case in suite:
-            print(case.result)
-        # handle cases
-            #print(case.getAttribute("result"))
-
-    #qa_std = "https://{API_SEVER}/api/v1/subset/{subset}/projects/{projectName}/approval/{buildNumber}"
-    #headers = {'Content-Type': 'application/json' , 'nextdrive-uuid' : cube_uuid , 'nextdrive-session' : token}
-    #r = requests.post(qa_std, data = json_data , headers = headers )
+        if (str(suite).find('pass') == -1):
+            res = "rejected"
+    qa_std = "https://frs.nextdrive.io/api/v1/subset/"+subset+"/projects/"+project+"/approval/"+buildnumber
+    print(qa_std)
+    json_data = {
+            "qaComments": "QA auto test result",    
+            "qaApproval": res
+            }
+    #{"approved" | "rejected"} 
+    r = requests.post(qa_std, data = json_data )
+    print(r)

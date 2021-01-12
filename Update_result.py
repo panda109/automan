@@ -17,8 +17,8 @@ from junitparser import JUnitXml
 if __name__ == '__main__':
     argv = sys.argv[1:]
     project = argv[0]
-    buildnumber = argv[1]
-    subset = argv[2]
+    buildnumber = argv[2]
+    subset = argv[1]
     logfile = argv[3]
     xml = JUnitXml.fromfile(logfile)
     time.sleep(1)
@@ -27,6 +27,7 @@ if __name__ == '__main__':
         if (str(suite).find('pass') == -1):
             res = "rejected"
     qa_std = "https://frs.nextdrive.io/api/v1/subset/"+subset+"/projects/"+project+"/approval/"+buildnumber
+    #qa_std = "https://frs.nextdrive.io/api/v1/subset/ndos2/projects/Cube-Test/approval/"+buildnumber
     print(qa_std)
     json_data = {
             "qaComments": "QA auto test result",    

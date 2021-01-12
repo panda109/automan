@@ -1,5 +1,6 @@
 start
 
-ini		test.ini
+#ini		test.ini
+start
 
 end

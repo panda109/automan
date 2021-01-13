@@ -1951,8 +1951,6 @@ class api_service(object):
     def create_data(self, device_uuid, data_uuid):
     
         dataarray = []
-        
-    
         timestamp = int(datetime.datetime.now().timestamp() * 1000)
         #value = random.randrange(100)
         value = 86146.000000
@@ -1969,4 +1967,85 @@ class api_service(object):
         #print(type(jsondata))   
         data = json.dumps(jsondata)
         return jsondata
+    
+    def device_data_acquire_url_get(self, valueDict):
+        ##  Return the HTTP request URL for - 
+        ##      Device Operation - Device Data Acquire
+        ##
+        ##  Required parameters:
+        ###     uuid            - Device UUID
+        ##      
+        ##  Required parameters(conf):
+        ##      api_endpoint    - API endpoint
+        ##      
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+        try:
+            url = dicParam['api_endpoint'] + "v1/devices/" + dicParam['uuid'] + "/acquire"
+            print("HTTP request URL: ", url)
+        except:
+            raise error.nonamevalue()
+        return url
         
+    def device_data_acquire_header_get(self, valueDict):
+        ##  Return the HTTP request header for - 
+        ##      Device Operation - Device Data Acquire
+        ##
+        ##  Required parameters:
+        ##      token           - Oauth token
+        ##
+        try:
+            authValue = '%s %s' % ('Bearer', valueDict['token'])
+            header = "{\"accept\": \"*/*\"," + \
+                "\"authorization\": \"" + authValue + "\"," + \
+                "\"content-type\": \"application/json\"" + \
+                "}"
+            print("HTTP request header: ", header)
+        except:
+            raise error.nonamevalue()
+        return header
+        
+    def device_data_acquire_sb_body_get(self, valueDict):
+        ##  Return the HTTP request body for - 
+        ##      Device Operation - Device Data Acquire - ECN Storage battery
+        ##
+        ##  Required parameters:
+        ##      scope               - Scope list, separated by ";"
+        ##
+        ##  Request body:
+        ###    {       
+        ###        "scopes": [
+        ###            "{scope 1}",
+        ###            "{scope 2}",
+        ###         ...
+        ###        ]
+        ###    }
+        ##
+        try:
+            scope = valueDict['scope'].split(";")
+            body = "{\"scopes\": ["
+            for i in range(len(scope)):
+                body += "\"" + scope[i] + "\","
+            body = body[0:len(body) - 1]
+            body += "]}"
+            print("HTTP request body: ", body)
+        except:
+            raise error.nonamevalue()
+        return body
+        
+    def string_replace_get(self, valueDict):
+        ##  Return the replace string.
+        ##  Replace #value_before# to #value_after#.
+        ##
+        ##  Required parameters:
+        ##      value               - Source value.
+        ##      value_before        - The string which will be replaced.
+        ##      value_after         - The string that #value_before# will be.
+        ##
+        try:
+            value = re.sub(valueDict['value_before'], valueDict['value_after'], valueDict['value'])
+            print("value: ", value)
+        except:
+            raise error.nonamevalue()
+        return value

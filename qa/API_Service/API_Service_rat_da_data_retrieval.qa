@@ -1,0 +1,147 @@
+###
+### Project			: API-Service
+### Category		: RAT
+###	Test case		:
+### 	Data Acquirement - Data Retrieval
+###
+###	Pre-condition	:
+###		1. Associated 1 air conditioner more than 15 minutes, and keep status without any change.
+###		2. Associated 1 Thermo pixi more than 15 minutes, and press it more than 1 time.
+###		3. Associated 1 Smart meter more than 45 minutes, and keep status without any change.
+###			*30 minutes for gateway query from device, 10 minutes for gateway upload to cloud
+###
+###	Request			:
+###  {
+###      "queries": [
+###          {
+###				"deviceUuid": "{device UUID}",
+###				"scopes": [
+###					"{Refer to *1}",
+###					"{Refer to *1}"
+###				]
+###          }
+###      ],
+###      "time": {
+###          "startTime": {Timestamp 15 minutes ago},
+###          "endTime": {Current timestamp}
+###      },
+###      "maxCount": 60,
+###      "offset": 0
+###  }
+###
+###	Response		:
+###	{
+###		"results": [
+###			{
+###				"pid": "{gateway PID}",
+###				"deviceUuid": "{device UUID}",
+###				"model": "{device model}",
+###				"scope": "{Refer to *1}",
+###				"generatedTime": {Timestamp which gateway got the value of data type},
+###				"uploadedTime": {Timestamp when the data is uploaded},
+###				"value": "{Refer to *1}"
+###			},
+###			{
+###				...
+###			}
+###		],
+###		"offset": {More data to get},
+###		"totalCount": {Total amount between startTime and endTime}
+###	}
+###
+###		*1: 
+###			Air conditioner
+###				operationStatus
+###					ON: 48, OFF: 49
+###				powerSavingOperation
+###					Power-saving: 65, Normal operation: 66
+###				operationMode
+###					Automatic: 65, Cooling: 66, Heating: 67, Dehumidification: 68, Air circulator: 69, Other: 64
+###				temperatureSetting
+###					0 ~ 50
+###				airFlow
+###					function used: 65, Air flow rate: 49–56
+###
+###			Thermo pixi
+###				battery
+###					0 ~ 100
+###				click
+###					false: Key release, true: Key press
+###				temperature
+###					-40 ~ +125
+###				humidity
+###					0 ~ 100
+###
+###			Smart meter
+###				instanceElectricity
+###					Integer
+###				instanceCurrents
+###					Float
+###				instanceCurrentsT
+###					Float
+###				normalUsage
+###					Float
+###				reverseUsage
+###					Float
+###				ed
+###					Integer
+###				rssi
+###					Integer
+###
+
+ini					API_Service.ini
+start
+$nd_token$=get		api_service		nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get			api_service		data_retrieval_url						#null#=null
+$header$=get		api_service		data_retrieval_header					#token#=$nd_token$
+
+## Data retrieval target: Air conditioner
+$body$=get			api_service		data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=powerSavingOperation;operationStatus;operationMode;temperatureSetting;airFlow,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_ac_operationStatus		#value#=$response$,#system_value#=$ecn_air_conditioner_01_operationStatus$,#criteria#==
+verify				api_service		data_retrieval_ac_powerSavingOperation	#value#=$response$,#system_value#=$ecn_air_conditioner_01_powerSavingOperation$,#criteria#==
+verify				api_service		data_retrieval_ac_operationMode			#value#=$response$,#system_value#=$ecn_air_conditioner_01_operationMode$,#criteria#==
+verify				api_service		data_retrieval_ac_temperatureSetting	#value#=$response$,#system_value#=$ecn_air_conditioner_01_temperatureSetting$,#criteria#==
+verify				api_service		data_retrieval_ac_airFlow				#value#=$response$,#system_value#=$ecn_air_conditioner_01_airFlow$,#criteria#==
+
+## Data retrieval target: Thermo pixi
+$body$=get			api_service		data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$thermo_pixi_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$thermo_pixi_01_model$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=battery;click;temperature;humidity,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_tp_battery				#value#=$response$,#system_value#=$thermo_pixi_01_battery$,#criteria#==
+verify				api_service		data_retrieval_tp_click					#value#=$response$,#system_value#=$thermo_pixi_01_battery$,#criteria#==
+verify				api_service		data_retrieval_tp_temperature			#value#=$response$,#system_value#=$thermo_pixi_01_temperature$,#criteria#==
+verify				api_service		data_retrieval_tp_humidity				#value#=$response$,#system_value#=$thermo_pixi_01_humidity$,#criteria#==
+
+## Data retrieval target: Smart meter
+$body$=get			api_service		data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$smart_meter_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$smart_meter_01_model$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=instanceElectricity;instanceCurrents;instanceCurrentsT;normalUsage;reverseUsage;ed;rssi,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_sm_instanceElectricity	#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_sm_instanceCurrents		#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_sm_instanceCurrentsT		#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_sm_normalUsage			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_sm_reverseUsage			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_sm_ed					#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_sm_rssi					#value#=$response$,#criteria#==
+
+end

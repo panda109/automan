@@ -1,0 +1,13 @@
+###
+### Project			: API-Service
+### Category		: RAT
+###	Test case		:
+### 	Authentication - Get Access Token
+###
+###	Pre-condition	:
+###		
+
+ini					API_Service.ini
+start
+$nd_token$=get		api_service		nd_token		#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+end

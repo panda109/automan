@@ -1,0 +1,51 @@
+###
+### Project			: API-Service
+### Category		: RAT
+###	Test case		:
+### 	Gateway Management - Device List
+###
+###	Pre-condition	:
+###		Association list
+###			Smart Meter X 1
+###			Thermo Pixi X 1
+###			ECN - Air Conditioner X 1
+###
+###	Request			:
+###
+###	Response		:
+###	{
+###		"devices": [
+###			{
+###				"deviceUuid": "{Device 1 UUID}",
+###				"model": "{Device 1 model}",
+###				"name": "{Device 1 name}",
+###				"onlineStatus": "{Device 1 online status}",
+###			},
+###			{
+###				"deviceUuid": "{Device 2 UUID}",
+###				"model": "{Device 2 model}",
+###				"name": "{Device 2 name}",
+###				"onlineStatus": "{Device 2 online status}",
+###			},
+###			{
+###				"deviceUuid": "{Device 3 UUID}",
+###				"model": "{Device 3 model}",
+###				"name": "{Device 3 name}",,
+###				"onlineStatus": "{Device 3 online status}",
+###			}
+###		]
+###	}
+###
+
+ini						API_Service.ini
+start
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			device_list_url				#gateway_pid#=$gateway_pid$
+$header$=get			api_service			device_list_header			#token#=$nd_token$
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$header$
+verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
+verify					api_service			device_list_deviceUuid		#value#=$response$,#system_value#=$smart_meter_01_uuid$;$ecn_air_conditioner_01_uuid$;$thermo_pixi_01_uuid$,#criteria#==
+verify					api_service			device_list_model			#value#=$response$,#system_value#=$smart_meter_01_model$;$ecn_air_conditioner_01_model$;$thermo_pixi_01_model$,#criteria#==
+verify					api_service			device_list_name			#value#=$response$,#system_value#=$smart_meter_01_name$;$ecn_air_conditioner_01_name$;$thermo_pixi_01_name$,#criteria#==
+verify					api_service			device_list_onlineStatus	#value#=$response$,#system_value#=$smart_meter_01_onlineStatus$;$ecn_air_conditioner_01_onlineStatus$;$thermo_pixi_01_onlineStatus$,#criteria#==
+end

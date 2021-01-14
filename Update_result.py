@@ -26,10 +26,8 @@ if __name__ == '__main__':
     for suite in xml:
         if (str(suite).find('pass') == -1):
             res = '{"qaComments": "QA_auto_test_result","qaApproval" : "rejected"}'
-    #qa_std = "https://frs-api.nextdrive.io/api/v1/subset/"+subset+"/projects/"+project+"/approval/"+version
-    #qa_std = "https://radiant-wildwood-74214.herokuapp.com/api/v1/subset/ndos2/projects/Cube-Test/approval/4.0.51007"
-    qa_std = "https://frs-api.nextdrive.io/api/v1/subset/ndos2/projects/Cube-Test/approval/4.0.51008"
-    #qa_std = "https://frs-api.nextdrive.io/api/v1/subset/ndos2/projects/Cube-Test/approval/4.0.51005"
+    qa_std = "https://frs-api.nextdrive.io/api/v1/subset/"+subset+"/projects/"+project+"/approval/"+version
+    #qa_std = "https://frs-api.nextdrive.io/api/v1/subset/ndos2/projects/Cube-Test/approval/4.0.51008"
     print(qa_std)
     json_data = res
     header = {'content-type': 'application/json',

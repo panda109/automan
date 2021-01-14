@@ -13,6 +13,7 @@ import aircv as ac
 import subprocess
 import automan.util.tool as tool
 
+
 config = configparser.ConfigParser()
 config.read(os.path.join(os.getcwd(), 'conf', "android_eg_plus.conf"), encoding="utf-8")
 
@@ -184,7 +185,7 @@ class android_eg_plus(object):
         fpWidth = size.get("width")
         fpHeight = size.get("height")
         x = int(fpWidth * 0.5)
-        y1 = int(fpHeight * 0.95)
+        y1 = int(fpHeight * 0.85)
         y2 = int(fpHeight * 0.35)
         browser.swipe(x, y1, x, y2, 3000)
         
@@ -249,6 +250,63 @@ class android_eg_plus(object):
         code = f.read()
         f.close()
         return code
+    
+    def ecnDeviceType_verify(self, browser, dicValue):
+        dicParam = dict(dicValue)
+        swipeFlag = True
+        swipeTime = 0
+        target_type = "エアコン".encode('utf-8')
+        print("target_type: {}".format(target_type))
+        try:
+            while swipeFlag:
+                try:
+                    time.sleep(1)
+                    objEcnDeviceType = browser.find_element_by_xpath(config.get("xpath", dicParam["xpath"]))
+                    strEcnDeviceType = objEcnDeviceType.text
+                    byteEcnDeviceType = strEcnDeviceType.encode('utf-8')
+                    print("Read: {}".format(byteEcnDeviceType))
+                    if byteEcnDeviceType == target_type:
+                        swipeFlag = False
+                        break
+                    else:
+                        self.up_swipe(browser)
+                except:
+                    self.up_swipe(browser)
+                swipeTime = swipeTime + 1
+                if swipeTime >= 50:
+                    swipeFlag = False
+                    raise error.notfind()
+                else:
+                    pass
+        except:
+            raise error.notfind()
         
- 
+    def screen_take(self,browser):
+        browser.save_screenshot('./log/app.png')
+"""    
+    def ecn_click(self, browsr, dicValue):
+        dicParam = dict(dicValue)
+        swipeFlag = True
+        swipeTime = 0
+        target_device_no = "01"
+        target_device_ip = "192.168.7.9"
+        try:
+            while swipeFlag:
+                try:
+                    #find device no
+                    #if device number == target_device_no
+                        #verify device ip
+                        # if device ip == target_device_ip
+                        #click
+                except:
+                    self.up_swipe(browser)
+                    pass
+        except:
+            pass                        
+"""                        
+                        
+
+        
+        
+        
             

@@ -5,31 +5,31 @@ start
 
 sleep				3
 click				browser.android_eg_plus					element				#xpath#=loginPage_already_have_an_account_button
-take				browser.iphone							screen
+take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_account_signin
 $sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=signin_input.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
 
 set					browser.android_eg_plus					element				#xpath#=signinPage_email,#strValue#=$app_account$
-take				browser.iphone							screen
+take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_account_signin
 $sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=signin_account.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
 
 set					browser.android_eg_plus					element				#xpath#=signinPage_password,#strValue#=$app_password$
-take				browser.iphone							screen
+take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_account_signin
 $sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=signin_password.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
 
 click				browser.android_eg_plus					element				#xpath#=loginPage_signin_button
-take				browser.iphone							screen
+take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_account_signin
 $sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=singin_loading.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
 
 sleep				3
-take				browser.iphone							screen
+take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_account_signin
 $sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Home_page_jp.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout

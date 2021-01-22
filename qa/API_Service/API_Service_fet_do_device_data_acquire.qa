@@ -1,0 +1,93 @@
+###
+### Project			: API-Service
+### Category		: FET
+###	Test case		:
+### 	Device Operation - Device Data Acquire
+###		
+###	Purpose			:
+###		1.	401 Unauthorized(Valid access token is not specified).
+###			Wrong ND token.
+###		2.	404 Not Found(Requesting resource not found).
+###			Device UUID that not exist.
+###		3.	403 Forbidden(Not authorized to access the resource).
+###			Wrong ND token scope.
+###		4.	499 Token Expired(Access Token expired).
+###			Not test.
+###		5.	400 Bad Request(Problem with the request) for each ECN devices.
+###			(1) Wrong scope.
+###			(2) Wrong format.
+###		6.	500 Internal Server Error(Error on the internal server) for each ECN devices.
+###			(1) Scope that is not support.
+###			(2) Empty scope array.
+###
+###	Pre-condition	:
+###		1. Associated with a ECN storage battery.,
+###
+###	Request			:
+###
+###	Response		:
+###
+
+ini						API_Service.ini
+start
+
+##	401 Unauthorized
+$nd_token$=get			api_service		nd_token								#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$wrong_nd_token$=get	api_service		string_replace							#value#=$nd_token$,#value_before#=a,#value_after#=A
+$url$=get				api_service		device_data_acquire_url					#uuid#=$ecn_storage_battery_01_uuid$
+$header$=get			api_service		device_data_acquire_header				#token#=$wrong_nd_token$
+$body$=get				api_service		device_data_acquire_sb_body				#scope#=operatingStatus;workingOperationStatus;operationMode
+$response$=get			api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service		status_code								#value#=$response$,#system_value#=401,#criteria#==
+
+##	404 Not Found
+$nd_token$=get			api_service		nd_token								#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service		device_data_acquire_url					#uuid#=$ecn_storage_battery_01_uuid$
+$wrong_url$=get			api_service		string_replace							#value#=$url$,#value_before#=\d,#value_after#=0
+$header$=get			api_service		device_data_acquire_header				#token#=$nd_token$
+$body$=get				api_service		device_data_acquire_sb_body				#scope#=operatingStatus;workingOperationStatus;operationMode
+$response$=get			api_service		HTTP_POST_response						#url#=$wrong_url$,#header#=$header$,#body#=$body$
+verify					api_service		status_code								#value#=$response$,#system_value#=404,#criteria#==
+
+##	403 Forbidden
+$nd_token$=get			api_service		nd_token								#environment#=$testing_environment$,#scope#=User Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service		device_data_acquire_url					#uuid#=$ecn_storage_battery_01_uuid$
+$header$=get			api_service		device_data_acquire_header				#token#=$nd_token$
+$body$=get				api_service		device_data_acquire_sb_body				#scope#=operatingStatus;workingOperationStatus;operationMode
+$response$=get			api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service		status_code								#value#=$response$,#system_value#=403,#criteria#==
+
+##	499 Token Expired
+##		Not test.
+
+###	ECN device: Storage battery
+$nd_token$=get			api_service		nd_token								#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service		device_data_acquire_url					#uuid#=$ecn_storage_battery_01_uuid$
+$header$=get			api_service		device_data_acquire_header				#token#=$nd_token$
+##	400 Bad Request
+##		Wrong key: "scopes" -> "scope"
+$body$=get				api_service		device_data_acquire_sb_body				#scope#=operatingStatus;workingOperationStatus;operationMode
+$wrong_body$=get		api_service		string_replace							#value#=$body$,#value_before#=scopes,#value_after#=scope
+$response$=get			api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify					api_service		status_code								#value#=$response$,#system_value#=400,#criteria#==
+##		Wrong format: "scopes" is not a array
+$body$=get				api_service		device_data_acquire_sb_body				#scope#=operatingStatus
+$wrong_body$=get		api_service		string_replace							#value#=$body$,#value_before#=\[\"operatingStatus\"\],#value_after#="operatingStatus"
+$response$=get			api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify					api_service		status_code								#value#=$response$,#system_value#=400,#criteria#==
+##		Not test. Because it will be an invalid JSON format in python.
+##			Wrong format: "scopes" not exist ""
+##			Wrong format: scope - "{scope}" not exist ""
+##			
+##	500 Internal Server Error
+##		Not support scope: "InvalidScope"
+$body$=get				api_service		device_data_acquire_sb_body				#scope#=InvalidScope;operatingStatus
+$response$=get			api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service		status_code								#value#=$response$,#system_value#=500,#criteria#==
+##		Empty scope array
+$body$=get				api_service		device_data_acquire_sb_body				#scope#=
+$response$=get			api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service		status_code								#value#=$response$,#system_value#=500,#criteria#==
+###		End of Storage battery
+
+end

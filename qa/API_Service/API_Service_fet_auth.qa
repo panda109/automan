@@ -1,0 +1,200 @@
+###
+### Project			: API-Service
+### Category		: FET
+### Test case		:
+###		Authentication - Get Access Token
+###
+###
+###	test scope
+###	test cases: 17
+###	wrong value:
+###		(400)enviroment: $testing_environment$ -> production
+###		(400)header key: authorization -> authorizatiom
+###		(Error 200)header key: content-type -> content-typo
+###		(400)header value(Key: authorization): Basic -> Basis
+###		(400)header value(Key: authorization): $nd_client_id$ -> 7t02o5suho56befc7rxxxxdddd
+###		(400)body key: grant_type -> grant_typo
+###		(Error 200)body key: scope -> scopee
+###		(400)body value(Key: grant_type): client_credentials -> client_credentialss
+###		(400)body value(Key: scope): oauth_scope(readwrite) -> oauth_scope(roodwrite)
+###	long value:
+###		(400)header key: authorization -> (ini) header_long_authorization
+###		(Error 200)header key: content-type -> (ini) header_long_content_type
+###		(400)header value(authorization): Basic -> (ini) long_string
+###		(400)body key: grant_type -> (ini) long_string
+###		(Error 200)body key: scope -> (ini) long_string
+###		(400)body value(Key: grant_type): client_credentials -> (ini) long_string
+###		(400)body value(Key: scope): oauth_scope -> (ini) long_string
+###	wrong format:
+###		(400)body format: dict -> list
+ini					API_Service.ini
+start
+###==============================================================================================
+##	401	Unauthorized
+###==============================================================================================
+##	404	Not	found
+###==============================================================================================
+##	403	Forbidden
+###==============================================================================================
+##	499	Token	expired
+###==============================================================================================
+##	400	Bad	request
+
+##		Wrong header
+##			Wrong environment: $testing_environment$ -> production
+$url$=get			api_service		nd_token_url						#environment#=production
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong header
+##			Wrong key: authorization -> authorizatiom
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$wrong_header$=get	api_service		string_replace						#value#=$header$,#value_before#=authorization,#value_after#=authorizatiom
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong header
+##			Wrong value: Basic -> Basis
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$wrong_header$=get	api_service		string_replace						#value#=$header$,#value_before#=Basic,#value_after#=Basis
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong header
+##			Wrong value: $nd_client_id$ -> 7t02o5suho56befc7rxxxxdddd
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=7t02o5suho56befc7rxxxxdddd,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong header
+##			Long key: authorization -> (ini) header_long_authorization
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$wrong_header$=get	api_service		string_replace						#value#=$header$,#value_before#=authorization,#value_after#=$header_long_authorization$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong header
+##			Long value: (authorization): Basic -> (ini) long_string
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$wrong_header$=get	api_service		string_replace						#value#=$header$,#value_before#=Basic,#value_after#=$long_string$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong key: grant_type -> grant_typo
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$wrong_body$=get	api_service		string_replace						#value#=$body$,#value_before#=grant_type,#value_after#=grant_typo
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long key: grant_type -> (ini) long_string
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$wrong_body$=get	api_service		string_replace						#value#=$body$,#value_before#=grant_type,#value_after#=$long_string$
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong value(Key: grant_type): client_credentials -> client_credentialss
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$wrong_body$=get	api_service		string_replace						#value#=$body$,#value_before#=client_credentials,#value_after#=client_credentialss
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong value(Key: scope): oauth_scope(readwrite) -> oauth_scope(roodwrite)
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$wrong_body$=get	api_service		string_replace						#value#=$body$,#value_before#=readwrite,#value_after#=roodwrite
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long value(Key: grant_type): client_credentials -> (ini) long_string
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$wrong_body$=get	api_service		string_replace						#value#=$body$,#value_before#=client_credentials,#value_after#=$long_string$
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long value(Key: scope): oauth_scope -> (ini) long_string
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$wrong_body$=get	api_service		string_replace						#value#=$body$,#value_before#=https://ioeapi-qa.nextdrive.io/device.readwrite,#value_after#=$long_string$
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong format: dict -> list
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$wrong_body$=get	api_service		string_replace						#value#=$body$,#value_before#={'grant_type': 'client_credentials', 'scope': 'https://ioeapi-qa.nextdrive.io/device.readwrite'},#value_after#=[{'grant_type': 'client_credentials', 'scope': 'https://ioeapi-qa.nextdrive.io/device.readwrite'}]
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify				api_service		status_code							#value#=$response$,#system_value#=400,#criteria#==
+###==============================================================================================
+##	500 Internal Server Error
+###==============================================================================================
+### Error case
+##		Wrong header
+##			Wrong key: content-type -> content-typo
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$wrong_header$=get	api_service		string_replace						#value#=$header$,#value_before#=content-type,#value_after#=content-typo
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify				api_service		status_code							#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong header
+##			Long key: content-type -> (ini) header_long_content_type
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$wrong_header$=get	api_service		string_replace						#value#=$header$,#value_before#=content-type,#value_after#=$header_long_content_type$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify				api_service		status_code							#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong key: scope -> scopee
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$wrong_body$=get	api_service		string_replace						#value#=$body$,#value_before#=scope,#value_after#=scopee
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify				api_service		status_code							#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long key: scope -> (ini) long_string
+$url$=get			api_service		nd_token_url						#environment#=$testing_environment$
+$header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
+$wrong_body$=get	api_service		string_replace						#value#=$body$,#value_before#=scope,#value_after#=$long_string$
+$response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify				api_service		status_code							#value#=$response$,#system_value#=200,#criteria#==
+###==============================================================================================
+end
+
+
+
+

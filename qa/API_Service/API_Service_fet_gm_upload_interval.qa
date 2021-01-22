@@ -1,0 +1,284 @@
+###
+### Project			: API-Service
+### Category		: FET
+###	Test case		:
+### 	Gateway Management - Upload Interval
+###		1. Upload Interval Config: PUT method
+###		2. Get Upload Interval Config: GET method
+###
+###	Pre-condition	:
+###
+###	Request(PUT)	:
+###	{       
+###		"uploadInterval": {interval, 1~10}
+###	}
+###
+###	Response(GET)	:
+###	{       
+###		"uploadInterval": {interval}
+###	}
+###
+###	test scope
+###	test cases: 21
+### wrong value:
+###		(404)url
+###		(404)url - PID
+###		(401)nd token
+###		(Error 200)header key: accept -> acceptt
+###		(401)header key: authorization -> authorizatiom
+###		(Error 200)header key: content-type -> content-typo
+###		(400)header value(Key: accept, content-type): application/json -> application/jsonn *if only changes value of accept, return code maintains 200, but if change content-type instead of accept value, return code is 400
+###		(401)header value(Key: authorization): Bearer -> Bearerr
+###		(403)header scope: Gateway Management -> Device Management
+###		(400)body key: uploadInterval -> upload_interval
+###		(400)body value(Key: uploadInterval): expected value is between 1-10 -> input value bigger than 10
+###	long value:
+###		(404)url - PID: gateway_pid -> (ini) long_gateway_pid
+###		(Error 200)header key: accept -> (ini) header_long_accept
+###		(401)header key: authorization -> (ini) header_long_authorization
+###		(Error 200)header key: content-type -> (ini) header_long_content_type
+###		(400)header value(Key: accept, content-type): applocation/json -> (ini) header_long_app_js
+###		(401)header value(Key: authorization): Bearer -> (ini) header_long_bearer
+###		(400)body key: uploadInterval -> (ini) upload_interval_body_long_uploadInterval_value
+###		(400)body value(Key: uploadInterval): e.g., 7 -> (ini) upload_interval_body_long_uploadInterval_value
+###	wrong format:
+###		(400)body format(uploadInterval integer -> string): e.g., 5 -> "five"
+###		(400)body format: e.g., {"uploadInterval": 5} -> [{"uploadInterval": 5}]
+
+
+
+
+
+ini						API_Service.ini
+start
+
+##		Wrong token
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$body$=get				api_service			upload_interval_body		#interval#=5
+$wrong_body$=get		api_service			string_replace				#value#=$body$,#value_before#={"uploadInterval": 5},#value_after#=[{"uploadInterval": 5}]
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify					api_service			status_code					#value#=$response$,#system_value#=400,#criteria#==
+
+
+###==============================================================================================
+##	401	Unauthorized
+##		Wrong token
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$wrong_nd_token$=get	api_service			string_replace				#value#=$nd_token$,#value_before#=a,#value_after#=A
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$wrong_nd_token$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Wrong key: authorization -> authorizatiom
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=authorization,#value_after#=authorizatiom
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Wrong value(Key: authorization): Bearer -> Bearerr
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=Bearer,#value_after#=Bearerr
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Long key: authorization -> (ini) header_long_authorization
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=authorization,#value_after#=$header_long_authorization$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Long value: (Key: authorization): Bearer -> (ini) header_long_bearer
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=Bearer,#value_after#=$header_long_bearer$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
+###==============================================================================================
+##	403	Forbidden
+##		Wrong header
+##			Wrong value: Gateway Management -> Device Management
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=403,#criteria#==
+###==============================================================================================
+##	404	Not	found
+##		Wrong url
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$wrong_url$=get			api_service			string_replace				#value#=$url$,#value_before#=/con,#value_after#=/cnn
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$wrong_url$,#header#=$header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=404,#criteria#==
+
+##		Wrong url
+##			Wrong PID: 	XXXXXXXYYYYYYZZZZ	
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=XXXXXXXYYYYYYZZZZ
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=404,#criteria#==
+
+##		Wrong url
+##			Long PID: 	(ini) long_gateway_pid	
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$long_gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=404,#criteria#==
+###==============================================================================================
+##	499	Token	expired
+###==============================================================================================
+##	400	Bad	request
+##		Wrong header
+##			Wrong value(Key: accept, content-type): application/json -> application/jsonn
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=application/json,#value_after#=application/jsonn
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong header
+##			Long value: (Key: accept, content-type): application/json -> (ini)header_long_app_js 
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=application/json,#value_after#=$header_long_app_js$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong key: uploadInterval -> upload_interval
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$wrong_body$=get		api_service			string_replace				#value#=$body$,#value_before#=uploadInterval,#value_after#=upload_interval
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify					api_service			status_code					#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long key: uploadInterval -> (ini) body_long_uploadInterval
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$wrong_body$=get		api_service			string_replace				#value#=$body$,#value_before#=uploadInterval,#value_after#=$body_long_uploadInterval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify					api_service			status_code					#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong value(Key: uploadInterval): e.g., 5 -> five
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$body$=get				api_service			upload_interval_body		#interval#="five"
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=400,#criteria#==
+
+##			Wrong value(Key: uploadInterval): expect value is between 1-10 -> input value bigger than 10
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$interval$=get			api_service			random_integer				#minimum#=11,#maximum#=15,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long value(Key: uploadInterval): e.g., 7 -> (ini)upload_interval_body_long_uploadInterval_value
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$body$=get				api_service			upload_interval_body		#interval#=$upload_interval_body_long_uploadInterval_value$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=400,#criteria#==
+###==============================================================================================
+##	500 Internal Server Error
+###==============================================================================================
+### Error case
+##		Wrong header
+##			Wrong key: accept -> acceptt
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=accept,#value_after#=acceptt
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong header
+##			Wrong key: content-type -> content-typo
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=content-type,#value_after#=content-typo
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong header
+##			Long key: accept -> (ini) header_long_accept
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=accept,#value_after#=$header_long_accept$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong header
+##			Long key: content_type -> (ini) header_long_content_type
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			upload_interval_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=content-type,#value_after#=$header_long_content_type$
+$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$body$=get				api_service			upload_interval_body		#interval#=$interval$
+$response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
+###==============================================================================================
+end

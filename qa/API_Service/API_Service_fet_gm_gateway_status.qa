@@ -1,0 +1,173 @@
+###
+### Project			: API-Service
+### Category		: FET
+###	Test case		:
+### 	Gateway Management - Gateway Status
+###
+###	Pre-condition	:
+###
+###	Request			:
+###
+###	Response		:
+###	{
+###		"name": "{gateway_name}",
+###		"model": "{gateway_model}",
+###		"fwVersion": "{gateway_firmware_version}",
+###		"onlineStatus": "{gateway_online_status}"
+###	}
+###		
+### test scope
+###	test cases: 13
+### wrong value:
+###		(404)url
+###		(404)url - PID
+###		(401)nd token
+###		(Error 200)header key: accept -> acceptt
+###		(401)header key: authorization -> authorizatiom
+###		(Error 200)header value(Key: accept): application/json -> application/jsonn
+###		(401)header value(Key: authorization): Bearer -> Bearerr
+###		(403)header scope: Gateway Management -> Device Management
+###	long value:
+###		(404)url - PID
+###		(Error 200)header key: accept -> (ini) header_long_accept
+###		(401)header key: authorization -> (ini) header_long_authorization
+###		(Error 200)header value(Key: accept): application/json -> (ini) header_long_app_js
+###		(401)header value(Key: authorization): Bearer -> (ini) header_long_bearer
+
+
+ini						API_Service.ini
+start
+###==============================================================================================
+##	401	Unauthorized
+##		Wrong token
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$wrong_nd_token$=get	api_service			string_replace				#value#=nd_token,#value_before#=a,#value_after#=A
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$wrong_nd_token$
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$header$
+verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Wrong key: authorization -> authorizatiom
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=authorization,#value_after#=authorizatiom
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$wrong_header$
+verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Wrong value: Bearer -> Bearerr
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=Bearer,#value_after#=Bearerr
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$wrong_header$
+verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Long value: Bearer -> (ini)header_long_bearer
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=Bearer,#value_after#=$header_long_bearer$
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$wrong_header$
+verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Long value: authorization -> (ini)header_long_authorization
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=authorization,#value_after#=$header_long_authorization$
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$wrong_header$
+verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
+###==============================================================================================
+##	403	Forbidden
+##		Wrong header
+##			Wrong value: Gateway Management -> Device Management
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$header$
+verify					api_service			status_code					#value#=$response$,#system_value#=403,#criteria#==
+
+###==============================================================================================
+##	404	Not	found
+##		Wrong url
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$wrong_url$=get			api_service			string_replace				#value#=$url$,#value_before#=/sta,#value_after#=/stt
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$response$=get			api_service			HTTP_GET_response			#url#=$wrong_url$,#header#=$header$
+verify					api_service			status_code					#value#=$response$,#system_value#=404,#criteria#==
+
+##		Wrong url
+##			Wrong PID: XXXXXXXYYYYYYZZZZ
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=XXXXXXXYYYYYYZZZZ
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$header$
+verify					api_service			status_code					#value#=$response$,#system_value#=404,#criteria#==
+
+##		Wrong url
+##			Long PID: gateway_pid -> (ini) long_gateway_pid
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$long_gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$header$
+verify					api_service			status_code					#value#=$response$,#system_value#=404,#criteria#==
+###==============================================================================================
+
+###==============================================================================================
+
+###==============================================================================================
+###==============================================================================================
+###==============================================================================================
+
+###==============================================================================================
+###==============================================================================================
+###==============================================================================================
+
+###==============================================================================================
+###==============================================================================================
+###==============================================================================================
+###	Error case
+##		Wrong header
+##			Wrong value: application/json -> application/jsonn
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=application/json,#value_after#=application/jsonn
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$wrong_header$
+verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong header
+##			Wrong key: accept -> acceptt
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=accept,#value_after#=acceptt
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$wrong_header$
+verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong header
+##			Long key: accept -> (ini) header_long_accept
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=accept,#value_after#=$header_long_accept$
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$wrong_header$
+verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong header
+##			Long value(Key: accept): application/json -> (ini) header_long_app_js
+$nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service			gateway_status_url			#gateway_pid#=$gateway_pid$
+$header$=get			api_service			gateway_status_header		#token#=$nd_token$
+$wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=application/json,#value_after#=$header_long_app_js$
+$response$=get			api_service			HTTP_GET_response			#url#=$url$,#header#=$wrong_header$
+verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
+
+
+end

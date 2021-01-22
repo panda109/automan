@@ -1,0 +1,869 @@
+###
+### Project			: API-Service
+### Category		: FET
+###	Test case		:
+### 	Data Acquirement - Data Retrieval
+###
+###	Pre-condition	:
+###		1. Associated 1 air conditioner more than 15 minutes, and keep status without any change.
+###		2. Associated 1 Thermo pixi more than 15 minutes, and press it more than 1 time.
+###		3. Associated 1 Smart meter more than 45 minutes, and keep status without any change.
+###			*30 minutes for gateway query from device, 10 minutes for gateway upload to cloud
+###
+###	Request			:
+###  {
+###      "queries": [
+###          {
+###				"deviceUuid": "{device UUID}",
+###				"scopes": [
+###					"{Refer to *1}",
+###					"{Refer to *1}"
+###				]
+###          }
+###      ],
+###      "time": {
+###          "startTime": {Timestamp 15 minutes ago},
+###          "endTime": {Current timestamp}
+###      },
+###      "maxCount": 60,
+###      "offset": 0
+###  }
+###
+###	Response		:
+###	{
+###		"results": [
+###			{
+###				"pid": "{gateway PID}",
+###				"deviceUuid": "{device UUID}",
+###				"model": "{device model}",
+###				"scope": "{Refer to *1}",
+###				"generatedTime": {Timestamp which gateway got the value of data type},
+###				"uploadedTime": {Timestamp when the data is uploaded},
+###				"value": "{Refer to *1}"
+###			},
+###			{
+###				...
+###			}
+###		],
+###		"offset": {More data to get},
+###		"totalCount": {Total amount between startTime and endTime}
+###	}
+###
+###		*1: 
+###			Air conditioner
+###				operationStatus
+###					ON: 48, OFF: 49
+###				powerSavingOperation
+###					Power-saving: 65, Normal operation: 66
+###				operationMode
+###					Automatic: 65, Cooling: 66, Heating: 67, Dehumidification: 68, Air circulator: 69, Other: 64
+###				temperatureSetting
+###					0 ~ 50
+###				airFlow
+###					function used: 65, Air flow rate: 49~56
+###
+###			Thermo pixi
+###				battery
+###					0 ~ 100
+###				click
+###					false: Key release, true: Key press
+###				temperature
+###					-40 ~ +125
+###				humidity
+###					0 ~ 100
+###
+###			Smart meter
+###				instanceElectricity
+###					Integer
+###				instanceCurrents
+###					Float
+###				instanceCurrentsT
+###					Float
+###				normalUsage
+###					Float
+###				reverseUsage
+###					Float
+###				ed
+###					Integer
+###				rssi
+###					Integer
+###
+###	test scope
+###	test cases: 64
+###	General
+###		wrong value:
+###			(404)url
+###			(401)nd token
+###			(403)header scope: Data Acquirement -> Gateway Management
+###			(Error 200)header key: accept -> acceptt
+###			(401)header key: authorization -> authorizatiom
+###			(Error 200)header key: content-type -> content-typo
+###			(400)header value(Key: accept, content-type): application/json -> application/jsonn *if only changes value of accept, return code maintains 200, but if change content-type instead of accept value, return code is 400
+###			(401)header value(authorization): Bearer -> Bearerr
+###			(400)body key: deviceUuid -> device_uuid
+###			(400)body key: queries -> queriess
+###			(400)body key: time -> timo
+###			(400)body key: maxCount -> max_count
+###			(Error 200)body key: offset -> offsett
+###			(400)body value(Key: time): startTime -> start_time
+###			(400)body value(Key: time): endTime -> end_time
+###		long value:
+###			(Error 200)header key: accept -> (ini) header_long_accept
+###			(401)header key: authorization -> (ini) header_long_authorization
+###			(Error 200)header key: content-type -> (ini) header_long_content_type
+###			(400)header value(Key: accept, content-type): application/json -> (ini) header_long_app_js
+###			(401)header value(authorization): Bearer -> (ini) header_long_bearer
+###			(400)body key: deviceUuid -> (ini) long_string
+###			(400)body key: queries -> (ini) long_string
+###			(400)body key: time -> (ini) long_string
+###			(400)body key: maxCount -> (ini) long_string
+###			(Error 200)body key: offset -> (ini) long_string
+###			(400)body value(Key: time): startTime -> (ini) long_string
+###			(400)body value(Key: time): endTime -> (ini) long_string
+###		wrong format:
+###			(400)body value(Key: maxCount): e.g., 60 -> "60"
+###			(400)body value(Key: offset): e.g., 0 -> "0"
+###	Air Conditioner
+###		wrong value:
+###			(Error 200)scope value: operationStatus -> operationStatuss
+###			(Error 200)scope value: powerSavingOperation -> powerSavingOperationn
+###			(Error 200)scope value: operationMode -> operationModee
+###			(Error 200)scope value: temperatureSetting -> temperatureSettingg
+###			(Error 200)scope value: airFlow -> airFloww
+###		long value:
+###			(Error 200)scope value: operationStatus -> (ini) long_string
+###			(Error 200)scope value: powerSavingOperation -> (ini) long_string
+###			(Error 200)scope value: operationMode -> (ini) long_string
+###			(Error 200)scope value: temperatureSetting -> (ini) long_string
+###			(Error 200)scope value: airFlow -> (ini) long_string
+###		wrong foramt:
+###			(Error 200)scope value: str -> list
+###	Thermo
+###		wrong value:
+###			(Error 200)scope value: battery -> batterymca
+###			(Error 200)scope value: click -> clickk
+###			(Error 200)scope value: temperature -> temperaturee
+###			(Error 200)scope value: humidity -> humidityy
+###		long value:
+###			(Error 200)scope value: battery -> (ini) long_string
+###			(Error 200)scope value: click -> (ini) long_string
+###			(Error 200)scope value: temperature -> (ini) long_string
+###			(Error 200)scope value: humidity -> (ini) long_string
+###		wrong format:
+###			(Error 200)scope value: str -> list
+###	Smart meter
+###		wrong value:
+###			(Error 200)scope value: instanceElectricity -> instanceElectricityy
+###			(Error 200)scope value: instanceCurrents -> instanceCurrentss
+###			(Error 200)scope value: instanceCurrentsT -> instanceCurrentsTT
+###			(Error 200)scope value: normalUsage -> normalUsagee
+###			(Error 200)scope value: reverseUsage -> reverseUsagee
+###			(Error 200)scope value: ed -> edd
+###			(Error 200)scope value: rssi -> rssp
+###		long value:
+###			(Error 200)scope value: instanceElectricity -> (ini) long_string
+###			(Error 200)scope value: instanceCurrents -> (ini) long_string
+###			(Error 200)scope value: instanceCurrentsT -> (ini) long_string
+###			(Error 200)scope value: normalUsage -> (ini) long_string
+###			(Error 200)scope value: reverseUsage -> (ini) long_string
+###			(Error 200)scope value: ed -> (ini) long_string
+###			(Error 200)scope value: rssi -> (ini) long_string
+###		wrong format:
+###			(Error 200)scope value: str -> list
+
+ini								API_Service.ini
+start
+###==============================================================================================
+##	401	Unauthorized
+##		Wrong header
+##			Wrong token
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$wrong_nd_token$=get			api_service					string_replace							#value#=$nd_token$,#value_before#=a,#value_after#=A
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$wrong_nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Wrong key: authorization -> authorizatiom
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=authorization,#value_after#=authorizatiom
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Wrong value: Bearer -> Bearerr
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=Bearer,#value_after#=Bearerr
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Wrong value: Bearer -> (ini) header_long_bearer
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=Bearer,#value_after#=$header_long_bearer$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=401,#criteria#==
+
+##		Wrong header
+##			Wrong key: authorization -> (ini) header_long_authorization
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=authorization,#value_after#=$header_long_authorization$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=401,#criteria#==
+###==============================================================================================
+##	404	Not	found
+##		Wrong header
+##			Wrong url
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$wrong_url$=get					api_service					string_replace							#value#=$url$,#value_before#=/que,#value_after#=/qoo
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$wrong_url$,#header#=$header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
+###==============================================================================================
+##	403	Forbidden
+##		Wrong header
+##			Wrong scope: Data Acquirement -> Gateway Management
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=403,#criteria#==
+###==============================================================================================
+##	499	Token	expired
+
+###==============================================================================================
+##	400	Bad	request
+##		Wrong header
+##			Wrong value: content-type -> content-typo
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=application/json,#value_after#=application/jsonn
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong header
+##			Wrong value: application/json -> (ini) header_long_app_js
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=application/json,#value_after#=$header_long_app_js$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong key: deviceUuid -> device_uuid
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=deviceUuid,#value_after#=device_uuid
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong key: queries -> queriess
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=queries,#value_after#=queriess
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong key: time -> timo
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=time,#value_after#=timo
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong key: maxCount -> max_count
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=maxCount,#value_after#=max_count
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong value(Key: time): startTime -> start_time
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=startTime,#value_after#=start_time
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Wrong value(Key: time): endTime -> end_time
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=endTime,#value_after#=end_time
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long key: deviceUuid -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=deviceUuid,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long key: queries -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=queries,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long key: time -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=time,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long key: maxCount -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=maxCount,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long key: startTime -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=startTime,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong body
+##			Long key: endTime -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=endTime,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong format
+##			body value(Key: maxCount): e.g., 60 -> "60"
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=60,#value_after#="60"
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+
+##		Wrong format
+##			body value(Key: offset): e.g., 0 -> "0"
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=: 0,#value_after#=: "0"
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
+###==============================================================================================
+##	500 Internal Server Error
+
+###==============================================================================================
+### Error case
+##		Wrong header
+##			Wrong key: accept -> acceptt
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=accept,#value_after#=acceptt
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong header
+##			Wrong key: content-type -> content-typo
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=content-type,#value_after#=content-typo
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong header
+##			Wrong key: content-type -> (ini) header_long_content_type
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=content-type,#value_after#=$header_long_content_type$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong key: offset -> offsett
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=offset,#value_after#=offsett
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong format
+##			Wrong scope: str -> list
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#="instanceElectricity","instanceCurrents","instanceCurrentsT","normalUsage","reverseUsage","ed","rssi",#value_after#=["instanceElectricity"],["instanceCurrents"],["instanceCurrentsT"],["normalUsage"],["reverseUsage"],["ed"],["rssi"]
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong format
+##			Wrong scope: str -> list
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#="operationStatus","powerSavingOperation","operationMode","temperatureSetting","airFlow",#value_after#=["operationStatus"],["powerSavingOperation"],["operationMode"],["temperatureSetting"],["airFlow"]
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong format
+##			Wrong scope: str -> list
+## Data retrieval target: Thermo pixi
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#="battery","click","temperature","humidity",#value_after#=["battery"],["click"],["temperature"],["humidity"]
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: operationStatus -> operationStatuss
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=operationStatus,#value_after#=operationStatuss
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: powerSavingOperation -> powerSavingOperationn
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=powerSavingOperation,#value_after#=powerSavingOperationn
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: operationMode -> operationModee
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=operationMode,#value_after#=operationModee
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: temperatureSetting -> temperatureSettingg
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=temperatureSetting,#value_after#=temperatureSettingg
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: airFlow -> airFloww
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=airFlow,#value_after#=airFloww
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: operationStatus -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=operationStatus,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: powerSavingOperation -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=powerSavingOperation,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: operationMode -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=operationMode,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: temperatureSetting -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=temperatureSetting,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: airFlow -> (ini) long_string
+## Data retrieval target: Air conditioner
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=airFlow,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: battery -> batterymca
+## Data retrieval target: Thermo pixi
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=battery,#value_after#=batterymca						
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: click -> clickk
+## Data retrieval target: Thermo pixi
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=click,#value_after#=clickk						
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: temperature -> temperaturee
+## Data retrieval target: Thermo pixi
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=temperature,#value_after#=temperaturee						
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: humidity -> humidityy
+## Data retrieval target: Thermo pixi
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=humidity,#value_after#=humidityy						
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: battery -> (ini) long_string
+## Data retrieval target: Thermo pixi
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=battery,#value_after#=$long_string$						
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: click -> (ini) long_string
+## Data retrieval target: Thermo pixi
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=click,#value_after#=$long_string$						
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: temperature -> (ini) long_string
+## Data retrieval target: Thermo pixi
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=temperature,#value_after#=$long_string$						
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: humidity -> (ini) long_string
+## Data retrieval target: Thermo pixi
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=humidity,#value_after#=$long_string$						
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: instanceElectricity -> instanceElectricityy
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceElectricity,#value_after#=instanceElectricityy
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: instanceCurrents -> instanceCurrentss
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceCurrents,#value_after#=instanceCurrentss
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: instanceCurrentsT -> instanceCurrentsTT
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceCurrentsT,#value_after#=instanceCurrentsTT
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: normalUsage -> normalUsagee
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=normalUsage,#value_after#=normalUsagee
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: reverseUsage -> reverseUsagee
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=reverseUsage,#value_after#=reverseUsagee
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: ed -> edd
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=ed,#value_after#=edd
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Wrong value: rssi -> rssp
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=rssi,#value_after#=rssp
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: instanceElectricity -> (ini) long_string
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceElectricity,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: instanceCurrents -> (ini) long_string
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceCurrents,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: instanceCurrentsT -> (ini) long_string
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceCurrentsT,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: normalUsage -> (ini) long_string
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=normalUsage,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: reverseUsage -> (ini) long_string
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=reverseUsage,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: ed -> (ini) long_string
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=ed,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+
+##		Wrong body
+##			Long value: rssi -> (ini) long_string
+## Data retrieval target: Smart meter
+$nd_token$=get					api_service					nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get						api_service					data_retrieval_url						#null#=null
+$header$=get					api_service					data_retrieval_header					#token#=$nd_token$
+$body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=rssi,#value_after#=$long_string$
+$response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
+verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+###==============================================================================================
+end

@@ -1876,8 +1876,11 @@ class api_service(object):
                             pass
                         else:
                             raise error.notequalerror()
+                    print(rawData[i][0][j]["scope"])
+
         except:
             raise error.notfind()
+
         
     def query_data_get(self, valueDict):
         ## Query data
@@ -1919,7 +1922,7 @@ class api_service(object):
         dicParam = {**dicParamConf, **dicParamIni}
                 
         token = self.get_token(dicParam["cube_uuid"])
-        json_data = json.dumps(self.create_data(dicParam["device_uuid"], dicParam["data_uuid"]))
+        json_data = json.dumps(self.create_data(dicParam["device_uuid"], dicParam["data_uuid"],dicParam["data_value"]))
         self.upload_data(token, dicParam["cube_uuid"], json_data)
         
         
@@ -1948,16 +1951,16 @@ class api_service(object):
         ret = response.json()
         return(ret['data']['session'])
     
-    def create_data(self, device_uuid, data_uuid):
+    def create_data(self, device_uuid, data_uuid, data_value):
     
         dataarray = []
         timestamp = int(datetime.datetime.now().timestamp() * 1000)
-        #value = random.randrange(100)
-        value = 86146.000000
+
+        value = data_value
         data = {"device_uuid" : device_uuid , 
                          "data_uuid" : data_uuid,
-                         "value" : str(value),
-                         "raw_value" : "AAFQgg==",
+                         "value" : value,
+                         "raw_value" : "AAAAAAAAAAHuPleEzJ7exdldie",
                          "tags" : "",
                          "generated_time" : timestamp
                          }
@@ -2044,8 +2047,163 @@ class api_service(object):
         ##      value_after         - The string that #value_before# will be.
         ##
         try:
+            print("value before:", valueDict["value"])
             value = re.sub(valueDict['value_before'], valueDict['value_after'], valueDict['value'])
             print("value: ", value)
         except:
             raise error.nonamevalue()
         return value
+        
+    def nd_token_url_get(self, valueDict):
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+        try:
+            oauth_token_url = ""
+            if dicParam['environment'] == "qa":
+                oauth_token_url = dicParam['oauth_token_url_qa']
+            elif dicParam['environment'] == "production":
+                oauth_token_url = dicParam['oauth_token_url_production']
+            elif dicParam['environment'] == "development":
+                oauth_token_url = dicParam['oauth_token_url_development']
+            print("Oauth token URL:", oauth_token_url)
+            return oauth_token_url
+        except Exception as e:
+            print(e)
+            raise error.onqaserror()  
+            
+    def nd_token_header_get(self, valueDict):
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+        ##  Create HTTP request headers
+        authValue = '%s:%s' % (dicParam['client_id'], dicParam['secret_key'])
+        authValue = authValue.encode('utf-8')
+        authValue = base64.b64encode(authValue)
+        authValue = '%s %s' % ('Basic', authValue.decode('utf-8'))
+        HTTPHeader = { \
+            'authorization': authValue, \
+            'content-type': 'application/x-www-form-urlencoded' \
+            }
+        
+        return HTTPHeader
+ 
+    def nd_token_body_get(self, valueDict):
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+        try:
+            oauth_token_url = ""
+            oauth_scope = ""
+            if dicParam['environment'] == "qa":
+                oauth_token_url = dicParam['oauth_token_url_qa']
+                oauth_scope = dicParam['api_suffix_qa']
+            elif dicParam['environment'] == "production":
+                oauth_token_url = dicParam['oauth_token_url_production']
+                oauth_scope = dicParam['api_suffix_production']
+            elif dicParam['environment'] == "development":
+                oauth_token_url = dicParam['oauth_token_url_development']
+                oauth_scope = dicParam['api_suffix_development']
+            
+            if dicParam['scope'] == "User Management":
+                oauth_scope = oauth_scope + dicParam['oauth_scope_user_management']
+            elif dicParam['scope'] == "Gateway Management":
+                oauth_scope = oauth_scope + dicParam['oauth_scope_gateway_management']
+            elif dicParam['scope'] == "Data Acquirement":
+                oauth_scope = oauth_scope + dicParam['oauth_scope_data_acquirement']
+            elif dicParam['scope'] == "Device Management":
+                oauth_scope = oauth_scope + dicParam['oauth_scope_device_management']
+            elif dicParam['scope'] == "NextDrive Data Application":
+                oauth_scope = oauth_scope + dicParam['oauth_scope_data_application']
+            ##  Create HTTP request body
+            HTTPBody = { \
+                'grant_type': 'client_credentials', \
+                'scope': oauth_scope \
+                }
+            return HTTPBody
+        except Exception as e:
+            print(e)
+            raise error.onqaserror() 
+
+    def HTTP_nd_token_POST_response_get(self, valueDict):
+        ##  HTTP request by POST method.
+        ##      HTTP request timeout: 180 seconds.
+        ##
+        ##  Required parameters :
+        ##      url             - APP url
+        ##      header          - The header of HTTP request
+        ##      body            - HTTP request body
+        ##
+        ##  Return              :
+        ##      HTTP response including status code.
+        ##
+        requestTimeout = 180
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+
+        try:
+            dicHeader = dicParam['header']
+            dicHeader = eval(dicHeader)
+            dicBody = dicParam['body']
+            dicBody = eval(dicBody)
+            HTTPResponse = requests.post(dicParam['url'], headers = dicHeader, data = dicBody, timeout = requestTimeout)
+            statusCode = HTTPResponse.status_code
+            HTTPResponse = HTTPResponse.json()
+            print("HTTP status code: ", statusCode)
+            print("HTTP response: ", HTTPResponse)
+            HTTPResponse['statusCode'] = statusCode
+            return HTTPResponse
+        except ValueError:
+            raise error.notfind()
+        except:
+            raise error.onqaserror()
+    def data_retrieval_single_scope_get(self, valueDict):
+        ##  Return the HTTP request body for - 
+        ##      Data Acquirement - Data Retrieval - Smart meter
+        ##
+        ##  Required parameters:
+        ##      uuid                - Device UUID
+        ##      data_scope          - data_type
+        ##
+        ##  Request body:
+        ##  {
+        ##      "queries": [
+        ##          {
+        ##              "deviceUuid": "{device UUID}",
+        ##              "scopes": [
+        ##                  "{data_type}"
+        ##              ]
+        ##          }
+        ##      ],
+        ##      "time": {
+        ##          "startTime": {Timestamp 45 minutes ago},
+        ##          "endTime": {Current timestamp}
+        ##      },
+        ##      "maxCount": 500,
+        ##      "offset": 0
+        ##  }
+        ##    
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+        try:
+            body = "{" + \
+                "\"queries\": [" + \
+                "{" + \
+                "\"deviceUuid\": \"" + dicParam['uuid'] + "\"," + \
+                "\"scopes\": [" + \
+                "\"" + dicParam["scope_value"] + "\""\
+                "]" + \
+                "}" + \
+                "]," + \
+                "\"time\": {" + \
+                "\"startTime\": " + (lambda x: (x.split("."))[0] + "000")(str(time.time() - 2700)) + "," + \
+                "\"endTime\": " + (lambda x: (x.split("."))[0] + "000")(str(time.time())) + "" + \
+                "}," + \
+                "\"maxCount\": 500," + \
+                "\"offset\": 0" + \
+                "}"
+        except:
+            raise error.nonamevalue()
+        return body

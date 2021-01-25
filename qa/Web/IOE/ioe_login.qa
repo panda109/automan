@@ -4,7 +4,7 @@ start
 init	browser					chrome
 
 set		browser.web_main		url						#url#=$ioe_url$
-click	browser.web_main		button_lang				#xpath#=language_xpath,#lang#=language_text
+#click	browser.web_main		button_lang				#xpath#=language_xpath,#lang#=language_text
 sleep	3
 
 set		browser.web_main		textbox					#key#=$username_correct$,#xpath#=username_xpath_value

@@ -18,7 +18,6 @@ encoding//automan/ui/eonone_sharefolder.py=utf-8
 encoding//automan/ui/general_login.py=utf-8
 encoding//automan/ui/google.py=utf-8
 encoding//automan/ui/ioe_login.py=utf-8
-encoding//automan/ui/iphone.py=utf-8
 encoding//automan/ui/login.py=utf-8
 encoding//automan/ui/seleniumide.py=utf-8
 encoding//automan/util/api_cfg_mgmt.py=utf-8

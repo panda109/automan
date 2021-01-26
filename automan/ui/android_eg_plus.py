@@ -189,7 +189,6 @@ class android_eg_plus(object):
         y2 = int(fpHeight * 0.35)
         browser.swipe(x, y1, x, y2, 3000)
         
-        
     def wifi_click(self, browser, dicValue):
         dicParam = dict(dicValue)
         listWifi = browser.find_elements_by_xpath(config.get("xpath", dicParam["xpath"]))
@@ -283,30 +282,127 @@ class android_eg_plus(object):
         
     def screen_take(self,browser):
         browser.save_screenshot('./log/app.png')
-"""    
-    def ecn_click(self, browsr, dicValue):
+    
+    def device_setup_verify(self, browser, dicValue):
+        dicParam = dict(dicValue)
+        listDevice = []
+        try:
+            dashboard = browser.find_elements_by_xpath(config.get("xpath", dicParam["xpath"]))
+            print(dashboard)
+            for device  in range(1, len(dashboard)):
+                
+                #strCurrentDeviceName = browser.find_element_by_xpath(config.get("xpath", dicParam["xpath"]) + "[{}]/android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView[1]".format(device + 1)).text
+                strCurrentDeviceName = browser.find_element_by_xpath(config.get("xpath", dicParam["xpath"]) + config.get("xpath", dicParam["deviceName"]).format(device + 1)).text
+                listDevice.append(strCurrentDeviceName)
+            print(listDevice)
+            if dicParam["strDeviceName"] in listDevice:
+                pass
+            else:
+                error.equalerror()
+        except:
+            raise error.equalerror()
+    
+    def element_verify(self, browser, dicValue):
+        dicParam = dict(dicValue)
+        try:
+            element_on_screen = browser.find_element_by_xpath(config.get("xpath", dicParam["xpath"]))
+            element_on_screen.click()
+        except:
+            raise error.notfind()
+          
+    def dashboard_no_device_verify(self, browser, dicValue):
+        dicParam = dict(dicValue)
+        try:
+            dashboard_device_list = browser.find_elements_by_xpath(config.get("xpath", dicParam["xpath"]))
+            print(len(dashboard_device_list))
+            if len(dashboard_device_list) == 1:
+                print("There is no other device")
+            else:
+                print("There is a device not remove yet")
+                raise error.equalerror()
+        except:
+            raise error.notfind()
+            
+                        
+    def down_swipe(self, browser):
+        size = browser.get_window_size()
+        fpWidth = size.get("width")
+        fpHeight = size.get("height")
+        x = int(fpWidth * 0.5)
+        y1 = int(fpHeight * 0.35)
+        y2 = int(fpHeight * 0.75)
+        browser.swipe(x, y1, x, y2, 2000)
+        
+    def string_not_equal_verify(self, browser, dicValue):
         dicParam = dict(dicValue)
         swipeFlag = True
         swipeTime = 0
-        target_device_no = "01"
-        target_device_ip = "192.168.7.9"
         try:
+            
+            #print("target: ", dicParam["string_value"])
+            print(config.get("text", dicParam["text"]))
+            self.down_swipe(browser)
             while swipeFlag:
+                time.sleep(2)
+                #if str_update_time_text == "- -:- -":
+                #if str_update_time_text == dicParam["string_value"]:
+                str_update_time_text = browser.find_element_by_xpath(config.get("xpath", dicParam["xpath"])).text
+                print("current text: ", str_update_time_text)
+                if str_update_time_text == config.get("text", dicParam["text"]):
+                    self.down_swipe(browser)
+                    swipeTime = swipeTime + 1
+                    if swipeTime >= 30:
+                        raise error.notfind()
+                        break
+                    else:
+                        pass
+                else:
+                    swipeFlag = False
+                    print("swipe time: {}".format(swipeTime))
+        except:
+            raise error.notfind()
+            
+    def string_equal_verify(self, browser, dicValue):
+        dicParam = dict(dicValue)
+        swipeFlag = True
+        swipeTime = 0
+        try:
+            
+            #print("target: ", dicParam["string_value"])
+            print(config.get("text", dicParam["text"]))
+            self.down_swipe(browser)
+            while swipeFlag:
+                time.sleep(2)
+                #if str_update_time_text == "- -:- -":
+                #if str_update_time_text == dicParam["string_value"]:
+                str_update_time_text = browser.find_element_by_xpath(config.get("xpath", dicParam["xpath"])).text
+                print("current text: ", str_update_time_text)
+                if str_update_time_text != config.get("text", dicParam["text"]):
+                    self.down_swipe(browser)
+                    swipeTime = swipeTime + 1
+                    if swipeTime >= 30:
+                        raise error.notfind()
+                        break
+                    else:
+                        pass
+                else:
+                    swipeFlag = False
+                    print("swipe time: {}".format(swipeTime))
+        except:
+            raise error.notfind()            
+    def gateway_found_search_again_verify(self, browser, dicValue):
+        dicParam = dict(dicValue)
+        clickFlag = 0
+        try:
+            while clickFlag <= 5:
+                time.sleep(2)
                 try:
-                    #find device no
-                    #if device number == target_device_no
-                        #verify device ip
-                        # if device ip == target_device_ip
-                        #click
+                    obj_search_again_btn = browser.find_element_by_xpath(config.get("xpath", dicParam["xpath"]))
+                    obj_search_again_btn.click()
+                    clickFlag = 0
                 except:
-                    self.up_swipe(browser)
+                    clickFlag = clickFlag + 1
                     pass
         except:
-            pass                        
-"""                        
-                        
-
-        
-        
-        
+            raise error.notfind()
             

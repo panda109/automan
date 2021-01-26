@@ -9,6 +9,7 @@ from automan.tool.verify import Verify
 from pathlib import Path
 import os.path
 import cv2 as CV2
+import paramiko, sys
 #pip3 install opencv-python
 import configparser
 config = configparser.ConfigParser()
@@ -108,3 +109,40 @@ class Tool(object):
         
     def getsystem(self,test):
         return '100'
+        
+    def SSH_command_run(self, valueDict):
+        ##  Execute command line via SSH.
+        ##
+        ##  Needed package:
+        ##      paramiko
+        ##      sys
+        ##
+        ##  Required parameters:
+        ##      ip: IP address of SSH daemon.
+        ##      username: SSH identity.
+        ##      password: SSH key.
+        ##      command: The command will run on SSH server.
+        ##
+        ##  Roger Wei/2021.01.22
+        ##
+        try:
+            SSH_ADDRESS = valueDict['ip']
+            SSH_USERNAME = valueDict['username']
+            SSH_PASSWORD = valueDict['password']
+            SSH_COMMAND = valueDict['command']
+        except:
+            raise error.nonamevalue()
+        
+        ## Establish SSH connection ##
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh_stdin = ssh_stdout = ssh_stderr = None
+        try:
+            ssh.connect(SSH_ADDRESS, username=SSH_USERNAME, password=SSH_PASSWORD)
+            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(SSH_COMMAND)
+        except Exception as e:
+            sys.stderr.write("SSH connection error: {0}".format(e))
+            raise error.onqaserror()
+    
+    
+    

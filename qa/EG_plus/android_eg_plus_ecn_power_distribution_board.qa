@@ -94,7 +94,7 @@ verify						verify_pic													picture							#path#=$targetPic$,#source_path
 ## choose ecn device
 $sys_locale$=get			File														shellcmd						#command#=adb -s $android_device_name$ shell "getprop | grep persist.sys.locale"
 $manufacture_code$=get		browser.eg_plus_android_main								manufacture_code				#value_mc#=$pdb_manufacture_code$,#value_in#=$pdb_instance_number$,#value_loc#=$sys_locale$
-click						browser.eg_plus_android_echonet_lite_device_setup			ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$manufacture_code$,#value_ia#=$pdb_ip_address$,#value_sc#=$scan_PDB_text$,#value_loc#=$sys_locale$
+click						browser.eg_plus_android_ecn_device_setup					ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$manufacture_code$,#value_ia#=$pdb_ip_address$,#value_sc#=$scan_PDB_text$,#value_loc#=$sys_locale$
 
 sleep						5
 take						browser.android_eg_plus										screen

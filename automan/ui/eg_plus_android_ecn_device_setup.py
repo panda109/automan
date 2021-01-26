@@ -78,7 +78,7 @@ class eg_plus_android_ecn_device_setup(object):
             valueDict['value_sc'] = config.get('ECHONET_Lite_device_Setup', valueDict['value_sc'])
             valueDict['value_loc'] = re.search("\[persist.sys.locale\]:\s\[([\s\S]+)\]", valueDict['value_loc'])
             valueDict['value_loc'] = (valueDict['value_loc']).group(1)
-            valueDict['value_sc'] = (valueDict['value_sc']).split("/")
+            valueDict['value_sc'] = (valueDict['value_sc']).split(";")
             if valueDict['value_loc'] == "ja-JP":
                 valueDict['value_sc'] = (valueDict['value_sc'])[1]
             elif valueDict['value_loc'] == "zh-TW":

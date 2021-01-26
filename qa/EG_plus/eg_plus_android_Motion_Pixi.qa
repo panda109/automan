@@ -23,25 +23,25 @@ init						browser												app
 ##	Enter "Motion Pixi Setup" page
 ##		Click "Device"
 click						browser.eg_plus_android_main						layout_btn						#xpath_id#=$device_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4111_01_click_device.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##		Click "+"
 ~click						browser.eg_plus_android_device						add_device_btn					#xpath_id#=$add_device_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4111_02_click_add_device.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##		Click "Motion Pixi"
 click						browser.eg_plus_android_add_device					element_find					#element_text#=Motion Pixi
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4111_03_click_motion_pixi.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##		Click "Next"
 ~click						browser.eg_plus_android_motion_pixi_setup			next_btn						#xpath_id#=$step0_next_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4111_04_click_next.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
@@ -49,19 +49,19 @@ verify						verify_pic											picture							#path#=$target_pic$,#source_path#
 verify						browser.eg_plus_android_motion_pixi_setup			element_attribute				#xpath_id#=$step1_next_btn$,#attribute#=enabled,#value#=false,#criteria#==
 ##		Click "Checkbox 1"
 ~click						browser.eg_plus_android_motion_pixi_setup			checkbox_01						#xpath_id#=$step1_checkbox_01$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4111_05_click_checkbox_01.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##		Click "Checkbox 2"
 ~click						browser.eg_plus_android_motion_pixi_setup			checkbox_02						#xpath_id#=$step1_checkbox_02$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4111_06_click_checkbox_02.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##		Click "Checkbox 3"
 ~click						browser.eg_plus_android_motion_pixi_setup			checkbox_03						#xpath_id#=$step1_checkbox_03$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4111_07_click_checkbox_03.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
@@ -69,13 +69,13 @@ verify						verify_pic											picture							#path#=$target_pic$,#source_path#
 verify						browser.eg_plus_android_motion_pixi_setup			element_attribute				#xpath_id#=$step1_next_btn$,#attribute#=enabled,#value#=true,#criteria#==
 ##		Click "Next"
 ~click						browser.eg_plus_android_motion_pixi_setup			checkbox_03						#xpath_id#=$step1_next_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4111_08_click_next.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##		Click "Next"
 ~click						browser.eg_plus_android_motion_pixi_setup			checkbox_03						#xpath_id#=$step1_actionsheets_next_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4111_09_click_next.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
@@ -90,7 +90,7 @@ verify						browser.eg_plus_android_motion_pixi_setup			device_search					#xpath
 ##		Click "Next"
 ~click						browser.eg_plus_android_motion_pixi_setup			next_btn						#xpath_id#=$step2_actionsheets_next_btn$
 verify						browser.eg_plus_android_motion_pixi_setup			element_located					#xpath_id#=$step3_device_name_edittext$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4111_10_click_next.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
@@ -104,7 +104,7 @@ verify						browser.eg_plus_android_motion_pixi_setup			element_attribute				#xp
 ##		Set device name
 ~set						browser.eg_plus_android_motion_pixi_setup			device_name						#xpath_id#=$step3_device_name_edittext$,#value#=m[O]t{i}OnPI@X!i~1%0^9753
 hide						browser.eg_plus_android_main						keyboard		
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4114_01_set_device_name.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
@@ -113,19 +113,19 @@ verify						verify_pic											picture							#path#=$target_pic$,#source_path#
 verify						browser.eg_plus_android_motion_pixi_setup			element_attribute				#xpath_id#=$step3_next_btn$,#attribute#=enabled,#value#=true,#criteria#==
 ##		Click "OK"
 ~click						browser.eg_plus_android_motion_pixi_setup			ok_btn							#xpath_id#=$step3_next_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4114_02_click_ok.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##		Click "Done"
 ~click						browser.eg_plus_android_motion_pixi_setup			done_btn						#xpath_id#=$step_final_done_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4114_03_click_done.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##		Click "Back"
 ~click						browser.eg_plus_android_add_device					back_btn						#xpath_id#=$back_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4114_04_click_back.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
@@ -138,19 +138,19 @@ sleep	10
 ###	TC-4237
 ###	TC-4546
 click						browser.android_eg_plus								element							#xpath#=motionSetting
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $targetPic$=get				browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Dashboard_motion_setting.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 							
 click						browser.android_eg_plus								element							#xpath#=motionSettingNotifiBtn
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $targetPic$=get				browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Dashboard_setting_noti_on.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 							
 click						browser.android_eg_plus								element							#xpath#=motionNotifSwitch
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $targetPic$=get				browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Dashboard_setting_noti_off.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
@@ -158,7 +158,7 @@ verify						verify_pic											picture							#path#=$targetPic$,#source_path#=
 click						browser.android_eg_plus								element							#xpath#=motionNotifSaveBtn
 							
 click						browser.android_eg_plus								element							#xpath#=motionDeviceCard
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $targetPic$=get				browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Dashboard_motion_chart.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
@@ -173,19 +173,19 @@ click						browser.android_eg_plus								element							#xpath#=motionNotifSaveB
 ###	TC-4239
 ##		Click "..."
 ~click						browser.eg_plus_android_motion_pixi_dashboard		settings_btn					#xpath_id#=$settings_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4239_01_click_settings.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##		Click "Remove"
 ~click						browser.eg_plus_android_motion_pixi_dashboard		remove_btn						#xpath_id#=$settings_remove_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4239_02_click_remove.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##	Step 1. Tap "Remove"
 ~click						browser.eg_plus_android_motion_pixi_dashboard		remove_btn						#xpath_id#=$settings_remove_remove_btn$
-take						browser.iphone										screen		
+take						browser.android_eg_plus								screen		
 $target_pic$=get			browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\TC-4239_03_click_remove.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi

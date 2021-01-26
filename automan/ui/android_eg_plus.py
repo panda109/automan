@@ -90,7 +90,7 @@ class android_eg_plus(object):
     
     def sourcePic_get(self, browser, dicValue):
         dicParam = dict(dicValue)
-        fileLocation = os.path.join(os.getcwd(), "img", "eg_plus_ui", dicParam["imgFileName"])
+        fileLocation = os.path.join(os.getcwd(), "img", "quick_scan", dicParam["imgFileName"])
         #print("=====> fileLocation")
         #print(fileLocation)
         return fileLocation 
@@ -185,7 +185,7 @@ class android_eg_plus(object):
         fpWidth = size.get("width")
         fpHeight = size.get("height")
         x = int(fpWidth * 0.5)
-        y1 = int(fpHeight * 0.85)
+        y1 = int(fpHeight * 0.75)
         y2 = int(fpHeight * 0.35)
         browser.swipe(x, y1, x, y2, 3000)
         

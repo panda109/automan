@@ -1,0 +1,182 @@
+###testcase:
+###	7334	[Phase 2][EG_3.0][Setup_Distribution Board] Choose the Device - 3.Choose the Device	
+###	7336	[Phase 2][EG_3.0][Setup_Distribution Board] Device Name - 2.Input Device Name	
+###	7410	[Phase 2][EG_3.0][Device_Distribution Board] Distribution Board Dashboard info - 1.Into Tab - Device - Distribution Board	
+###	7411	[Phase 2][EG_3.0][Device_Distribution Board] Distribution Board Chart - 1.Into Distribution Board Chart	
+###	7425	[Phase 2][EG_3.0][Device_Distribution Board] Settings-Remove - 2.Remove Distribution Board	
+
+init						browser									app	
+ini							eg_plus_android_setting.ini
+start
+
+sleep						3
+##	go to device page
+click						browser.android_eg_plus										element							#xpath#=devicePage
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Device_GW.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+
+##	click add device 
+click						browser.android_eg_plus										element							#xpath#=addDevicePage
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Device_addDevice.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+## choose to setup ecn device
+click						browser.android_eg_plus										element							#xpath#=addEcn
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+## click next on setup ecn device page
+click						browser.android_eg_plus										element							#xpath#=setupNextBtn
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PreparingForSetup_none.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+##	click prepare setup 1st item
+click						browser.android_eg_plus										element							#xpath#=prepareCheck1
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_Check1stItem.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+##	click prepare setup 2nd item
+click						browser.android_eg_plus										element							#xpath#=prepareCheck2
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_Check2ndItem.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+##	click prepare setup 3rd item
+click						browser.android_eg_plus										element							#xpath#=prepareCheck3
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_Check3rdItem.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+##	click prepare setup 4th item
+click						browser.android_eg_plus										element							#xpath#=prepareCheck4
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_Check4thItem.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+##	click prepare setup 5th item
+click						browser.android_eg_plus										element							#xpath#=prepareCheck5
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_Check5thItem.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+##	click next, go to choose gateway
+click						browser.android_eg_plus										element							#xpath#=preparePageNextBtn
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_ChooseGW.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+##	click to confirm gateway
+click						browser.android_eg_plus										element							#xpath#=setupConfirmCubeNextBtn
+
+sleep						5
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+###	7334	[Phase 2][EG_3.0][Setup_Distribution Board] Choose the Device - 3.Choose the Device	
+## choose ecn device
+$sys_locale$=get			File														shellcmd						#command#=adb -s $android_device_name$ shell "getprop | grep persist.sys.locale"
+$manufacture_code$=get		browser.eg_plus_android_main								manufacture_code				#value_mc#=$pdb_manufacture_code$,#value_in#=$pdb_instance_number$,#value_loc#=$sys_locale$
+click						browser.eg_plus_android_echonet_lite_device_setup			ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$manufacture_code$,#value_ia#=$pdb_ip_address$,#value_sc#=$scan_PDB_text$,#value_loc#=$sys_locale$
+
+sleep						5
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList_setDeviceNamePage_notSet.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+###	7336	[Phase 2][EG_3.0][Setup_Distribution Board] Device Name - 2.Input Device Name
+## set device name
+set							browser.android_eg_plus										element							#xpath#=ecnName,#strValue#=QA PDB
+
+sleep						5
+
+hide						browser.android_eg_plus										keyboard
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList_setDeviceNamePage_PDB.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+## click ok btn on setup device name page
+click						browser.android_eg_plus										element							#xpath#=setDeviceNameOKBtn
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PDB_setup_complete.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+##	click ok btn on setup complete page, will goto add device page
+click						browser.android_eg_plus										element							#xpath#=setupFinishBtn
+
+##	click go back btn on add device page
+click						browser.android_eg_plus										element							#xpath#=addDevicePageGoBackBtn
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Dashboard_already_binding_PDB.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+###	7410	[Phase 2][EG_3.0][Device_Distribution Board] Distribution Board Dashboard info - 1.Into Tab - Device - Distribution Board	
+##	check device name
+verify						browser.android_eg_plus										device_setup					#xpath#=dashboard_device,#strDeviceName#=QA PDB,#deviceName#=dashboard_deviceName
+
+##	verify update time
+#verify						browser.android_eg_plus										string_not_equal				#xpath#=ecn_pdb_update_time_textbox,#text#=time_not_update_text
+
+sleep						3
+
+###	7411	[Phase 2][EG_3.0][Device_Distribution Board] Distribution Board Chart - 1.Into Distribution Board Chart	
+##	goto pv system chart page
+click						browser.android_eg_plus										element							#xpath#=ecn_pdb_card
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Dashboard_already_binding_pvSystem_PDBChartPage.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+## verify title string of pv system chart page
+verify						browser.android_eg_plus										element							#xpath#=ecn_pdb_chart_title_text
+
+##	click go back btn on pv system chart page
+click						browser.android_eg_plus										element							#xpath#=page_go_back_jp_btn
+
+###	7425	[Phase 2][EG_3.0][Device_Distribution Board] Settings-Remove - 2.Remove Distribution Board	
+##	click setting on pv system card
+click						browser.android_eg_plus										element							#xpath#=ecn_pdb_setting_btn
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Dashboard_PDB_settingPage.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+##	click remove btn
+click						browser.android_eg_plus										element							#xpath#=remove_btn
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Dashboard_PDB_settingPage_removeDialog.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+## click remove btn on double confirm remove dialog
+click						browser.android_eg_plus										element							#xpath#=remove_confirm_btn
+take						browser.android_eg_plus										screen
+$targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_ecn_power_distribution_board
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Device_GW.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_power_distribution_board
+
+##	verify dashboard device number
+verify						browser.android_eg_plus										dashboard_no_device				#xpath#=dashboard_device_list
+
+end

@@ -158,6 +158,7 @@ class eg_plus_android_ecn_device_setup(object):
                         pass
                     while elem != None:
                         elem_text = elem.get_attribute("text")
+                        #print("elem_text: ", elem_text)
                         if len(elem_text) != 0 and elem_text != valueDict['value_sc']:
                             ## Meet another category, exit loop
                             print("Meet another category: " + elem_text)
@@ -195,9 +196,39 @@ class eg_plus_android_ecn_device_setup(object):
                     if ECN_found is False:
                         #print("Not find ECN device in this page.")
                         #print("Swipe up")
-                        check_elem_index = 1
                         browser.swipe(x1, y1, x2, y2, 2000)
                         time.sleep(1)
+                        check_elem_index = 1
+                        ## If target category is in screen, use "check_elem_index" as before.
+                        ## If target category is not in screen, reset "check_elem_index"
+                        try:
+                            elem_category = None
+                            elem_category = browser.find_element_by_xpath("//*[@text=\"" + valueDict['value_sc'] + "\"]")
+                            if elem_category is not None:
+                                #print("Category still on screen.")
+                                ## Get "Category" index
+                                check_elem_index = check_elem_index + 1
+                                elem = None
+                                try:
+                                    elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(check_elem_index) + "]")
+                                except:
+                                    pass
+                                while elem != None:
+                                    elem_text = elem.text if len(elem.text) != 0 else elem.get_attribute("text")
+                                    #print("elem_text: ", elem_text)
+                                    if elem_text == valueDict['value_sc']:
+                                        ## Found target category, exit loop
+                                        #print("Found target category, index: ", check_elem_index)
+                                        break
+                                    else:
+                                        check_elem_index = check_elem_index + 1
+                                        elem = None
+                                        try:
+                                            elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(check_elem_index) + "]")
+                                        except:
+                                            pass
+                        except:
+                            pass
                     else:
                         elem.click()
                         break

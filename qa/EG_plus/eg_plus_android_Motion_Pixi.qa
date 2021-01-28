@@ -132,7 +132,7 @@ verify						verify_pic											picture							#path#=$target_pic$,#source_path#
 ##		Motion Pixi dashboard must show on "Device" page
 $4114_pixi_name$=get		browser.eg_plus_android_motion_pixi_dashboard		element_text					#xpath_id#=$title_text$
 
-sleep	10
+
 ###	TC-4218
 ###	TC-4220
 ###	TC-4237

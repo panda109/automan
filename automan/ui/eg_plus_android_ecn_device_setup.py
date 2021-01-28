@@ -79,9 +79,9 @@ class eg_plus_android_ecn_device_setup(object):
             valueDict['value_loc'] = re.search("\[persist.sys.locale\]:\s\[([\s\S]+)\]", valueDict['value_loc'])
             valueDict['value_loc'] = (valueDict['value_loc']).group(1)
             valueDict['value_sc'] = (valueDict['value_sc']).split(";")
-            if valueDict['value_loc'] == "ja-JP":
+            if re.search("ja-", valueDict['value_loc']) != None:
                 valueDict['value_sc'] = (valueDict['value_sc'])[1]
-            elif valueDict['value_loc'] == "zh-TW":
+            elif re.search("zh-", valueDict['value_loc']) != None:
                 valueDict['value_sc'] = (valueDict['value_sc'])[0]
             else:
                 valueDict['value_sc'] = (valueDict['value_sc'])[2] 

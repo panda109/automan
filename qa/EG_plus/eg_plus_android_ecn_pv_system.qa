@@ -6,7 +6,7 @@
 ###	4356	[EG_3.0][Device_PV]Settings - Remove_2.Remove PV	
 
 init						browser									app	
-ini							eg_plus_android_setting.ini
+ini							eg_plus_android.ini
 start
 
 sleep						3
@@ -14,7 +14,7 @@ sleep						3
 click						browser.android_eg_plus										element							#xpath#=devicePage
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Device_GW.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\Device_GW.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 
@@ -22,63 +22,63 @@ verify						verify_pic													picture							#path#=$targetPic$,#source_path
 click						browser.android_eg_plus										element							#xpath#=addDevicePage
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Device_addDevice.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\Device_addDevice.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ## choose to setup ecn device
 click						browser.android_eg_plus										element							#xpath#=addEcn
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ## click next on setup ecn device page
 click						browser.android_eg_plus										element							#xpath#=setupNextBtn
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PreparingForSetup_none.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_PreparingForSetup_none.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ##	click prepare setup 1st item
 click						browser.android_eg_plus										element							#xpath#=prepareCheck1
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_Check1stItem.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_PrepareForSetup_Check1stItem.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ##	click prepare setup 2nd item
 click						browser.android_eg_plus										element							#xpath#=prepareCheck2
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_Check2ndItem.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_PrepareForSetup_Check2ndItem.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ##	click prepare setup 3rd item
 click						browser.android_eg_plus										element							#xpath#=prepareCheck3
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_Check3rdItem.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_PrepareForSetup_Check3rdItem.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ##	click prepare setup 4th item
 click						browser.android_eg_plus										element							#xpath#=prepareCheck4
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_Check4thItem.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_PrepareForSetup_Check4thItem.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ##	click prepare setup 5th item
 click						browser.android_eg_plus										element							#xpath#=prepareCheck5
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_Check5thItem.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_PrepareForSetup_Check5thItem.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ##	click next, go to choose gateway
 click						browser.android_eg_plus										element							#xpath#=preparePageNextBtn
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_ChooseGW.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_PrepareForSetup_ChooseGW.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ##	click to confirm gateway
@@ -87,7 +87,7 @@ click						browser.android_eg_plus										element							#xpath#=setupConfirmCu
 sleep						5
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ###	TC-4172 [EG_3.0][Setup PV]Choose the Device_3.Choose the Device
@@ -99,7 +99,7 @@ click						browser.eg_plus_android_ecn_device_setup					ECN_device_name					#xpa
 sleep						5
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList_setDeviceNamePage_notSet.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList_setDeviceNamePage_notSet.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ###	TC-4174 [EG3.0][Setup PV]Device Name_2.Input Device Name
@@ -111,14 +111,14 @@ sleep						5
 hide						browser.android_eg_plus										keyboard
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList_setDeviceNamePage_pvSystem.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList_setDeviceNamePage_pvSystem.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ## click ok btn on setup device name page
 click						browser.android_eg_plus										element							#xpath#=setDeviceNameOKBtn
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECNSetup_pvSystem_setupComplete.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\ECNSetup_pvSystem_setupComplete.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ##	click ok btn on setup complete page, will goto add device page
@@ -128,7 +128,7 @@ click						browser.android_eg_plus										element							#xpath#=setupFinishBtn
 click						browser.android_eg_plus										element							#xpath#=addDevicePageGoBackBtn
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Dashboard_already_binding_pvSystem.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\Dashboard_already_binding_pvSystem.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ###	TC-4341 [EG_3.0][Device_PV]PV System Dashboard info_1.Into Tab - Device - PV System
@@ -145,7 +145,7 @@ sleep						3
 click						browser.android_eg_plus										element							#xpath#=ecn_pv_system_card
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Dashboard_already_binding_pvSystem_pvSystemChartPage.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\Dashboard_already_binding_pvSystem_pvSystemChartPage.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ## verify title string of pv system chart page
@@ -159,21 +159,21 @@ click						browser.android_eg_plus										element							#xpath#=page_go_back_j
 click						browser.android_eg_plus										element							#xpath#=ecn_pv_system_setting_btn
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Dashboard_pvSystem_settingPage.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\Dashboard_pvSystem_settingPage.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ##	click remove btn
 click						browser.android_eg_plus										element							#xpath#=remove_btn
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Dashboard_pvSystem_settingPage_removeDialog.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\Dashboard_pvSystem_settingPage_removeDialog.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ## click remove btn on double confirm remove dialog
 click						browser.android_eg_plus										element							#xpath#=remove_confirm_btn
 take						browser.android_eg_plus										screen
 $targetPic$=get				browser.android_eg_plus										targetPic						#logFolderName#=android_eg_plus_setup_pv_system
-$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=Device_GW.png
+$sourcePic$=get				browser.android_eg_plus										sourcePic						#imgFileName#=ECN_Household_Solar_Power_Peneration\\Device_GW.png
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setup_pv_system
 
 ##	verify dashboard device number

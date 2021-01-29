@@ -7,7 +7,7 @@
 ### 4216	[EG_3.0][Device_Cube]Settings - Remove_2.Remove Cube
 
 
-ini					cube_setup.ini
+ini					eg_plus_android.ini
 init				browser									app	
 
 start
@@ -17,14 +17,14 @@ sleep				5
 click				browser.android_eg_plus					element				#xpath#=devicePage
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Device_empty.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\Device_empty.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## click cube setting btn
 click				browser.android_eg_plus					element				#xpath#=cubeCardSetting
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Dashboard_Cube_setting.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\Dashboard_Cube_setting.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ### 4216	[EG_3.0][Device_Cube]Settings - Remove_2.Remove Cube
@@ -32,7 +32,7 @@ verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourceP
 click				browser.android_eg_plus					element				#xpath#=cubeRemoveBtn
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Dashboard_Cube_setting_remove_window.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\Dashboard_Cube_setting_remove_window.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## click confirm remove
@@ -74,49 +74,49 @@ sleep				30
 click				browser.android_eg_plus					element				#xpath#=addDevicePage
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Device_addDevice.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\Device_addDevice.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## on add device page click add cube
 click				browser.android_eg_plus					element				#xpath#=addCube
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## on cube setup page click next
 click				browser.android_eg_plus					element				#xpath#=setupNextBtn
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_PreparingForSetup_empty.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_PreparingForSetup_empty.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## on preparing for setup page check 1st item
 click				browser.android_eg_plus					element				#xpath#=prepareCheck1
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_PreparingForSetup_Check1stItem.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_PreparingForSetup_Check1stItem.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## on preparing for setup page check 2nd item
 click				browser.android_eg_plus					element				#xpath#=prepareCheck2
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_PreparingForSetup_Check2ndItem.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_PreparingForSetup_Check2ndItem.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## on preparing for setup page check 3rd item
 click				browser.android_eg_plus					element				#xpath#=prepareCheck3
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_PreparingForSetup_Check3rdItem.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_PreparingForSetup_Check3rdItem.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## on preparing for setup page click next btn
 click				browser.android_eg_plus					element				#xpath#=preparePageNextBtn
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_PreparingForSetup_checkAllItem_pair.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_PreparingForSetup_checkAllItem_pair.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## verify if need open authority
@@ -134,7 +134,7 @@ click				browser.android_eg_plus					element				#xpath#=pairBtn
 verify				browser.android_eg_plus					cube				#targetCubeName#=$android_device_name$,#cubeNameXpath#=cubeNameXpath,#searchAgainBtnXpath#=searchAgainBtnXpath
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_availableDevice.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_availableDevice.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ##	click next btn on available devices page
@@ -142,7 +142,7 @@ click				browser.android_eg_plus					element				#xpath#=nextBtnXpath
 sleep				5
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_wifiList.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_wifiList.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ### 4097	[EG_3.0][Setup_Cube][Android]Connect to Wi-Fi_3.Input PWD
@@ -150,14 +150,14 @@ verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourceP
 click				browser.android_eg_plus					wifi				#wifiName#=$wifi_ssid$,#xpath#=wifiList
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_InputWiFiPswNotYet.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_InputWiFiPswNotYet.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## set wifi password
 set					browser.android_eg_plus					element				#xpath#=wifiPswBoxXpath,#strValue#=$wifi_psw$
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_InputWiFiPswAlreadySet.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_InputWiFiPswAlreadySet.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ##	click OK btn on wifi password dialog
@@ -165,7 +165,7 @@ click				browser.android_eg_plus					element				#xpath#=wifiSetConfirmBtn
 sleep				5
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_gatewayName_notSet.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_gatewayName_notSet.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ### 4100	[EG_3.0][Setup_Cube]Device Name_2.Input Device Name
@@ -176,14 +176,14 @@ set					browser.android_eg_plus					element				#xpath#=cubeName,#strValue#=QA
 hide				browser.android_eg_plus					keyboard
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_gatewayName_alreadySet.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_gatewayName_alreadySet.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## click the OK　btn on device name page
 click				browser.android_eg_plus					element				#xpath#=okBtn
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=CubeSetup_setupComplete.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\CubeSetup_setupComplete.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 ## on setup complete page click ok btn
@@ -197,7 +197,7 @@ click				browser.android_eg_plus					element				#xpath#=goBackBtn
 verify				browser.android_eg_plus					gwSetup				#xpath#=cubeCard
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_setupCube
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Device_GW.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Cube\\Device_GW.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_setupCube
 
 

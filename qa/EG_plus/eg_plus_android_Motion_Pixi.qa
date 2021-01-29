@@ -140,19 +140,19 @@ $4114_pixi_name$=get		browser.eg_plus_android_motion_pixi_dashboard		element_tex
 click						browser.android_eg_plus								element							#xpath#=motionSetting
 take						browser.android_eg_plus								screen		
 $targetPic$=get				browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
-$sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Dashboard_motion_setting.png
+$sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\Dashboard_motion_setting.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 							
 click						browser.android_eg_plus								element							#xpath#=motionSettingNotifiBtn
 take						browser.android_eg_plus								screen		
 $targetPic$=get				browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
-$sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Dashboard_setting_noti_on.png
+$sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\Dashboard_setting_noti_on.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 							
 click						browser.android_eg_plus								element							#xpath#=motionNotifSwitch
 take						browser.android_eg_plus								screen		
 $targetPic$=get				browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
-$sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Dashboard_setting_noti_off.png
+$sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\Dashboard_setting_noti_off.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 							
 click						browser.android_eg_plus								element							#xpath#=motionNotifSaveBtn
@@ -160,7 +160,7 @@ click						browser.android_eg_plus								element							#xpath#=motionNotifSaveB
 click						browser.android_eg_plus								element							#xpath#=motionDeviceCard
 take						browser.android_eg_plus								screen		
 $targetPic$=get				browser.android_eg_plus								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
-$sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Dashboard_motion_chart.png
+$sourcePic$=get				browser.android_eg_plus								sourcePic						#imgFileName#=Motion_Pixi\\Dashboard_motion_chart.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 							
 click						browser.android_eg_plus								element							#xpath#=motionChartReturnBtn

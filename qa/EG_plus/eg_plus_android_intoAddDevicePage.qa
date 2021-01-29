@@ -12,21 +12,21 @@ sleep				10
 click				browser.android_eg_plus					element				#xpath#=devicePage
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_intoAddDevicePage
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Device_empty.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Empty\\Device_empty.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_intoAddDevicePage
 
 
 click				browser.android_eg_plus					element				#xpath#=addDevicePage
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_intoAddDevicePage
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Device_addDevice.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Empty\\Device_addDevice.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_intoAddDevicePage
 
 swipe				browser.android_eg_plus					up
 swipe				browser.android_eg_plus					up
 take				browser.android_eg_plus					screen
 $targetPic$=get		browser.android_eg_plus					targetPic			#logFolderName#=android_eg_plus_intoAddDevicePage
-$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Device_addDevice_swipeUp.png
+$sourcePic$=get		browser.android_eg_plus					sourcePic			#imgFileName#=Empty\\Device_addDevice_swipeUp.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_intoAddDevicePage
 
 end

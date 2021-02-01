@@ -420,13 +420,13 @@ class eg_plus_android(object):
             if valueDict['stage'] == "qa":
                 command = "adb -s " + valueDict['name'] + " shell \"setprop persist.next.server.type qa\""
                 response = ""
-                out = subprocess.Popen(valueDict['command'], shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                out = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 for line in out.stdout:
                     line = line.rstrip()
                     response += line.decode("big5", "ignore")
                 
                 command = "adb -s " + valueDict['name'] + " shell \"reboot\""
-                out = subprocess.Popen(valueDict['command'], shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                out = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 for line in out.stdout:
                     line = line.rstrip()
                     response += line.decode("big5", "ignore")

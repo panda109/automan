@@ -15,9 +15,9 @@ import automan.util.tool as tool
 
 
 config = configparser.ConfigParser()
-config.read(os.path.join(os.getcwd(), 'conf', "android_eg_plus.conf"), encoding="utf-8")
+config.read(os.path.join(os.getcwd(), 'conf', "eg_plus_android.conf"), encoding="utf-8")
 
-class android_eg_plus(object):
+class eg_plus_android(object):
     
     def _init_(self):
         pass

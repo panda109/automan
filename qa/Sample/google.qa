@@ -1,7 +1,7 @@
 start
 
 init		browser	Chrome
-include						keypair.sub
+
 #~set			browser.google	search_new_1				#xpath_id#=google_search,#value#=123
 #set			browser.google	search_new_2				#xpath_id#=google_search,#value#=456
 

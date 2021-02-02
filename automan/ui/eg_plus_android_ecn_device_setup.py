@@ -79,8 +79,10 @@ class eg_plus_android_ecn_device_setup(object):
             valueDict['value_loc'] = re.search("\[persist.sys.locale\]:\s\[([\s\S]+)\]", valueDict['value_loc'])
             valueDict['value_loc'] = (valueDict['value_loc']).group(1)
             valueDict['value_sc'] = (valueDict['value_sc']).split(";")
+            #if valueDict['value_loc'] == "ja-JP":
             if re.search("ja-", valueDict['value_loc']) != None:
                 valueDict['value_sc'] = (valueDict['value_sc'])[1]
+            #elif valueDict['value_loc'] == "zh-TW":
             elif re.search("zh-", valueDict['value_loc']) != None:
                 valueDict['value_sc'] = (valueDict['value_sc'])[0]
             else:
@@ -107,7 +109,7 @@ class eg_plus_android_ecn_device_setup(object):
             
             e = None
             max_swipe = 120
-            for i in range(max_swipe):
+            for i in range(max_swipe + 1):
                 try:
                     e = WebDriverWait(browser, 1, 0.5).until(EC.presence_of_element_located(target_loc))
                 except:
@@ -143,96 +145,93 @@ class eg_plus_android_ecn_device_setup(object):
                 print("Not found category")
                 raise error.nonamevalue()
             else:
-                ECN_index = 1
                 max_swipe = max_swipe - i
-                for i in range(max_swipe):
-                    ECN_found = False
-                    Category_endpoint = False
-                    
-                    ## Check elements below target category
-                    check_elem_index = check_elem_index + 1
-                    elem = None
-                    try:
-                        elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(check_elem_index) + "]")
-                    except:
-                        pass
-                    while elem != None:
-                        elem_text = elem.get_attribute("text")
-                        #print("elem_text: ", elem_text)
-                        if len(elem_text) != 0 and elem_text != valueDict['value_sc']:
-                            ## Meet another category, exit loop
-                            print("Meet another category: " + elem_text)
-                            Category_endpoint = True
-                            ECN_index = -1
-                            break
-                        elif len(elem_text) == 0:
-                            ## Element is not a cateory, it's a container. So find its child's text.
-                            elem_text = ""
-                            try:
-                                elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(check_elem_index) + "]" + "/*[1]")
-                                elem_text = elem_text + elem.get_attribute("text") + "\n"
-                            except:
-                                pass
-                            try:
-                                elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(check_elem_index) + "]" + "/*[2]")
-                                elem_text = elem_text + elem.get_attribute("text")
-                            except:
-                                pass
-                            #print("Element " , check_elem_index, ": ", elem_text)
-                            if elem_text == valueDict['value_mc'] + "\n" + valueDict['value_ia']:
-                                print("Found ECN device")
-                                ECN_found = True
-                                break
-                        check_elem_index = check_elem_index + 1
-                        ECN_index = ECN_index + 1
+                ECN_found = False
+                lastChance = False
+                for i in range(max_swipe + 1):
+                    startIndex = -1
+                    endIndex = -1
+                
+                    ## 1. Find target category.
+                    checkIndex = 1
+                    while 1:
                         elem = None
                         try:
-                            elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(check_elem_index) + "]")
+                            elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(checkIndex) + "]")
+                            elem_text = elem.get_attribute("text")
+                            if len(elem_text) != 0 and elem_text == valueDict['value_sc']:
+                                ## Found target category
+                                #print("Found target category:", checkIndex)
+                                startIndex = checkIndex
+                                break
+                            checkIndex = checkIndex + 1
                         except:
-                            pass
-                    if Category_endpoint is True:
-                        print("Not find ECN device in target category.")
-                        raise error.nonamevalue()
-                    if ECN_found is False:
-                        #print("Not find ECN device in this page.")
-                        #print("Swipe up")
-                        browser.swipe(x1, y1, x2, y2, 2000)
-                        time.sleep(1)
-                        check_elem_index = 1
-                        ## If target category is in screen, use "check_elem_index" as before.
-                        ## If target category is not in screen, reset "check_elem_index"
+                            break
+                        
+                    ## 2. Find another category
+                    checkIndex = 1 if startIndex == -1 else startIndex
+                    while 1:
+                        elem = None
                         try:
-                            elem_category = None
-                            elem_category = browser.find_element_by_xpath("//*[@text=\"" + valueDict['value_sc'] + "\"]")
-                            if elem_category is not None:
-                                #print("Category still on screen.")
-                                ## Get "Category" index
-                                check_elem_index = check_elem_index + 1
-                                elem = None
+                            elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(checkIndex) + "]")
+                            elem_text = elem.get_attribute("text")
+                            if len(elem_text) != 0 and elem_text != valueDict['value_sc']:
+                                ## Found another category
+                                #print("Found another category:", checkIndex)
+                                endIndex = checkIndex
+                                break
+                            checkIndex = checkIndex + 1
+                        except:
+                            break
+                    
+                    ## 3. Find ECN device
+                    startIndex = 1 if startIndex == -1 else startIndex
+                    endIndex = 100 if endIndex == -1 else endIndex
+                    #print("startIndex: ", startIndex)
+                    #print("endIndex: ", endIndex)
+                    while 1:
+                        elem = None
+                        try:
+                            elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(startIndex) + "]")
+                            elem_text = elem.get_attribute("text")
+                            if len(elem_text) == 0:
+                                ## Found a container
+                                #print("Found a container:", startIndex)
+                                elem_text = ""
                                 try:
-                                    elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(check_elem_index) + "]")
+                                    elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(startIndex) + "]" + "/*[1]")
+                                    elem_text = elem_text + elem.get_attribute("text") + "\n"
                                 except:
                                     pass
-                                while elem != None:
-                                    elem_text = elem.text if len(elem.text) != 0 else elem.get_attribute("text")
-                                    #print("elem_text: ", elem_text)
-                                    if elem_text == valueDict['value_sc']:
-                                        ## Found target category, exit loop
-                                        #print("Found target category, index: ", check_elem_index)
-                                        break
-                                    else:
-                                        check_elem_index = check_elem_index + 1
-                                        elem = None
-                                        try:
-                                            elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(check_elem_index) + "]")
-                                        except:
-                                            pass
+                                try:
+                                    elem = browser.find_element_by_xpath(elem_xpath + "/*[" + str(startIndex) + "]" + "/*[2]")
+                                    elem_text = elem_text + elem.get_attribute("text")
+                                except:
+                                    pass
+                                #print("Element " , startIndex, ": ", elem_text)
+                                if elem_text == valueDict['value_mc'] + "\n" + valueDict['value_ia']:
+                                    print("Found ECN device")
+                                    ECN_found = True
+                                    break
+                            startIndex = startIndex + 1
+                            if startIndex > endIndex:
+                                lastChance = True
+                                break
                         except:
-                            pass
-                    else:
-                        elem.click()
+                            break
+                    
+                    if ECN_found == True:
                         break
-                print("Swipe times: " + str(i) + ", index: " + str(ECN_index))
+                    elif lastChance == True:
+                        break
+                    else:
+                        browser.swipe(x1, y1, x2, y2, 2000)
+                
+                if ECN_found == True:
+                    elem.click()
+                else:
+                    print("Not found ECN device.")
+                    raise error.nonamevalue()
         except:
             raise error.equalerror()
 

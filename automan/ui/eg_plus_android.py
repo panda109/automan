@@ -196,7 +196,8 @@ class eg_plus_android(object):
         swipeTime = 0
         try:
             while swipeFlag:
-                for i in range(1, len(listWifi)):
+                ##  20210201, Roger: The "end" of range must +1
+                for i in range(1, (len(listWifi) + 1)):
                     strWifiItem = browser.find_element_by_xpath(config.get("xpath", dicParam["xpath"]) + "[{}]".format(i) + "/android.widget.TextView")
                     strWifiSsid = strWifiItem.text
                     print(strWifiSsid)
@@ -405,4 +406,33 @@ class eg_plus_android(object):
                     pass
         except:
             raise error.notfind()
+            
+    def server_type_set(self, browser, valueDict):
+        ##  Purpose:
+        ##      1. Set persist.server.type to qa/production.
+        ##      2. Reboot gateway.
+        ##
+        ##  Required parameters:
+        ##      stage       - QA staging / Production staging
+        ##      name        - Gateway's name 
+        ##
+        try:
+            if valueDict['stage'] == "qa":
+                command = "adb -s " + valueDict['name'] + " shell \"setprop persist.next.server.type qa\""
+                response = ""
+                out = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                for line in out.stdout:
+                    line = line.rstrip()
+                    response += line.decode("big5", "ignore")
+                
+                command = "adb -s " + valueDict['name'] + " shell \"reboot\""
+                out = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                for line in out.stdout:
+                    line = line.rstrip()
+                    response += line.decode("big5", "ignore")
+                print(response)
+            else:
+                pass
+        except:
+            raise error.nonamevalue()
             

@@ -29,7 +29,7 @@ class Parse_file(object):
         qa = []
         include = []
         i = 0
-        for line in open(filename):
+        for line in open(filename, encoding="utf-8"):
             #!= 'include'
             if len(line.strip()) > 1 and line[0] != '#' and str(line).strip().find('include') != 0:
                 qa.append(['main '+str(i)]+[str(x).strip() for x in str(line).strip().split('\t') if x != ''])
@@ -126,8 +126,8 @@ class Parse_file(object):
         app_list=[]
         for dirname, dirnames, filenames in os.walk(os.path.join(os.getcwd() , 'conf')):
             try:
-                if open(dirname + os.sep + filename):
-                    for line in open(dirname + os.sep + filename):
+                if open(dirname + os.sep + filename, encoding="utf-8"):
+                    for line in open(dirname + os.sep + filename, encoding="utf-8"):
                         app_list.append(line)
                         #print (app_list)
             except:

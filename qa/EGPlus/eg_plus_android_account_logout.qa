@@ -1,0 +1,54 @@
+ini					eg_plus_android.ini
+init				browser									app	
+
+start
+
+sleep				3
+
+click				browser.eg_plus_android					element				#xpath#=naviBar_account_button_jp
+take				browser.eg_plus_android					screen
+$targetPic$=get		browser.eg_plus_android					targetPic			#logFolderName#=android_eg_plus_account_logout
+$sourcePic$=get		browser.eg_plus_android					sourcePic			#imgFileName#=$project_name$\Quick-Scan\Account\account_page.png
+verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
+
+click				browser.eg_plus_android					element				#xpath#=accountPage_logout_button
+take				browser.eg_plus_android					screen
+$targetPic$=get		browser.eg_plus_android					targetPic			#logFolderName#=android_eg_plus_account_logout
+$sourcePic$=get		browser.eg_plus_android					sourcePic			#imgFileName#=$project_name$\Quick-Scan\Account\logout_alerted.png
+verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
+
+click				browser.eg_plus_android					element				#xpath#=logoutAlert_logout_button
+take				browser.eg_plus_android					screen
+$targetPic$=get		browser.eg_plus_android					targetPic			#logFolderName#=android_eg_plus_account_logout
+$sourcePic$=get		browser.eg_plus_android					sourcePic			#imgFileName#=$project_name$\Quick-Scan\Account\signin.png
+verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
+
+click				browser.eg_plus_android					element				#xpath#=loginPage_already_have_an_account_button
+take				browser.eg_plus_android					screen
+$targetPic$=get		browser.eg_plus_android					targetPic			#logFolderName#=android_eg_plus_account_logout
+$sourcePic$=get		browser.eg_plus_android					sourcePic			#imgFileName#=$project_name$\Quick-Scan\Account\signin_input.png
+verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
+
+set					browser.eg_plus_android					element				#xpath#=signinPage_email,#strValue#=$app_account$
+take				browser.eg_plus_android					screen
+$targetPic$=get		browser.eg_plus_android					targetPic			#logFolderName#=android_eg_plus_account_logout
+$sourcePic$=get		browser.eg_plus_android					sourcePic			#imgFileName#=$project_name$\Quick-Scan\Account\signin_account.png
+verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
+
+set					browser.eg_plus_android					element				#xpath#=signinPage_password,#strValue#=$app_password$
+take				browser.eg_plus_android					screen
+$targetPic$=get		browser.eg_plus_android					targetPic			#logFolderName#=android_eg_plus_account_logout
+$sourcePic$=get		browser.eg_plus_android					sourcePic			#imgFileName#=$project_name$\Quick-Scan\Account\signin_password.png
+verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
+
+click				browser.eg_plus_android					element				#xpath#=loginPage_signin_button
+take				browser.eg_plus_android					screen
+$targetPic$=get		browser.eg_plus_android					targetPic			#logFolderName#=android_eg_plus_account_logout
+$sourcePic$=get		browser.eg_plus_android					sourcePic			#imgFileName#=$project_name$\Quick-Scan\Account\singin_loading.png
+verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout
+
+sleep				3
+take				browser.eg_plus_android					screen
+$targetPic$=get		browser.eg_plus_android					targetPic			#logFolderName#=android_eg_plus_account_logout
+$sourcePic$=get		browser.eg_plus_android					sourcePic			#imgFileName#=$project_name$\Quick-Scan\Account\Home_page_jp.png
+verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_account_logout

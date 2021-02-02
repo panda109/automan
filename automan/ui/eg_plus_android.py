@@ -90,7 +90,7 @@ class eg_plus_android(object):
     
     def sourcePic_get(self, browser, dicValue):
         dicParam = dict(dicValue)
-        fileLocation = os.path.join(os.getcwd(), "img", "quick_scan", dicParam["imgFileName"])
+        fileLocation = os.path.join(os.getcwd(), "img", dicParam["imgFileName"])
         #print("=====> fileLocation")
         #print(fileLocation)
         return fileLocation 

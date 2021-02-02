@@ -1,0 +1,194 @@
+###testcase:
+###	7366	[Phase 2][EG_3.0][Setup_EV Charger] Choose the Device - 3.Choose the Device	
+###	7368	[Phase 2][EG_3.0][Setup_EV Charger] Device Name - 2.Input Device Name	
+###	7446	[Phase 2][EG_3.0][Device_EV Charger] EV Charger Dashboard info - 1.Into Tab - Device - EV Charger	
+###	7448	[Phase 2][EG_3.0][Device_EV Charger] Control - 2.Mode Setting	
+###	7454	[Phase 2][EG_3.0][Device_EV Charger] EV Charger Status Chart - 1.Into EV Charger Status Chart	
+###	7473	[Phase 2][EG_3.0][Device_EV Charger] Settings-Remove - 2.Remove EV Charger	
+
+init						browser									app	
+ini							eg_plus_android.ini
+start
+
+sleep						3
+##	go to device page
+click						browser.eg_plus_android										element							#xpath#=devicePage
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\Device_GW.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+
+##	click add device 
+click						browser.eg_plus_android										element							#xpath#=addDevicePage
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\Device_addDevice.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+## choose to setup ecn device
+click						browser.eg_plus_android										element							#xpath#=addEcn
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+## click next on setup ecn device page
+click						browser.eg_plus_android										element							#xpath#=setupNextBtn
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_PreparingForSetup_none.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+##	click prepare setup 1st item
+click						browser.eg_plus_android										element							#xpath#=prepareCheck1
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_PrepareForSetup_Check1stItem.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+##	click prepare setup 2nd item
+click						browser.eg_plus_android										element							#xpath#=prepareCheck2
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_PrepareForSetup_Check2ndItem.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+##	click prepare setup 3rd item
+click						browser.eg_plus_android										element							#xpath#=prepareCheck3
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_PrepareForSetup_Check3rdItem.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+##	click prepare setup 4th item
+click						browser.eg_plus_android										element							#xpath#=prepareCheck4
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_PrepareForSetup_Check4thItem.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+##	click prepare setup 5th item
+click						browser.eg_plus_android										element							#xpath#=prepareCheck5
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_PrepareForSetup_Check5thItem.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+##	click next, go to choose gateway
+click						browser.eg_plus_android										element							#xpath#=preparePageNextBtn
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_PrepareForSetup_ChooseGW.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+##	click to confirm gateway
+click						browser.eg_plus_android										element							#xpath#=setupConfirmCubeNextBtn
+
+sleep						5
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+###	7366	[Phase 2][EG_3.0][Setup_EV Charger] Choose the Device - 3.Choose the Device	
+## choose ecn device
+$sys_locale$=get			File														shellcmd						#command#=adb -s $android_device_name$ shell "getprop | grep persist.sys.locale"
+$manufacture_code$=get		browser.eg_plus_android_main								manufacture_code				#value_mc#=$ev_charger_manufacture_code$,#value_in#=$ev_charger_instance_number$,#value_loc#=$sys_locale$
+click						browser.eg_plus_android_ecn_device_setup					ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$manufacture_code$,#value_ia#=$ev_charger_ip_address$,#value_sc#=$scan_EV_charger_text$,#value_loc#=$sys_locale$
+
+sleep						5
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList_setDeviceNamePage_notSet.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+###	7368	[Phase 2][EG_3.0][Setup_EV Charger] Device Name - 2.Input Device Name
+## set device name
+set							browser.eg_plus_android										element							#xpath#=ecnName,#strValue#=QA EVCharger
+
+sleep						5
+
+hide						browser.eg_plus_android										keyboard
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList_setDeviceNamePage_evCharger.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+## click ok btn on setup device name page
+click						browser.eg_plus_android										element							#xpath#=setDeviceNameOKBtn
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\ECNSetup_evCharger_setupComplete.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+##	click ok btn on setup complete page, will goto add device page
+click						browser.eg_plus_android										element							#xpath#=setupFinishBtn
+
+##	click go back btn on add device page
+click						browser.eg_plus_android										element							#xpath#=addDevicePageGoBackBtn
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\Dashboard_already_binding_evCharger.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+###	7446	[Phase 2][EG_3.0][Device_EV Charger] EV Charger Dashboard info - 1.Into Tab - Device - EV Charger	
+##	check device name
+verify						browser.eg_plus_android										device_setup					#xpath#=dashboard_device,#strDeviceName#=QA EVCharger,#deviceName#=dashboard_deviceName
+
+##	verify update time
+verify						browser.eg_plus_android										string_not_equal				#xpath#=ecn_ev_charger_update_time_textbox,#text#=time_not_update_text
+
+sleep						3
+
+###	7454	[Phase 2][EG_3.0][Device_EV Charger] EV Charger Status Chart - 1.Into EV Charger Status Chart	
+##	goto pv system chart page
+click						browser.eg_plus_android										element							#xpath#=ecn_ev_charger_card
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\Dashboard_already_binding_pvSystem_evChargerChartPage.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+## verify title string of pv system chart page
+verify						browser.eg_plus_android										element							#xpath#=ecn_ev_charger_chart_title_text
+
+##	click go back btn on pv system chart page
+click						browser.eg_plus_android										element							#xpath#=page_go_back_jp_btn
+###	7448	[Phase 2][EG_3.0][Device_EV Charger] Control - 2.Mode Setting	
+##	click control btn
+click						browser.eg_plus_android										element							#xpath#=ecn_ev_charger_control_btn
+
+##	choose charging mode
+click						browser.eg_plus_android										element							#xpath#=ecn_ev_charger_control_charging_mode
+
+sleep						15
+
+verify						browser.eg_plus_android										string_equal					#xpath#=ecn_ev_charger_mode_textbox,#text#=charging_jp
+
+
+
+###	7473	[Phase 2][EG_3.0][Device_EV Charger] Settings-Remove - 2.Remove EV Charger	
+##	click setting on pv system card
+click						browser.eg_plus_android										element							#xpath#=ecn_ev_charger_setting_btn
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\Dashboard_evCharger_settingPage.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+##	click remove btn
+click						browser.eg_plus_android										element							#xpath#=remove_btn
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\Dashboard_evCharger_settingPage_removeDialog.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+## click remove btn on double confirm remove dialog
+click						browser.eg_plus_android										element							#xpath#=remove_confirm_btn
+take						browser.eg_plus_android										screen
+$targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=android_eg_plus_ecn_ev_charger
+$sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EV_Charger\Device_GW.png
+verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=android_eg_plus_ecn_ev_charger
+
+##	verify dashboard device number
+verify						browser.eg_plus_android										dashboard_no_device				#xpath#=dashboard_device_list
+

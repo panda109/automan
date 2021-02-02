@@ -1,0 +1,49 @@
+start
+init				browser								app	
+sleep				2
+# [TC-4010] signin > input email & pwd > take snapshot
+take				browser.iphone						screen
+swipe				browser.eg_plus_android				left
+
+swipe				browser.eg_plus_android				left
+take				browser.iphone						screen
+
+click				browser.eg_plus_android				element				#xpath#=loginPage_turn_on_button
+take				browser.iphone						screen
+
+click				browser.eg_plus_android				element				#xpath#=loginPage_already_have_an_account_button
+take				browser.iphone						screen
+
+set					browser.eg_plus_android				element				#xpath#=signinPage_email,#strValue#=eric.lee+99@nextdrive.io
+take				browser.iphone						screen
+
+set					browser.eg_plus_android				element				#xpath#=signinPage_password,#strValue#=link4581
+take				browser.iphone						screen
+#$targetPic$=get	browser.eg_plus_android				targetPic			#logFolderName#=android_eg_plus_signup
+#$sourcePit$=get	browser.eg_plus_android				sourcePic			#imgFileName#=LoginPage_enable_login_button.jpg
+#verify				Tool								picture				#path#=$targetPic$,#source_path#=$sourcePit$,#lessthan#=3
+
+# [TC-4011] click signup button > take snapshot
+click				browser.eg_plus_android				element				#xpath#=loginPage_signin_button
+sleep				3
+take				browser.iphone						screen
+#$targetPic$=get	browser.eg_plus_android				targetPic			#logFolderName#=android_eg_plus_signup
+#$sourcePit$=get	browser.eg_plus_android				sourcePic			#imgFileName#=HomePage.jpg
+#verify				Tool								picture				#path#=$targetPic$,#source_path#=$sourcePit$,#lessthan#=3
+
+# [TC-4054] click logout button > take snapshot
+click				browser.eg_plus_android				element				#xpath#=naviBar_account_button_jp
+take				browser.iphone						screen
+
+click				browser.eg_plus_android				element				#xpath#=accountPage_logout_button
+take				browser.iphone						screen
+
+click				browser.eg_plus_android				element				#xpath#=logoutAlert_logout_button
+sleep				3
+take				browser.iphone						screen
+#$targetPic$=get	browser.eg_plus_android				targetPic			#logFolderName#=android_eg_plus_signup
+#$sourcePit$=get	browser.eg_plus_android				sourcePic			#imgFileName#=AccountPage_enable_logout_button.jpg
+#verify				Tool
+
+close				browser
+end

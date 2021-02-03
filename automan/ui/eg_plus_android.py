@@ -85,14 +85,14 @@ class eg_plus_android(object):
         #print(listRevFilename)
         
         picLocation = folderLocation + "\\" + listRevFilename[0]
-        #print(picLocation)
+        print("Target image path: ", picLocation)
         return picLocation
     
     def sourcePic_get(self, browser, dicValue):
         dicParam = dict(dicValue)
         fileLocation = os.path.join(os.getcwd(), "img", dicParam["imgFileName"])
         #print("=====> fileLocation")
-        #print(fileLocation)
+        print("Source image path: ", fileLocation)
         return fileLocation 
 
     def authority_verify(self, browser, dicValue):

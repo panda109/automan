@@ -90,8 +90,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##	Step 1. Select one Air Conditioner on Choose the Device page
 ##	Expected result 1. Start loading successfully	
 $7398_sys_locale$=get		File 											shellcmd						#command#=adb -s $android_device_name$ shell "getprop | grep persist.sys.locale"
-$7398_manufacture_code$=get	browser.eg_plus_android_main					manufacture_code				#value_mc#=$fuel_cell_manufacture_code$,#value_in#=$fuel_cell_instance_number$,#value_loc#=$7398_sys_locale$
-click						browser.eg_plus_android_ecn_device_setup		ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$7398_manufacture_code$,#value_ia#=$fuel_cell_ip_address$,#value_sc#=$scan_fuel_cell_text$,#value_loc#=$7398_sys_locale$
+click						browser.eg_plus_android_ecn_device_setup		ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$fuel_cell_manufacture_code$,#value_in#=$fuel_cell_instance_number$,#value_ia#=$fuel_cell_ip_address$,#value_sc#=$scan_fuel_cell_text$,#value_loc#=$7398_sys_locale$
 ##	Expected result 2. Into Device Name page when the Fuel Cell is connected
 verify						browser.eg_plus_android_ecn_device_setup		element_located					#xpath_id#=$step3_device_name_edittext$
 take						browser.eg_plus_android							screen		

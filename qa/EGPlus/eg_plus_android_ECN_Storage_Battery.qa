@@ -90,8 +90,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##	Step 1. Select one battery on Choose the Device page	
 ##	Expected result 1. Start loading successfully	
 $4156_sys_locale$=get		File 											shellcmd						#command#=adb -s $android_device_name$ shell "getprop | grep persist.sys.locale"
-$4156_manufacture_code$=get	browser.eg_plus_android_main					manufacture_code				#value_mc#=$battery_manufacture_code$,#value_in#=$battery_instance_number$,#value_loc#=$4156_sys_locale$
-click						browser.eg_plus_android_ecn_device_setup		ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$4156_manufacture_code$,#value_ia#=$battery_ip_address$,#value_sc#=$scan_storage_battery_text$,#value_loc#=$4156_sys_locale$
+click						browser.eg_plus_android_ecn_device_setup		ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$battery_manufacture_code$,#value_in#=$battery_instance_number$,#value_ia#=$battery_ip_address$,#value_sc#=$scan_storage_battery_text$,#value_loc#=$4156_sys_locale$
 ##	Expected result 2. Into Device Name page when the battery is connected
 verify						browser.eg_plus_android_ecn_device_setup		element_located					#xpath_id#=$step3_device_name_edittext$
 take						browser.eg_plus_android							screen		

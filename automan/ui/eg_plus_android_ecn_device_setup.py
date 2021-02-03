@@ -52,8 +52,8 @@ class eg_plus_android_ecn_device_setup(object):
     def ECN_device_name_click(self, browser, valueDict):
         ### Required parameters:
         ###     xpath_id        - List view where ECN device name located
-        ###     value_mc        - ECN device name
-        ###         Format          : {manufacture code}-{instance number}
+        ###     value_mc        - ECN device manufacture code
+        ###     value_in        - ECN device instance number
         ###     value_ia        - ECN device IP address
         ###     value_sc        - ECN device category text in scan list
         ###         Format          : {Chinese text}/{Japanese text}/{English text}
@@ -69,26 +69,22 @@ class eg_plus_android_ecn_device_setup(object):
         ### 3. Until find #value# in #xpath_id#
         ###
         try:
-            valueDict['xpath_id'] in locals().keys()
-            valueDict['value_mc'] in locals().keys()
-            valueDict['value_ia'] in locals().keys()
-            valueDict['value_sc'] in locals().keys()
-            valueDict['value_loc'] in locals().keys()
-            valueDict['xpath_id'] = config.get('ECHONET_Lite_device_Setup', valueDict['xpath_id'])
-            valueDict['value_sc'] = config.get('ECHONET_Lite_device_Setup', valueDict['value_sc'])
             valueDict['value_loc'] = re.search("\[persist.sys.locale\]:\s\[([\s\S]+)\]", valueDict['value_loc'])
             valueDict['value_loc'] = (valueDict['value_loc']).group(1)
+            if re.search("ja-", valueDict['value_loc']) != None:
+                valueDict['value_mc'] = config.get('Manufacture_code', valueDict['value_mc'])
+            valueDict['value_mc'] = valueDict['value_mc'] + "-" + valueDict['value_in']
+            valueDict['xpath_id'] = config.get('ECHONET_Lite_device_Setup', valueDict['xpath_id'])
+            valueDict['value_sc'] = config.get('ECHONET_Lite_device_Setup', valueDict['value_sc'])
             valueDict['value_sc'] = (valueDict['value_sc']).split(";")
-            #if valueDict['value_loc'] == "ja-JP":
             if re.search("ja-", valueDict['value_loc']) != None:
                 valueDict['value_sc'] = (valueDict['value_sc'])[1]
-            #elif valueDict['value_loc'] == "zh-TW":
             elif re.search("zh-", valueDict['value_loc']) != None:
                 valueDict['value_sc'] = (valueDict['value_sc'])[0]
             else:
                 valueDict['value_sc'] = (valueDict['value_sc'])[2] 
-            print("Category: " + valueDict['value_sc'] + "\n" + \
-                "ECN device: " + valueDict['value_mc'] + ", " + valueDict['value_ia'])
+            #print("Category: " + valueDict['value_sc'] + "\n" + \
+            #    "ECN device: " + valueDict['value_mc'] + ", " + valueDict['value_ia'])
         except:
             raise error.nonamevalue()
             

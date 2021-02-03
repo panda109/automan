@@ -1,0 +1,25 @@
+###
+### Send result to Google chat room.
+###	1. Get testing result from {workspace}\log\{test case}\{test case}.xml
+###	2. Merge all result and make them human readable.
+### 3. Send result.
+###
+
+start
+
+##	Step 1.
+$result_Air_Conditioner$=get		eg_plus_testbed				xml_list			#path#=log\eg_plus_android_ECN_Air_Conditioner\eg_plus_android_ECN_Air_Conditioner.xml
+$result_EcoCute$=get				eg_plus_testbed				xml_list			#path#=log\eg_plus_android_ECN_EcoCute\eg_plus_android_ECN_EcoCute.xml
+$result_Fuel_Cell$=get				eg_plus_testbed				xml_list			#path#=log\eg_plus_android_ECN_Fuel_Cell\eg_plus_android_ECN_Fuel_Cell.xml
+$result_Storage_Battery$=get		eg_plus_testbed				xml_list			#path#=log\eg_plus_android_ECN_Storage_Battery\eg_plus_android_ECN_Storage_Battery.xml
+$result_Smart_Meter$=get			eg_plus_testbed				xml_list			#path#=log\eg_plus_android_Smart_Meter\eg_plus_android_Smart_Meter.xml
+$result_Motion_Pixi$=get			eg_plus_testbed				xml_list			#path#=log\eg_plus_android_Motion_Pixi\eg_plus_android_Motion_Pixi.xml
+$result_Thermo_Pixi$=get			eg_plus_testbed				xml_list			#path#=log\eg_plus_android_Thermo_Pixi\eg_plus_android_Thermo_Pixi.xml
+
+##	Step 2.
+$overall_result$=get				eg_plus_testbed				overall_result		#text#=$result_Air_Conditioner$;$result_EcoCute$;$result_Fuel_Cell$;$result_Storage_Battery$;$result_Smart_Meter$;$result_Motion_Pixi$;$result_Thermo_Pixi$
+
+###	Step 3.
+send								Fb							googlemessage		#message#=$overall_result$
+
+end

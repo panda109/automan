@@ -58,9 +58,9 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##		Click "Checkbox 3"	
 ~click						browser.eg_plus_android_ecn_device_setup		checkbox_03						#xpath_id#=$step1_checkbox_03$
 take						browser.eg_plus_android							screen		
-#$target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=eg_plus_android_ECN_EcoCute
-#$source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EcoCute\TC-7382_07_click_checkbox_3.jpg
-#verify						verify_pic										picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_ECN_EcoCute
+$target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=eg_plus_android_ECN_EcoCute
+$source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EcoCute\TC-7382_07_click_checkbox_3.jpg
+verify						verify_pic										picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_ECN_EcoCute
 ##		Click "Checkbox 4"	
 ~click						browser.eg_plus_android_ecn_device_setup		checkbox_04						#xpath_id#=$step1_checkbox_04$
 take						browser.eg_plus_android							screen		
@@ -89,8 +89,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##	Step 1. Select one EcoCute on Choose the Device page	
 ##	Expected result 1. Start loading successfully	
 $7382_sys_locale$=get		File 											shellcmd						#command#=adb -s $android_device_name$ shell "getprop | grep persist.sys.locale"
-$7382_manufacture_code$=get	browser.eg_plus_android_main					manufacture_code				#value_mc#=$ecocute_manufacture_code$,#value_in#=$ecocute_instance_number$,#value_loc#=$7382_sys_locale$
-click						browser.eg_plus_android_ecn_device_setup		ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$7382_manufacture_code$,#value_ia#=$ecocute_ip_address$,#value_sc#=$scan_ecocute_text$,#value_loc#=$7382_sys_locale$
+click						browser.eg_plus_android_ecn_device_setup		ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$ecocute_manufacture_code$,#value_in#=$ecocute_instance_number$,#value_ia#=$ecocute_ip_address$,#value_sc#=$scan_ecocute_text$,#value_loc#=$7382_sys_locale$
 ##	Expected result 2. Into Device Name page when the battery is connected
 verify						browser.eg_plus_android_ecn_device_setup		element_located					#xpath_id#=$step3_device_name_edittext$
 take						browser.eg_plus_android							screen		

@@ -94,8 +94,7 @@ verify						verify_pic													picture							#path#=$targetPic$,#source_path
 ###	7366	[Phase 2][EG_3.0][Setup_EV Charger] Choose the Device - 3.Choose the Device	
 ## choose ecn device
 $sys_locale$=get			File														shellcmd						#command#=adb -s $android_device_name$ shell "getprop | grep persist.sys.locale"
-$manufacture_code$=get		browser.eg_plus_android_main								manufacture_code				#value_mc#=$ev_charger_manufacture_code$,#value_in#=$ev_charger_instance_number$,#value_loc#=$sys_locale$
-click						browser.eg_plus_android_ecn_device_setup					ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$manufacture_code$,#value_ia#=$ev_charger_ip_address$,#value_sc#=$scan_EV_charger_text$,#value_loc#=$sys_locale$
+click						browser.eg_plus_android_ecn_device_setup					ECN_device_name					#xpath_id#=$step2_device_list_view$,#value_mc#=$ev_charger_manufacture_code$,#value_in#=$ev_charger_instance_number$,#value_ia#=$ev_charger_ip_address$,#value_sc#=$scan_EV_charger_text$,#value_loc#=$sys_locale$
 
 sleep						5
 take						browser.eg_plus_android										screen

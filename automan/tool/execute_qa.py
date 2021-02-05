@@ -161,7 +161,9 @@ class Execute_qa(object):
                 self.nowcase = self.nowcase.split(os.sep)[-1]
                 
             SaveDirectory = os.getcwd()
-            os.mkdir(os.path.join(SaveDirectory , "log" , qas ,   self.nowcase ))
+            print(os.path.join(SaveDirectory , "log" , qas ,   self.nowcase ))
+            if os.path.isdir(os.path.join(SaveDirectory , "log" , qas ,   self.nowcase )) != True :
+                os.mkdir(os.path.join(SaveDirectory , "log" , qas ,   self.nowcase ))
             SaveAs = os.path.join(SaveDirectory,'log' , qas ,   self.nowcase , time.strftime('%Y_%m_%d_%H_%M_%S'))
             im=ImageGrab.grab()
             time.sleep(2)

@@ -16,6 +16,9 @@
 
 ini							eg_plus_android.ini
 start
+$directory$=get				File											shellcmd						#command#=echo %CD%\temp
+exec 						File 											shellcmd						#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
+exec 						File 											shellcmd						#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
 init						browser											app
 
 ###	TC-4156
@@ -83,6 +86,7 @@ $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$p
 verify						verify_pic										picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_ECN_Storage_Battery
 ##		Click "Next"	
 ~click						browser.eg_plus_android_ecn_device_setup		next_btn						#xpath_id#=$step1_actionsheets_next_btn$
+verify						browser.eg_plus_android_ecn_device_setup		element_located					#xpath_id#=$step2_device_list_view$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=eg_plus_android_ECN_Storage_Battery
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_Storage_Battery\TC-4156_11_click_next.jpg
@@ -153,7 +157,7 @@ $4326_device_name$=get		browser.eg_plus_android_ecn_storage_battery		element_tex
 ##	Step 1. Tap "Battery Usage" card on dashboard
 ##	Expected result 1. Into Storage Battery Volume Chart page successfully
 ~click						browser.eg_plus_android_ecn_storage_battery		battery_img						#xpath_id#=$battery_img$
-$4327_content_title$=get	browser.eg_plus_android_ecn_storage_battery		element_text					#xpath_id#=$battery_content_title_text$
+verify						browser.eg_plus_android_ecn_storage_battery		element_located					#xpath_id#=$battery_content_title_text$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=eg_plus_android_ECN_Storage_Battery
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_Storage_Battery\TC-4327_01_click_image.jpg
@@ -266,4 +270,5 @@ $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$p
 verify						verify_pic										picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_ECN_Storage_Battery
 
 close						browser
+exec 						File 											shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
 end

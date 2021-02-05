@@ -16,6 +16,9 @@
 
 ini							eg_plus_android.ini
 start
+$directory$=get				File											shellcmd						#command#=echo %CD%\temp
+exec 						File 											shellcmd						#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
+exec 						File 											shellcmd						#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
 init						browser											app
 
 ###	TC-7398
@@ -83,6 +86,7 @@ $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$p
 verify						verify_pic										picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_ECN_Fuel_Cell
 ##		Click "Next"	
 ~click						browser.eg_plus_android_ecn_device_setup		next_btn						#xpath_id#=$step1_actionsheets_next_btn$
+verify						browser.eg_plus_android_ecn_device_setup		element_located					#xpath_id#=$step2_device_list_view$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=eg_plus_android_ECN_Fuel_Cell
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_Fuel_Cell\TC-7398_11_click_next.jpg
@@ -144,8 +148,7 @@ verify						browser.eg_plus_android_ecn_fuel_cell			element_text					#value#=--,
 ##	Expected result 2. Show device name successfully and default is Fuel Cell
 $7491_device_name$=get		browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$title_text$
 ##	Expected result 3. Show status(Generating, Idling, Stopping, Starting, Stop)above the radio buttons successfully
-$7491_status$=get			browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$operation_mode_text$
-verify						browser.eg_plus_android_ecn_fuel_cell			element_text					#value#=--,#system_value#=$7491_status$,#criteria#=!
+verify						browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$operation_mode_text$,#value#=--,#criteria#=!
 ##	Expected result 4. Use radio buttons to switch views on the card
 ##	Expected result 4-1. Now shows cloud latest Real-time power generation 0–9999 W (Round to whole number)
 ~click						browser.eg_plus_android_ecn_fuel_cell			now_btn							#xpath_id#=$now_btn$
@@ -171,7 +174,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ~click						browser.eg_plus_android_ecn_fuel_cell			now_btn							#xpath_id#=$now_btn$
 ~click						browser.eg_plus_android_ecn_fuel_cell			value_text						#xpath_id#=$now_value_text$
 ##	Expected result 1. Into Current Power Generation Chart page successfully
-$7492_title$=get			browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$current_power_title_text$
+verify						browser.eg_plus_android_ecn_fuel_cell			element_located					#xpath_id#=$current_power_title_text$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=eg_plus_android_ECN_Fuel_Cell
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_Fuel_Cell\TC-7492_01_click_now_value.jpg
@@ -184,8 +187,8 @@ verify						browser.eg_plus_android_ecn_fuel_cell			element_located					#xpath_i
 $7492_power$=get			browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$current_power_value_text$
 verify						browser.eg_plus_android_ecn_fuel_cell			element_text					#value#=--,#system_value#=$7492_power$,#criteria#=!
 ##	Expected result 4. Last data time which is based on cloud latest time (not the last phone or cloud update time) shows successfully above the chart
-$7492_time$=get				browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$current_power_time_text$
-verify						browser.eg_plus_android_ecn_fuel_cell			element_text					#value#=--,#system_value#=$7492_time$,#criteria#=!
+#verify						browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$current_power_time_text$,#value#=--,#criteria#=!
+verify						browser.eg_plus_android_ecn_fuel_cell			element_located					#xpath_id#=$current_power_time_text$
 ##		Click "<-"
 ~click						browser.eg_plus_android_ecn_fuel_cell			back_btn						#xpath_id#=$current_power_back_btn$
 take						browser.eg_plus_android							screen		
@@ -198,7 +201,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##	Step 1. Tap "Today - Total" card on dashboard
 ~click						browser.eg_plus_android_ecn_fuel_cell			today_btn						#xpath_id#=$today_btn$
 ~click						browser.eg_plus_android_ecn_fuel_cell			value_text						#xpath_id#=$today_value_text$
-$7495_title$=get			browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$today_power_title_text$
+verify						browser.eg_plus_android_ecn_fuel_cell			element_located					#xpath_id#=$today_power_title_text$
 $7495_total_value$=get		browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$today_power_total_value_text$
 $7495_selected_value$=get	browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$today_power_selected_value_text$
 $7495_selected_unit$=get	browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$today_power_selected_unit_text$
@@ -250,4 +253,5 @@ $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$p
 verify						verify_pic										picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_ECN_Fuel_Cell
 
 close						browser
+exec 						File 											shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
 end

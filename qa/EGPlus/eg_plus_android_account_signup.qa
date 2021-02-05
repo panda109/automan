@@ -1,4 +1,8 @@
+ini					eg_plus_android.ini
 start
+$directory$=get		File								shellcmd			#command#=echo %CD%\temp
+exec 				File 								shellcmd			#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
+exec 				File 								shellcmd			#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
 init				browser								app	
 sleep				2
 # [TC-4010] signin > input email & pwd > take snapshot
@@ -46,4 +50,5 @@ take				browser.iphone						screen
 #verify				Tool
 
 close				browser
+exec 				File 								shellcmd			#command#=taskkill /F /IM ADB_recorder.exe /T
 end

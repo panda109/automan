@@ -15,11 +15,15 @@ $result_Storage_Battery$=get		eg_plus_testbed				xml_list			#path#=log\eg_plus_a
 $result_Smart_Meter$=get			eg_plus_testbed				xml_list			#path#=log\eg_plus_android_Smart_Meter\eg_plus_android_Smart_Meter.xml
 $result_Motion_Pixi$=get			eg_plus_testbed				xml_list			#path#=log\eg_plus_android_Motion_Pixi\eg_plus_android_Motion_Pixi.xml
 $result_Thermo_Pixi$=get			eg_plus_testbed				xml_list			#path#=log\eg_plus_android_Thermo_Pixi\eg_plus_android_Thermo_Pixi.xml
+$result_EV_Charger$=get				eg_plus_testbed				xml_list			#path#=log\eg_plus_android_ECN_EV_Charger\eg_plus_android_ECN_EV_Charger.xml
+$result_PDB$=get					eg_plus_testbed				xml_list			#path#=log\eg_plus_android_ECN_Power_Distribution_Board\eg_plus_android_ECN_Power_Distribution_Board.xml
+$result_PV_System$=get				eg_plus_testbed				xml_list			#path#=log\eg_plus_android_ECN_PV_System\eg_plus_android_ECN_PV_System.xml
+$result_Setup_Cube$=get				eg_plus_testbed				xml_list			#path#=log\eg_plus_android_Setup_Cube\eg_plus_android_Setup_Cube.xml
 
 ##	Step 2.
-$overall_result$=get				eg_plus_testbed				overall_result		#text#=$result_Air_Conditioner$;$result_EcoCute$;$result_Fuel_Cell$;$result_Storage_Battery$;$result_Smart_Meter$;$result_Motion_Pixi$;$result_Thermo_Pixi$
+$overall_result$=get				eg_plus_testbed				overall_result		#text#=$result_Air_Conditioner$;$result_EcoCute$;$result_Fuel_Cell$;$result_Storage_Battery$;$result_Smart_Meter$;$result_Motion_Pixi$;$result_Thermo_Pixi$;$result_EV_Charger$;$result_PDB$;$result_PV_System$;$result_Setup_Cube$
 
 ###	Step 3.
-send								Fb							googlemessage		#message#=$overall_result$
+#send								Fb							googlemessage		#message#=$overall_result$
 
 end

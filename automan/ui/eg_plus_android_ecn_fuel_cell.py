@@ -70,14 +70,25 @@ class eg_plus_android_ecn_fuel_cell(object):
     
     def element_text_get(self, browser, valueDict):
         try:
-            elem = browser.find_element_by_xpath(config.get('ECN_Fuel_Cell', valueDict['xpath_id']))
+            elem_xpath = config.get('ECN_Fuel_Cell', valueDict['xpath_id'])          
+            elem = browser.find_element_by_xpath(elem_xpath)
             print("Element text: " + elem.text)
             return elem.text
         except:
             raise error.nonamevalue()
     
-    def element_text_verify(self, browser, valueDict):    
+    def element_text_verify(self, browser, valueDict):
         try:
+            valueDict['xpath_id'] in locals().keys()
+            elem_xpath = config.get('ECN_Fuel_Cell', valueDict['xpath_id'])          
+            elem = browser.find_element_by_xpath(elem_xpath)
+            valueDict['system_value'] = elem.text
+        except:
+            pass
+        
+        try:
+            valueDict['value'] = str.encode(valueDict['value'])
+            valueDict['system_value'] = str.encode(valueDict['system_value'])
             valueDict['criteria'] in locals().keys()
             print("Actual result: ", valueDict['value'], "\nExpected result: ", valueDict['system_value'])
         except:

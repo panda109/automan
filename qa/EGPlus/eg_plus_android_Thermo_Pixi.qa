@@ -17,6 +17,9 @@
 
 ini							eg_plus_android.ini
 start
+$directory$=get				File												shellcmd						#command#=echo %CD%\temp
+exec 						File 												shellcmd						#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
+exec 						File 												shellcmd						#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
 init						browser												app
 
 ###	TC-4125
@@ -148,7 +151,7 @@ verify						verify_pic											picture							#path#=$target_pic$,#source_path#
 ##	Expected result 1. Display cloud latest Temperature and Humidity (round down to whole number) successfully and default unit is °C
 $4240_temperature$=get		browser.eg_plus_android_thermo_pixi_dashboard		thermo_temperature_text			#xpath_id#=$temperature_text$
 $4240_temperature_unit$=get	browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$temperature_unit_text$
-$4240_humidity$=get			browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$humidity_text$
+#$4240_humidity$=get			browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$humidity_text$
 ##	Expected result 2. Show pixi name successfully and default is Thermo Pixi
 $4240_pixi_name$=get		browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$title_text$
 ##	Expected result 3. The panel includes last data time which is based on cloud latest time(not the last phone or cloud update time)
@@ -165,7 +168,7 @@ $target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#
 $source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$\Quick-Scan\Thermo_Pixi\TC-4241_01_click_dashboard.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Thermo_Pixi
 ##	Expected result 1. Into Thermo Chart page successfully
-$4241_title$=get			browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$detail_title_text$
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$detail_title_text$,#value#=--,#criteria#=!
 ##	Expected result 2. Cloud latest Temperature and Humidity show successfully above the chart
 $4241_temperature$=get		browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$detail_temperature_text$
 $4241_humidity$=get			browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$detail_humidity_text$
@@ -238,7 +241,7 @@ verify						verify_pic											picture							#path#=$target_pic$,#source_path#
 ###	TC-4541
 ##	Step 1. Trigger Thermo Pixi event
 ##		Trigger Thermo Pixi's bluetooth by relay on Pi via SSH
-run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
+#run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
 ##	Expected result 1. Receive push notification successfully
 
 
@@ -261,8 +264,10 @@ take						browser.eg_plus_android								screen
 $target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=eg_plus_android_Thermo_Pixi
 $source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$\Quick-Scan\Thermo_Pixi\TC-4284_02_click_remove.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Thermo_Pixi
-##	Expected result 1. Remove Theromo successfully
+##	Expected result 1. Remove Thermo successfully
+click						browser.eg_plus_android_main						refresh_page					#xpath_id#=$refresh_img$
 verify						browser.eg_plus_android_thermo_pixi_dashboard		element_disappear				#xpath_id#=$title_text$
 
 close						browser
+exec 						File 												shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
 end

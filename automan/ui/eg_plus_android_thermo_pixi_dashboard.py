@@ -140,7 +140,31 @@ class eg_plus_android_thermo_pixi_dashboard(object):
         toast_loc = ("xpath", ".//*[contains(@text, '" + valueDict['value'] + "')]")
         toast = WebDriverWait(browser, 3, 0.1).until(EC.presence_of_element_located(toast_loc))
       
-    
+    def element_text_verify(self, browser, valueDict):
+        try:
+            valueDict['xpath_id'] in locals().keys()
+            elem_xpath = config.get('Thermo_Pixi_Dashboard', valueDict['xpath_id'])          
+            elem = browser.find_element_by_xpath(elem_xpath)
+            valueDict['system_value'] = elem.text
+        except:
+            pass
+        
+        try:
+            valueDict['value'] = str.encode(valueDict['value'])
+            valueDict['system_value'] = str.encode(valueDict['system_value'])
+            valueDict['criteria'] in locals().keys()
+            print("Actual result: ", valueDict['value'], "\nExpected result: ", valueDict['system_value'])
+        except:
+            raise error.nonamevalue()
+        
+        try:
+            Verify().verify(valueDict)
+        except error.notequalerror:
+            raise error.notequalerror()
+        except error.equalerror:
+            raise error.equalerror()
+        except:
+            pass
     
     #def no_config_toast_verify(self, browser, valueDict):
     #    ### 1. Click #xpath_id# and get the message in toast

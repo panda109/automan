@@ -3,9 +3,12 @@
 ### testcase
 ### 4181	[EG_3.0][Device_Dashboard]Empty Status dashboard_2.Into Add Device
 
-init				browser									app	
-
+ini					eg_plus_android.ini
 start
+$directory$=get		File									shellcmd			#command#=echo %CD%\temp
+exec 				File 									shellcmd			#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
+exec 				File 									shellcmd			#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
+init				browser									app	
 
 sleep				10
 
@@ -29,4 +32,6 @@ $targetPic$=get		browser.eg_plus_android					targetPic			#logFolderName#=eg_plus
 $sourcePic$=get		browser.eg_plus_android					sourcePic			#imgFileName#=$project_name$\Quick-Scan\Empty\Device_addDevice_swipeUp.png
 verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_intoAddDevicePage
 
+close				browser
+exec 				File 									shellcmd			#command#=taskkill /F /IM ADB_recorder.exe /T
 end

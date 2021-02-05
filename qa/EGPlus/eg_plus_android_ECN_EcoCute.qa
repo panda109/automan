@@ -15,6 +15,9 @@
 
 ini							eg_plus_android.ini
 start
+$directory$=get				File											shellcmd						#command#=echo %CD%\temp
+exec 						File 											shellcmd						#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
+exec 						File 											shellcmd						#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
 init						browser											app
 
 ###	TC-7382
@@ -82,6 +85,7 @@ $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$p
 verify						verify_pic										picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_ECN_EcoCute
 ##		Click "Next"	
 ~click						browser.eg_plus_android_ecn_device_setup		next_btn						#xpath_id#=$step1_actionsheets_next_btn$
+verify						browser.eg_plus_android_ecn_device_setup		element_located					#xpath_id#=$step2_device_list_view$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=eg_plus_android_ECN_EcoCute
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$\Quick-Scan\ECN_EcoCute\TC-7382_11_click_next.jpg
@@ -207,4 +211,5 @@ $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$p
 verify						verify_pic										picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_ECN_EcoCute
 
 close						browser
+exec 						File 											shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
 end

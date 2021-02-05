@@ -17,6 +17,9 @@
 
 ini							eg_plus_android.ini
 start
+$directory$=get				File												shellcmd						#command#=echo %CD%\temp
+exec 						File 												shellcmd						#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
+exec 						File 												shellcmd						#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
 init						browser												app
 
 ###	TC-4111
@@ -144,19 +147,19 @@ $4114_pixi_name$=get		browser.eg_plus_android_motion_pixi_dashboard		element_tex
 click						browser.eg_plus_android								element							#xpath#=motionSetting
 take						browser.eg_plus_android								screen		
 $targetPic$=get				browser.eg_plus_android								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
-$sourcePic$=get				browser.eg_plus_android								sourcePic						#imgFileName#=Dashboard_motion_setting.png
+$sourcePic$=get				browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$\Quick-Scan\Motion_Pixi\Dashboard_motion_setting.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 							
 click						browser.eg_plus_android								element							#xpath#=motionSettingNotifiBtn
 take						browser.eg_plus_android								screen		
 $targetPic$=get				browser.eg_plus_android								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
-$sourcePic$=get				browser.eg_plus_android								sourcePic						#imgFileName#=Dashboard_setting_noti_on.png
+$sourcePic$=get				browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$\Quick-Scan\Motion_Pixi\Dashboard_setting_noti_on.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 							
 click						browser.eg_plus_android								element							#xpath#=motionNotifSwitch
 take						browser.eg_plus_android								screen		
 $targetPic$=get				browser.eg_plus_android								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
-$sourcePic$=get				browser.eg_plus_android								sourcePic						#imgFileName#=Dashboard_setting_noti_off.png
+$sourcePic$=get				browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$\Quick-Scan\Motion_Pixi\Dashboard_setting_noti_off.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 							
 click						browser.eg_plus_android								element							#xpath#=motionNotifSaveBtn
@@ -164,7 +167,7 @@ click						browser.eg_plus_android								element							#xpath#=motionNotifSaveB
 click						browser.eg_plus_android								element							#xpath#=motionDeviceCard
 take						browser.eg_plus_android								screen		
 $targetPic$=get				browser.eg_plus_android								targetPic						#logFolderName#=eg_plus_android_Motion_Pixi
-$sourcePic$=get				browser.eg_plus_android								sourcePic						#imgFileName#=Dashboard_motion_chart.png
+$sourcePic$=get				browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$\Quick-Scan\Motion_Pixi\Dashboard_motion_chart.png
 verify						verify_pic											picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 							
 click						browser.eg_plus_android								element							#xpath#=motionChartReturnBtn
@@ -194,7 +197,9 @@ $target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#
 $source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$\Quick-Scan\Motion_Pixi\TC-4239_03_click_remove.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=eg_plus_android_Motion_Pixi
 ##	Expected result 1. Remove Motion successfully
+click						browser.eg_plus_android_main						refresh_page					#xpath_id#=$refresh_img$
 verify						browser.eg_plus_android_motion_pixi_dashboard		element_disappear				#xpath_id#=$title_text$
 
 close						browser
+exec 						File 												shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
 end

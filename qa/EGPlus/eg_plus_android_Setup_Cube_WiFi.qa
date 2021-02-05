@@ -1,7 +1,10 @@
 ini					eg_plus_android.ini
-init				browser									app	
 
 start
+$directory$=get		File									shellcmd			#command#=echo %CD%\temp
+exec 				File 									shellcmd			#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
+exec 				File 									shellcmd			#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
+init				browser									app	
 
 sleep				3
 
@@ -53,5 +56,7 @@ verify				verify_pic								picture				#path#=$targetPic$,#source_path#=$sourceP
 
 click				browser.eg_plus_android					element				#xpath#=wifiSetConfirmBtn
 sleep				3
-			
+	
+close				browser
+exec 				File 									shellcmd			#command#=taskkill /F /IM ADB_recorder.exe /T
 end

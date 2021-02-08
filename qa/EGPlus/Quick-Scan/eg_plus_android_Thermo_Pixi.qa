@@ -1,0 +1,275 @@
+###
+### Product			: Ecogenie+ / APP
+### Category		: RAT
+###	Test case		:
+### 	1. TC-4125: [EG_3.0][Setup_Thermo]Bluetooth Searching_2.Searching Pixi
+###		2. TC-4128: [EG_3.0][Setup_Thermo]Device Name_2.Input Device Name
+###		3. TC-4240: [EG_3.0][Device_Thermo]Thermo Pixi Dashboard info_1.Into Tab - Device - Thermo Pixi
+###		4. TC-4241: [EG_3.0][Device_Thermo]Chart of Real Time_1.Into Tab - Device - Thermo Pixi
+###		5. TC-4279: [EG_3.0][Device_Thermo]Settings - Notifications_6. Save Settings
+###		(Not implement)6. TC-4541: [EG_3.0][Device_Thermo]Push Notification_1. Notification ON
+###		7. TC-4284: [EG_3.0][Device_Thermo]Settings - Remove_2. Remove Thermo
+###	
+###	Pre-condition	:
+###		1. Only 1 gateway under "Device" page.
+###		2. Not any devices associated by gateway.
+###
+
+ini							eg_plus_android.ini
+start
+exec 						File 												shellcmd						#command#=adb reconnect offline		
+exec 						File 												shellcmd						#command#=adb connect $gateway_name$	
+$directory$=get				File												shellcmd						#command#=echo %CD%\temp
+exec 						File 												shellcmd						#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
+exec 						File 												shellcmd						#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
+init						browser												app
+
+###	TC-4125
+##	Enter "Thermo Pixi Setup" page
+##		Click "Device"
+click						browser.eg_plus_android_main						layout_btn						#xpath_id#=$device_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4125_01_click_device.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click "+"
+~click						browser.eg_plus_android_device						add_device_btn					#xpath_id#=$add_device_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4125_02_click_add_device.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click "Thermo Pixi"
+click						browser.eg_plus_android_add_device					element_find					#element_text#=Thermo Pixi
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4125_03_click_thermo_pixi.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click "Next"
+~click						browser.eg_plus_android_thermo_pixi_setup			next_btn						#xpath_id#=$step0_next_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4125_04_click_next.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		"Next" must be disabled
+verify						browser.eg_plus_android_thermo_pixi_setup			element_attribute				#xpath_id#=$step1_next_btn$,#attribute#=enabled,#value#=false,#criteria#==
+##		Click "Checkbox 1"
+~click						browser.eg_plus_android_thermo_pixi_setup			checkbox_01						#xpath_id#=$step1_checkbox_01$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4125_05_click_checkbox_01.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click "Checkbox 2"
+~click						browser.eg_plus_android_thermo_pixi_setup			checkbox_02						#xpath_id#=$step1_checkbox_02$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4125_06_click_checkbox_02.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click "Checkbox 3"
+~click						browser.eg_plus_android_thermo_pixi_setup			checkbox_03						#xpath_id#=$step1_checkbox_03$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4125_07_click_checkbox_03.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		"Next" must be enabled
+verify						browser.eg_plus_android_thermo_pixi_setup			element_attribute				#xpath_id#=$step1_next_btn$,#attribute#=enabled,#value#=true,#criteria#==
+##		Click "Next"
+~click						browser.eg_plus_android_thermo_pixi_setup			checkbox_03						#xpath_id#=$step1_next_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4125_08_click_next.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click "Next"
+~click						browser.eg_plus_android_thermo_pixi_setup			checkbox_03						#xpath_id#=$step1_actionsheets_next_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4125_09_click_next.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##	Step 1. Pressed the button on pixi
+##		Trigger Thermo Pixi's bluetooth by relay on Pi via SSH
+run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
+run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
+run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
+run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
+run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
+##	Expected result 1. Start to run searching 60s and it will display the first found Thermo
+##	Expected result 2. Including 2 animations - press the btn&scan
+##	Expected result 3. Into Device Found page when a pixi is found
+##		Check pixi by its MAC address
+verify						browser.eg_plus_android_thermo_pixi_setup			device_search					#xpath_id#=$step2_actionsheets_mac_text$,#xpath_refresh#=$step2_actionsheets_retry_btn$,#value#=$thermo_pixi_mac_address$
+##		Click "Next"
+~click						browser.eg_plus_android_thermo_pixi_setup			next_btn						#xpath_id#=$step2_actionsheets_next_btn$
+verify						browser.eg_plus_android_thermo_pixi_setup			element_located					#xpath_id#=$step3_device_name_edittext$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4125_10_click_next.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		"OK" must be disabled
+verify						browser.eg_plus_android_thermo_pixi_setup			element_attribute				#xpath_id#=$step3_next_btn$,#attribute#=enabled,#value#=false,#criteria#==
+
+
+###	TC-4128
+##	Step 1. Tap to call Keyboard and input Device Name
+##	Expected result 1. Maximum 25 characters, symbol & emoji are allowed
+##		Set device name
+~set						browser.eg_plus_android_thermo_pixi_setup			device_name						#xpath_id#=$step3_device_name_edittext$,#value#=T[h]E{r}moPI@X!i~0%1^2039
+hide						browser.eg_plus_android_main						keyboard		
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4128_01_set_device_name.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##	Expected result 2. "OK" button enable
+##		"OK" must be enabled
+verify						browser.eg_plus_android_thermo_pixi_setup			element_attribute				#xpath_id#=$step3_next_btn$,#attribute#=enabled,#value#=true,#criteria#==
+##		Click "OK"
+~click						browser.eg_plus_android_thermo_pixi_setup			ok_btn							#xpath_id#=$step3_next_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4128_02_click_ok.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click "Done"
+~click						browser.eg_plus_android_thermo_pixi_setup			done_btn						#xpath_id#=$step_final_done_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4128_03_click_done.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click "Back"
+~click						browser.eg_plus_android_add_device					back_btn						#xpath_id#=$back_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4128_04_click_back.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Thermo Pixi dashboard must show on "Device" page
+$4128_pixi_name$=get		browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$title_text$
+
+
+###	TC-4240
+##	Step 1. Check Thermo Pixi current info
+#		Refresh page
+click						browser.eg_plus_android_main						refresh_page					#xpath_id#=$refresh_img$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4240_01_refresh_page.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##	Expected result 1. Display cloud latest Temperature and Humidity (round down to whole number) successfully and default unit is °C
+$4240_temperature$=get		browser.eg_plus_android_thermo_pixi_dashboard		thermo_temperature_text			#xpath_id#=$temperature_text$
+$4240_temperature_unit$=get	browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$temperature_unit_text$
+#$4240_humidity$=get			browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$humidity_text$
+##	Expected result 2. Show pixi name successfully and default is Thermo Pixi
+$4240_pixi_name$=get		browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$title_text$
+##	Expected result 3. The panel includes last data time which is based on cloud latest time(not the last phone or cloud update time)
+$4240_last_time$=get		browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$update_time_text$
+##	Expected result 4. The battery capacity is displayed correctly (Battery: 100-50% Black,50-20% Yellow, 20-0% Red)
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_located					#xpath_id#=$rainbow_img$
+
+
+###	TC-4241
+##	Step 1. Tap "Thermo Pixi" Device card on dashboard
+~click						browser.eg_plus_android_thermo_pixi_dashboard		temperature_text				#xpath_id#=$temperature_text$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4241_01_click_dashboard.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##	Expected result 1. Into Thermo Chart page successfully
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$detail_title_text$,#value#=--,#criteria#=!
+##	Expected result 2. Cloud latest Temperature and Humidity show successfully above the chart
+$4241_temperature$=get		browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$detail_temperature_text$
+$4241_humidity$=get			browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$detail_humidity_text$
+##	Expected result 3. Separated chart for temp. and humid. show successfully
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_located					#xpath_id#=$detail_temperature_chart_img$
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_located					#xpath_id#=$detail_humidity_chart_img$
+##		Click "<-"
+~click						browser.eg_plus_android_thermo_pixi_dashboard		back_btn						#xpath_id#=$detail_back_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4241_02_click_back.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+
+
+###	TC-4279
+##		Click "..."
+~click						browser.eg_plus_android_thermo_pixi_dashboard		settings_btn					#xpath_id#=$settings_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4279_01_click_settings.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click "Notification"
+~click						browser.eg_plus_android_thermo_pixi_dashboard		notification_btn				#xpath_id#=$settings_notification_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4279_02_click_notification.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click all switch for changing its status
+~click						browser.eg_plus_android_thermo_pixi_dashboard		switch_01						#xpath_id#=$notification_switch_01$
+~click						browser.eg_plus_android_thermo_pixi_dashboard		switch_02						#xpath_id#=$notification_switch_02$
+~click						browser.eg_plus_android_thermo_pixi_dashboard		switch_03						#xpath_id#=$notification_switch_03$
+~click						browser.eg_plus_android_thermo_pixi_dashboard		switch_04						#xpath_id#=$notification_switch_04$
+$4279_switch_status_01$=get	browser.eg_plus_android_thermo_pixi_dashboard		element_attribute				#xpath_id#=$notification_switch_01$,#attribute#=checked
+$4279_switch_status_02$=get	browser.eg_plus_android_thermo_pixi_dashboard		element_attribute				#xpath_id#=$notification_switch_02$,#attribute#=checked
+$4279_switch_status_03$=get	browser.eg_plus_android_thermo_pixi_dashboard		element_attribute				#xpath_id#=$notification_switch_03$,#attribute#=checked
+$4279_switch_status_04$=get	browser.eg_plus_android_thermo_pixi_dashboard		element_attribute				#xpath_id#=$notification_switch_04$,#attribute#=checked
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4279_03_click_all_switch.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##	Step 1. Tap "✓"
+~click						browser.eg_plus_android_thermo_pixi_dashboard		save_btn						#xpath_id#=$notification_save_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4279_04_click_check.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##	Expected result 1. Tap "✓" to save changes and return to settings page
+$4279_back_page$=get		browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$title_text$
+##		Click "..."
+~click						browser.eg_plus_android_thermo_pixi_dashboard		settings_btn					#xpath_id#=$settings_btn$
+##		Click "Notification"
+~click						browser.eg_plus_android_thermo_pixi_dashboard		notification_btn				#xpath_id#=$settings_notification_btn$
+##		Check all switch's status
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_attribute				#xpath_id#=$notification_switch_01$,#attribute#=checked,#value#=$4279_switch_status_01$,#criteria#==
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_attribute				#xpath_id#=$notification_switch_02$,#attribute#=checked,#value#=$4279_switch_status_02$,#criteria#==
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_attribute				#xpath_id#=$notification_switch_03$,#attribute#=checked,#value#=$4279_switch_status_03$,#criteria#==
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_attribute				#xpath_id#=$notification_switch_04$,#attribute#=checked,#value#=$4279_switch_status_04$,#criteria#==
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4279_05_check_switch.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##		Click "<-"
+~click						browser.eg_plus_android_thermo_pixi_dashboard		back_btn						#xpath_id#=$notification_back_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4279_06_click_back.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+
+
+###	TC-4541
+##	Step 1. Trigger Thermo Pixi event
+##		Trigger Thermo Pixi's bluetooth by relay on Pi via SSH
+#run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
+##	Expected result 1. Receive push notification successfully
+
+
+##	Expected result 2. Notification contains app name and notification titile
+##	Expected result 3. Trigger once if the set value is exceeded, and then trigger again after returning to the normal value
+
+
+###	TC-4284
+##		Click "..."
+~click						browser.eg_plus_android_thermo_pixi_dashboard		settings_btn					#xpath_id#=$settings_btn$
+##		Click "Remove"
+~click						browser.eg_plus_android_thermo_pixi_dashboard		remove_btn						#xpath_id#=$settings_remove_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4284_01_click_remove.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##	Step 1. Tap "Remove"
+~click						browser.eg_plus_android_thermo_pixi_dashboard		remove_btn						#xpath_id#=$settings_remove_remove_btn$
+take						browser.eg_plus_android								screen		
+$target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+$source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4284_02_click_remove.jpg
+verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
+##	Expected result 1. Remove Thermo successfully
+click						browser.eg_plus_android_main						refresh_page					#xpath_id#=$refresh_img$
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_disappear				#xpath_id#=$title_text$
+
+close						browser
+exec 						File 												shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
+end

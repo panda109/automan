@@ -1,0 +1,66 @@
+### 	TC-4013: [EG_3.0][Sign up]Ecogenie_signup_1.Create an Account_2)Tap to call keyboard and input Email
+### 	TC-4025: [EG_3.0][Sign up]Ecogenie_signup_4.Varification Code_3)Input Varification code
+###		TC-4027: [EG_3.0][Sign up]Ecogenie_signup_5.User Name_2)Tap to call keyboard and input User Name
+
+ini					eg_plus_android.ini
+start
+exec 				File 							shellcmd					#command#=adb reconnect offline		
+exec 				File 							shellcmd					#command#=adb connect $gateway_name$	
+$directory$=get		File							shellcmd					#command#=echo %CD%\temp
+exec 				File 							shellcmd					#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
+exec 				File 							shellcmd					#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
+init				browser							app	
+#sleep				2
+
+#[TC-4013]
+take				browser.eg_plus_android			screen
+
+swipe				browser.eg_plus_android			left
+take				browser.eg_plus_android			screen
+
+swipe				browser.eg_plus_android			left
+take				browser.eg_plus_android			screen
+
+click				browser.eg_plus_android			element						#xpath#=loginPage_turn_on_button
+take				browser.eg_plus_android			screen
+
+click				browser.eg_plus_android			element						#xpath#=loginPage_signup_button
+take				browser.eg_plus_android			screen
+
+$email_addr$=get	browser.eg_plus_android			email_addr
+set					browser.eg_plus_android			element						#xpath#=createAnAccountPage_email,#strValue#=$email_addr$
+take				browser.eg_plus_android			screen
+
+#[TC-4025]
+click				browser.eg_plus_android			element						#xpath#=createAnAccountPage_next_button
+take				browser.eg_plus_android			screen
+
+set					browser.eg_plus_android			element						#xpath#=setAPasswordPage_new_password,#strValue#=link4581
+take				browser.eg_plus_android			screen
+
+click				browser.eg_plus_android			element						#xpath#=setAPasswordPage_next_button
+take				browser.eg_plus_android			screen
+
+get					browser.eg_plus_android			verification_code_from_web
+$code$=get			browser.eg_plus_android			verification_code_from_file
+
+set					browser.eg_plus_android			element						#xpath#=verificationCodePage_code,#strValue#=$code$
+take				browser.eg_plus_android			screen
+
+#[TC-4027]
+click				browser.eg_plus_android			element						#xpath#=verificationCodePage_code_next_button
+take				browser.eg_plus_android			screen
+
+sleep				5
+
+set					browser.eg_plus_android			element						#xpath#=usernamePage_username,#strValue#=QA
+take				browser.eg_plus_android			screen
+
+click				browser.eg_plus_android			element						#xpath#=usernamePage_username_ok_button
+take				browser.eg_plus_android			screen
+
+sleep				3
+
+close				browser
+exec 				File 							shellcmd					#command#=taskkill /F /IM ADB_recorder.exe /T
+end

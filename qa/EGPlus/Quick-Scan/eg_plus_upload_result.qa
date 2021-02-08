@@ -1,0 +1,23 @@
+###
+### Send result to Google chat room.
+###	1. Get running test case from quick-scan.qas.
+###	2. Get testing result from {workspace}\log\{test case}\{test case}.xml
+###	3. Merge all result and make them human readable.
+### 4. Send result.
+###
+
+start
+
+###	Step 1.
+$qa_list$=get						eg_plus_testbed				qa_list				#path#=qa\qas\quick-scan.qas
+
+###	Step 2.
+$xml_list$=get						eg_plus_testbed				xml_list			#list#=$qa_list$
+
+###	Step 3.
+$overall_result$=get				eg_plus_testbed				overall_result		#text#=$xml_list$
+
+###	Step 4.
+send								Fb							googlemessage		#message#=$overall_result$
+
+end

@@ -5,7 +5,7 @@ Created on 2021/02/03
 Project     : Ecogenie+ APP
 """
 import automan.tool.error as error
-import os.path, re, time
+import os.path, re, time, json
 import xml.etree.ElementTree as ET
 
 class eg_plus_testbed(object):
@@ -13,30 +13,49 @@ class eg_plus_testbed(object):
     def _init_(self):
         pass
             
+    def qa_list_get(self, valueDict):
+        try:
+            hFile = open(os.getcwd() + "\\" + valueDict['path'], 'r')
+            fileContent = hFile.read() 
+            hFile.close()
+            
+            match = re.findall("([^\r\n]+).qa\n{0,1}", fileContent)
+            try:
+                match.remove("eg_plus_upload_result")
+            except:
+                pass
+            return match
+        except:
+            raise error.nonamevalue()
+            
     def xml_list_get(self, valueDict):
         ### Get XML content and return then as a list.
         ###
         ### Required parameters:
-        ###     path        - XML file path.
-        ###         Format: {folder}\{file}.xml
+        ###     list        - QA file list.
         ###
         try:
-            valueDict['path'] in locals().keys()
+            valueDict['list'] in locals().keys()
+            qaList = valueDict['list']
+            qaList = eval(qaList)
+            qaList = json.dumps(qaList)
+            qaList = json.loads(qaList)
         except:
             raise error.nonamevalue()
-        try:
-            filePath = os.getcwd() + "\\" + valueDict['path']
+
+        resultList = ""
+        for item in qaList:
+            filePath = os.getcwd() + "\\log\\" + item + "\\" + item + ".xml"
             tree = ET.parse(filePath)
             for element in tree.findall(".//testcase"):
                 xmlName = element.get('name')
                 xmlResult = element.get('result')
                 xmlTime = element.get('time')
-            print([xmlName, xmlResult, xmlTime])
-            return [xmlName, xmlResult, xmlTime]
-        except:
-            print("Can NOT parse XML: " + filePath)
-            return ""
-        
+            resultList = resultList + "['" + xmlName + "', '" + xmlResult + "', '" + xmlTime + "'];"
+        resultList = resultList[0:len(resultList) - 1]
+        print(resultList)
+        return resultList
+               
     def overall_result_get(self, valueDict):
         ### Merge all result and make them human readable.
         ###
@@ -56,6 +75,7 @@ class eg_plus_testbed(object):
             totalTime = 0
             finalResult = True
             for result in resultList:
+                print(result)
                 if len(result) == 0:
                     continue
             

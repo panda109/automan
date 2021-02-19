@@ -70,7 +70,7 @@ start
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_storedElectricityPercent_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=storedElectricityPercent
 get							api_service					closeDBConnection
 sleep						30
 
@@ -78,7 +78,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_acEffectiveCapacityCharging_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=acEffectiveCapacityCharging
 get							api_service					closeDBConnection
 sleep						30
 
@@ -86,7 +86,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_minChargingElectricEnergy_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=minChargingElectricEnergy
 get							api_service					closeDBConnection
 sleep						30
 
@@ -94,7 +94,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_maxChargingElectricEnergy_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=maxChargingElectricEnergy
 get							api_service					closeDBConnection
 sleep						30
 
@@ -102,7 +102,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_minDischargingElectricEnergy_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=minDischargingElectricEnergy
 get							api_service					closeDBConnection
 sleep						30
 
@@ -110,7 +110,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_maxDischargingElectricEnergy_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=maxDischargingElectricEnergy
 get							api_service					closeDBConnection
 sleep						30
 
@@ -118,7 +118,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_ratedElectricEnergy_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=ratedElectricEnergy
 get							api_service					closeDBConnection
 sleep						30
 
@@ -126,7 +126,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_chargingElectricEnergySetting_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=chargingElectricEnergySetting
 get							api_service					closeDBConnection
 sleep						30
 
@@ -134,7 +134,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_dischargingElectricEnergySetting_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=dischargingElectricEnergySetting
 get							api_service					closeDBConnection
 sleep						30
 
@@ -142,7 +142,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_acChargeableElectricEnergy_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=acChargeableElectricEnergy
 get							api_service					closeDBConnection
 sleep						30
 
@@ -150,7 +150,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_acDischargeableElectricEnergy_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=acDischargeableElectricEnergy
 get							api_service					closeDBConnection
 sleep						30
 
@@ -159,7 +159,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_workingOperationStatus_data_uuid$,#data_value#=65
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=workingOperationStatus
 get							api_service					closeDBConnection
 sleep						30
 
@@ -167,7 +167,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_dischargeableElectricity_data_uuid$,#data_value#=0.00000
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=dischargeableElectricity
 get							api_service					closeDBConnection
 sleep						30
 
@@ -175,7 +175,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_chargeableElectricity_data_uuid$,#data_value#=0.00000
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=chargeableElectricity
 get							api_service					closeDBConnection
 sleep						30
 
@@ -183,7 +183,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_storedElectricity_data_uuid$,#data_value#=62
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=storedElectricity
 get							api_service					closeDBConnection
 sleep						30
 
@@ -191,7 +191,7 @@ sleep						30
 get							api_service					data_upload_api						#cube_uuid#=$gateway_uuid$,#device_uuid#=$ecn_storage_battery_01_uuid$,#data_uuid#=$ecn_storage_battery_storedElectricityAmpereHour_data_uuid$,#data_value#=0.00000
 get							api_service					DBconnect
 $list_results$=get			api_service					query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
-verify						api_service					data_callback						#callbackData#=$list_results$
+verify						api_service					data_callback						#callbackData#=$list_results$,#scope#=storedElectricityAmpereHour
 get							api_service					closeDBConnection
 
 end

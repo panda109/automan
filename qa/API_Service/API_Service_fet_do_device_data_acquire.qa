@@ -59,6 +59,13 @@ verify					api_service		status_code								#value#=$response$,#system_value#=403
 
 ##	499 Token Expired
 ##		Not test.
+#after 02/05/21 12:35 when token expired, testing error code 499
+$nd_token$=get			api_service		nd_token								#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$url$=get				api_service		device_data_acquire_url					#uuid#=$ecn_storage_battery_01_uuid$
+$header$=get			api_service		device_data_acquire_header				#token#=eyJraWQiOiI3R2p6TEZpOXEzQ2FJZXB4ajdEcVwvXC9jQ1VYNHFIenpicGNvbWJDK0JUU1k9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIzNHRocWVhYnYwMDFncXBvdDU1Y2ZvaTNwZyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiaHR0cHM6XC9cL2lvZWFwaS5uZXh0ZHJpdmUuaW9cL2RldmljZS5yZWFkd3JpdGUiLCJhdXRoX3RpbWUiOjE2MTI0OTU5MTQsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1ub3J0aGVhc3QtMS5hbWF6b25hd3MuY29tXC9hcC1ub3J0aGVhc3QtMV9aYnJRYTFWRDIiLCJleHAiOjE2MTI0OTk1MTQsImlhdCI6MTYxMjQ5NTkxNCwidmVyc2lvbiI6MiwianRpIjoiYjJiM2FlZmEtMTdjNi00MTkyLWJlNmMtMjYwNmU5NDJlZTc3IiwiY2xpZW50X2lkIjoiMzR0aHFlYWJ2MDAxZ3Fwb3Q1NWNmb2kzcGcifQ.PpoSsoBFQWHbf6M-vrHY_LJEGmS-YumVXe0MZo8EXfVxRA4bwciIToZ9NUmaF0x38Wjj0bozGOCWPcKwYBt2jzQECa4-DdsuSbm7MByKah7gT4EewdGrlmyTnh9Us3FDMBIakvJByqozPPyIOll24MSRMqEV72GMWpkFLX1NnYtENH4NBXZ1hqDjYK6LjYUi8XWI0NtmtPEb_Q6DuuBZCnQcR1NxnzRZIVTwW3QXhBwXsImOecFceU5TIvmzjVWcD9N4GPi5WKUuD5Ll35UkYT4Vo2l3pDquXFi97d3s0yks_LSOhp3yZkQeCi8TOc2nfY3xIJLh0qvB8R0qYnjjWw
+$body$=get				api_service		device_data_acquire_sb_body				#scope#=operatingStatus;workingOperationStatus;operationMode
+$response$=get			api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify					api_service		status_code								#value#=$response$,#system_value#=401,#criteria#==
 
 ###	ECN device: Storage battery
 $nd_token$=get			api_service		nd_token								#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$

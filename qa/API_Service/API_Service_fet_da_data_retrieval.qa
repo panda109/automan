@@ -418,7 +418,7 @@ $nd_token$=get					api_service					nd_token								#environment#=$testing_enviro
 $url$=get						api_service					data_retrieval_url						#null#=null
 $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
-$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=60,#value_after#="60"
+$wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#="maxCount": 60,#value_after#="maxCount": "60"
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
 verify							api_service					status_code								#value#=$response$,#system_value#=400,#criteria#==
 
@@ -446,7 +446,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=accept,#value_after#=acceptt
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong header
 ##			Wrong key: content-type -> content-typo
@@ -457,7 +457,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=content-type,#value_after#=content-typo
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong header
 ##			Wrong key: content-type -> (ini) header_long_content_type
@@ -468,7 +468,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $wrong_header$=get				api_service					string_replace							#value#=$header$,#value_before#=content-type,#value_after#=$header_long_content_type$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$wrong_header$,#body#=$body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong key: offset -> offsett
@@ -479,7 +479,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=offset,#value_after#=offsett
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong format
 ##			Wrong scope: str -> list
@@ -490,7 +490,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#="instanceElectricity","instanceCurrents","instanceCurrentsT","normalUsage","reverseUsage","ed","rssi",#value_after#=["instanceElectricity"],["instanceCurrents"],["instanceCurrentsT"],["normalUsage"],["reverseUsage"],["ed"],["rssi"]
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong format
 ##			Wrong scope: str -> list
@@ -501,7 +501,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#="operationStatus","powerSavingOperation","operationMode","temperatureSetting","airFlow",#value_after#=["operationStatus"],["powerSavingOperation"],["operationMode"],["temperatureSetting"],["airFlow"]
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong format
 ##			Wrong scope: str -> list
@@ -523,7 +523,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=operationStatus,#value_after#=operationStatuss
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: powerSavingOperation -> powerSavingOperationn
@@ -534,7 +534,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=powerSavingOperation,#value_after#=powerSavingOperationn
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: operationMode -> operationModee
@@ -545,7 +545,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=operationMode,#value_after#=operationModee
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: temperatureSetting -> temperatureSettingg
@@ -556,7 +556,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=temperatureSetting,#value_after#=temperatureSettingg
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: airFlow -> airFloww
@@ -567,7 +567,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=airFlow,#value_after#=airFloww
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: operationStatus -> (ini) long_string
@@ -578,7 +578,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=operationStatus,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: powerSavingOperation -> (ini) long_string
@@ -589,7 +589,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=powerSavingOperation,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: operationMode -> (ini) long_string
@@ -600,7 +600,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=operationMode,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: temperatureSetting -> (ini) long_string
@@ -611,7 +611,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=temperatureSetting,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: airFlow -> (ini) long_string
@@ -622,7 +622,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_ac_body					#uuid#=$ecn_air_conditioner_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=airFlow,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: battery -> batterymca
@@ -633,7 +633,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=battery,#value_after#=batterymca						
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: click -> clickk
@@ -644,7 +644,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=click,#value_after#=clickk						
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: temperature -> temperaturee
@@ -655,7 +655,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=temperature,#value_after#=temperaturee						
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: humidity -> humidityy
@@ -666,7 +666,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=humidity,#value_after#=humidityy						
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: battery -> (ini) long_string
@@ -677,7 +677,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=battery,#value_after#=$long_string$						
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: click -> (ini) long_string
@@ -688,7 +688,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=click,#value_after#=$long_string$						
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: temperature -> (ini) long_string
@@ -699,7 +699,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=temperature,#value_after#=$long_string$						
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: humidity -> (ini) long_string
@@ -710,7 +710,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_tp_body					#uuid#=$thermo_pixi_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=humidity,#value_after#=$long_string$						
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: instanceElectricity -> instanceElectricityy
@@ -721,7 +721,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceElectricity,#value_after#=instanceElectricityy
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: instanceCurrents -> instanceCurrentss
@@ -732,7 +732,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceCurrents,#value_after#=instanceCurrentss
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: instanceCurrentsT -> instanceCurrentsTT
@@ -743,7 +743,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceCurrentsT,#value_after#=instanceCurrentsTT
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: normalUsage -> normalUsagee
@@ -754,7 +754,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=normalUsage,#value_after#=normalUsagee
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: reverseUsage -> reverseUsagee
@@ -765,7 +765,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=reverseUsage,#value_after#=reverseUsagee
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: ed -> edd
@@ -776,7 +776,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=ed,#value_after#=edd
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Wrong value: rssi -> rssp
@@ -787,7 +787,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=rssi,#value_after#=rssp
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: instanceElectricity -> (ini) long_string
@@ -798,7 +798,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceElectricity,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: instanceCurrents -> (ini) long_string
@@ -809,7 +809,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceCurrents,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: instanceCurrentsT -> (ini) long_string
@@ -820,7 +820,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=instanceCurrentsT,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: normalUsage -> (ini) long_string
@@ -831,7 +831,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=normalUsage,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: reverseUsage -> (ini) long_string
@@ -842,7 +842,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=reverseUsage,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: ed -> (ini) long_string
@@ -853,7 +853,7 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=ed,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 
 ##		Wrong body
 ##			Long value: rssi -> (ini) long_string
@@ -864,6 +864,6 @@ $header$=get					api_service					data_retrieval_header					#token#=$nd_token$
 $body$=get						api_service					data_retrieval_sm_body					#uuid#=$smart_meter_01_uuid$
 $wrong_body$=get				api_service					string_replace							#value#=$body$,#value_before#=rssi,#value_after#=$long_string$
 $response$=get					api_service					HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$wrong_body$
-verify							api_service					status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify							api_service					status_code								#value#=$response$,#system_value#=404,#criteria#==
 ###==============================================================================================
 end

@@ -1856,6 +1856,7 @@ class api_service(object):
         ##    requestBodyKey  -    ["deviceUuid", "model", "scope", "value", "generatedTime", "uploadedTime"]
         dicParam = dict(valueDict)
         rawData = eval(dicParam["callbackData"])
+        listAllQueryScope = []
         requestBodyKey = ["deviceUuid","model","scope","value","generatedTime","uploadedTime"]
         try:
             intDataLen = len(rawData)
@@ -1866,18 +1867,20 @@ class api_service(object):
             else:
                 pass
             for i in range(intDataLen):
-                for j in range(len(rawData[i][0])):
-                    clsDataKeyValue = rawData[i][0][j].keys()
-                    listDataKeyValue = list(clsDataKeyValue)
-                    print(listDataKeyValue)
-                    #print("data", rawData[i][0][j])
-                    for x in range(len(listDataKeyValue)):
-                        if listDataKeyValue[x] in requestBodyKey:
-                            pass
-                        else:
-                            raise error.notequalerror()
-                    print(rawData[i][0][j]["scope"])
-
+                clsDataKeyValue = rawData[i][0]["data"][0].keys()
+                listDataKeyValue = list(clsDataKeyValue)
+                print(listDataKeyValue)
+                for x in range(len(listDataKeyValue)):
+                    if listDataKeyValue[x] in requestBodyKey:
+                        pass
+                    else:
+                        raise error.notequalerror()
+                print(rawData[i][0]["data"][0]["scope"])
+                listAllQueryScope.append(rawData[i][0]["data"][0]["scope"])
+            if dicParam["scope"] in listAllQueryScope:
+                pass
+            else:
+                raise error.notequalerror()
         except:
             raise error.notfind()
 
@@ -2198,7 +2201,7 @@ class api_service(object):
                 "}" + \
                 "]," + \
                 "\"time\": {" + \
-                "\"startTime\": " + (lambda x: (x.split("."))[0] + "000")(str(time.time() - 2700)) + "," + \
+                "\"startTime\": " + (lambda x: (x.split("."))[0] + "000")(str(time.time() - 3660)) + "," + \
                 "\"endTime\": " + (lambda x: (x.split("."))[0] + "000")(str(time.time())) + "" + \
                 "}," + \
                 "\"maxCount\": 500," + \

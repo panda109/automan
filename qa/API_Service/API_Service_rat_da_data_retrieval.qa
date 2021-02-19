@@ -10,6 +10,13 @@
 ###		3. Associated 1 Smart meter more than 45 minutes, and keep status without any change.
 ###			*30 minutes for gateway query from device, 10 minutes for gateway upload to cloud
 ###
+###	Ref.
+###		Power distribution board	:	https://oawiki.nextdrive.io/pages/viewpage.action?pageId=5015647
+###		Storage battery				: 	https://oawiki.nextdrive.io/pages/viewpage.action?pageId=5015648
+###		Smart meter					: 	https://oawiki.nextdrive.io/pages/viewpage.action?pageId=5015645
+###		PV system					: 	https://oawiki.nextdrive.io/pages/viewpage.action?pageId=5015647
+###
+###
 ###	Request			:
 ###  {
 ###      "queries": [
@@ -91,35 +98,44 @@
 
 ini					API_Service.ini
 start
+
+exec				File 			shellcmd								#command#=adb connect $gateway_ip_address$
+exec				File 			shellcmd								#command#=adb -s $gateway_ip_address$ shell "reboot"
+
+
+
+
 $nd_token$=get		api_service		nd_token								#environment#=$testing_environment$,#scope#=Data Acquirement,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
 $url$=get			api_service		data_retrieval_url						#null#=null
 $header$=get		api_service		data_retrieval_header					#token#=$nd_token$
 
 ## Data retrieval target: Smart meter
 ##	scope: rssi
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$smart_meter_01_uuid$,#scope_value#=rssi
-$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
-verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
-verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$smart_meter_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$smart_meter_01_model$,#criteria#==
-verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=rssi,#criteria#==
-verify				api_service		data_retrieval_sm_rssi					#value#=$response$,#criteria#==
+##	not support on this stage(02/09/21)
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$smart_meter_01_uuid$,#scope_value#=rssi
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$smart_meter_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$smart_meter_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=rssi,#criteria#==
+#verify				api_service		data_retrieval_sm_rssi					#value#=$response$,#criteria#==
 
 ## Data retrieval target: Smart meter
 ##	scope: ed
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$smart_meter_01_uuid$,#scope_value#=ed
-$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
-verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
-verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$smart_meter_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$smart_meter_01_model$,#criteria#==
-verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=ed,#criteria#==
-verify				api_service		data_retrieval_sm_ed					#value#=$response$,#criteria#==
+## not support on this stage(02/09/21)
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$smart_meter_01_uuid$,#scope_value#=ed
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$smart_meter_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$smart_meter_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=ed,#criteria#==
+#verify				api_service		data_retrieval_sm_ed					#value#=$response$,#criteria#==
 
 ## Data retrieval target: Smart meter
 ##	scope: reverseUsage
@@ -186,121 +202,349 @@ verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criter
 verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=instanceElectricity,#criteria#==
 verify				api_service		data_retrieval_sm_instanceElectricity	#value#=$response$,#criteria#==
 
-## Data retrieval target: Thermo pixi
-##	scope: battery
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$thermo_pixi_01_uuid$,#scope_value#=battery
+
+## Data retrieval target: Smart meter
+##	scope: operatingStatus
+##	retrieve frequency: read once
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$smart_meter_01_uuid$,#scope_value#=operatingStatus
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$smart_meter_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$smart_meter_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=operatingStatus,#criteria#==
+
+## Data retrieval target: Smart meter
+##	scope: smartMeterNumber
+##	retrieve frequency: read once
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$smart_meter_01_uuid$,#scope_value#=smartMeterNumber
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$smart_meter_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$smart_meter_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=smartMeterNumber,#criteria#==
+
+## Data retrieval target: Smart meter
+##	scope: smartMeterUnit
+##	retrieve frequency: read once
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$smart_meter_01_uuid$,#scope_value#=smartMeterUnit
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$smart_meter_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$smart_meter_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=smartMeterUnit,#criteria#==
+
+## Data retrieval target: PV system
+##	scope: operatingStatus
+##	retrieve frequency: read once
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_pv_system_01_uuid$,#scope_value#=operatingStatus
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_pv_system_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_pv_system_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=operatingStatus,#criteria#==
+
+## Data retrieval target: PV system
+##	scope: instanceElectricity
+$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_pv_system_01_uuid$,#scope_value#=instanceElectricity
 $response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
 verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
 verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$thermo_pixi_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$thermo_pixi_01_model$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_pv_system_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_pv_system_01_model$,#criteria#==
 verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
 verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=battery,#criteria#==
-verify				api_service		data_retrieval_tp_battery				#value#=$response$,#system_value#=$thermo_pixi_01_battery$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=instanceElectricity,#criteria#==
+
+## Data retrieval target: PV system
+##	scope: generatedElectricity
+$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_pv_system_01_uuid$,#scope_value#=generatedElectricity
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_pv_system_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_pv_system_01_model$,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=generatedElectricity,#criteria#==
+
+## Data retrieval target: Power distribution board
+##	scope: normalUsage
+$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_power_distribution_board_01_uuid$,#scope_value#=normalUsage
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_power_distribution_board_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_power_distribution_board_01_model$,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=normalUsage,#criteria#==
+
+## Data retrieval target: Power distribution board
+##	scope: reverseUsage
+$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_power_distribution_board_01_uuid$,#scope_value#=reverseUsage
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_power_distribution_board_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_power_distribution_board_01_model$,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=reverseUsage,#criteria#==
+
+## Data retrieval target: Power distribution board
+##	scope: unit
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_power_distribution_board_01_uuid$,#scope_value#=unit
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_power_distribution_board_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_power_distribution_board_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=unit,#criteria#==
+
+## Data retrieval target: Storage battery
+##	scope: acEffectiveCapacityCharging
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_storage_battery_01_uuid$,#scope_value#=acEffectiveCapacityCharging
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_storage_battery_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_storage_battery_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=acEffectiveCapacityCharging,#criteria#==
+
+## Data retrieval target: Storage battery
+##	scope: 
+$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_storage_battery_01_uuid$,#scope_value#=acChargeableElectricEnergy
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_storage_battery_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_storage_battery_01_model$,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=acChargeableElectricEnergy,#criteria#==
+
+## Data retrieval target: Storage battery
+##	scope: acDischargeableElectricEnergy
+$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_storage_battery_01_uuid$,#scope_value#=acDischargeableElectricEnergy
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_storage_battery_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_storage_battery_01_model$,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=acDischargeableElectricEnergy,#criteria#==
+
+## Data retrieval target: Storage battery
+##	scope: minChargingElectricEnergy
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_storage_battery_01_uuid$,#scope_value#=minChargingElectricEnergy
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_storage_battery_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_storage_battery_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=minChargingElectricEnergy,#criteria#==
+
+## Data retrieval target: Storage battery
+##	scope: minDischargingElectricEnergy
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_storage_battery_01_uuid$,#scope_value#=minDischargingElectricEnergy 
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_storage_battery_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_storage_battery_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=minDischargingElectricEnergy ,#criteria#==
+
+## Data retrieval target: Storage battery
+##	scope: workingOperationStatus
+$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_storage_battery_01_uuid$,#scope_value#=workingOperationStatus
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_storage_battery_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_storage_battery_01_model$,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=workingOperationStatus,#criteria#==
+
+## Data retrieval target: Storage battery
+##	scope: storedElectricity
+$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_storage_battery_01_uuid$,#scope_value#=storedElectricity
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_storage_battery_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_storage_battery_01_model$,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=storedElectricity,#criteria#==
+
+## Data retrieval target: Storage battery
+##	scope: storedElectricityAmpereHour
+$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_storage_battery_01_uuid$,#scope_value#=storedElectricityAmpereHour
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_storage_battery_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_storage_battery_01_model$,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=storedElectricityAmpereHour,#criteria#==
+
+## Data retrieval target: Storage battery
+##	scope: storedElectricityPercent
+$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_storage_battery_01_uuid$,#scope_value#=storedElectricityPercent
+$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_storage_battery_01_uuid$,#criteria#==
+verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_storage_battery_01_model$,#criteria#==
+verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=storedElectricityPercent,#criteria#==
+
+
+
+
+
+## Data retrieval target: Thermo pixi
+##	scope: battery
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$thermo_pixi_01_uuid$,#scope_value#=battery
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$thermo_pixi_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$thermo_pixi_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=battery,#criteria#==
+#verify				api_service		data_retrieval_tp_battery				#value#=$response$,#system_value#=$thermo_pixi_01_battery$,#criteria#==
 
 ## Data retrieval target: Thermo pixi
 ##	scope: click
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$thermo_pixi_01_uuid$,#scope_value#=click
-$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
-verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
-verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$thermo_pixi_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$thermo_pixi_01_model$,#criteria#==
-verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=click,#criteria#==
-verify				api_service		data_retrieval_tp_click					#value#=$response$,#system_value#=$thermo_pixi_01_battery$,#criteria#==
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$thermo_pixi_01_uuid$,#scope_value#=click
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$thermo_pixi_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$thermo_pixi_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=click,#criteria#==
+#verify				api_service		data_retrieval_tp_click					#value#=$response$,#system_value#=$thermo_pixi_01_battery$,#criteria#==
 
 ## Data retrieval target: Thermo pixi
 ##	scope: temperature
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$thermo_pixi_01_uuid$,#scope_value#=temperature
-$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
-verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
-verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$thermo_pixi_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$thermo_pixi_01_model$,#criteria#==
-verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=temperature,#criteria#==
-verify				api_service		data_retrieval_tp_temperature			#value#=$response$,#system_value#=$thermo_pixi_01_temperature$,#criteria#==
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$thermo_pixi_01_uuid$,#scope_value#=temperature
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$thermo_pixi_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$thermo_pixi_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=temperature,#criteria#==
+#verify				api_service		data_retrieval_tp_temperature			#value#=$response$,#system_value#=$thermo_pixi_01_temperature$,#criteria#==
 
 ## Data retrieval target: Thermo pixi
 ##	scope: humidity
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$thermo_pixi_01_uuid$,#scope_value#=humidity
-$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
-verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
-verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$thermo_pixi_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$thermo_pixi_01_model$,#criteria#==
-verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=humidity,#criteria#==
-verify				api_service		data_retrieval_tp_humidity				#value#=$response$,#system_value#=$thermo_pixi_01_humidity$,#criteria#==
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$thermo_pixi_01_uuid$,#scope_value#=humidity
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$thermo_pixi_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$thermo_pixi_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=humidity,#criteria#==
+#verify				api_service		data_retrieval_tp_humidity				#value#=$response$,#system_value#=$thermo_pixi_01_humidity$,#criteria#==
 
 ## Data retrieval target: Air conditioner
 ##	scope: operationStatus
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_air_conditioner_01_uuid$,#scope_value#=operationStatus
-$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
-verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
-verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
-verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=operationStatus,#criteria#==
-verify				api_service		data_retrieval_ac_operationStatus		#value#=$response$,#system_value#=$ecn_air_conditioner_01_operationStatus$,#criteria#==
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_air_conditioner_01_uuid$,#scope_value#=operationStatus
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=operationStatus,#criteria#==
+#verify				api_service		data_retrieval_ac_operationStatus		#value#=$response$,#system_value#=$ecn_air_conditioner_01_operationStatus$,#criteria#==
 
 ## Data retrieval target: Air conditioner
 ##	scope: powerSavingOperation
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_air_conditioner_01_uuid$,#scope_value#=powerSavingOperation
-$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
-verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
-verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
-verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=powerSavingOperation,#criteria#==
-verify				api_service		data_retrieval_ac_powerSavingOperation	#value#=$response$,#system_value#=$ecn_air_conditioner_01_powerSavingOperation$,#criteria#==
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_air_conditioner_01_uuid$,#scope_value#=powerSavingOperation
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=powerSavingOperation,#criteria#==
+#verify				api_service		data_retrieval_ac_powerSavingOperation	#value#=$response$,#system_value#=$ecn_air_conditioner_01_powerSavingOperation$,#criteria#==
 
 ## Data retrieval target: Air conditioner
 ##	scope: operationMode
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_air_conditioner_01_uuid$,#scope_value#=operationMode
-$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
-verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
-verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
-verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=operationMode,#criteria#==
-verify				api_service		data_retrieval_ac_operationMode			#value#=$response$,#system_value#=$ecn_air_conditioner_01_operationMode$,#criteria#==
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_air_conditioner_01_uuid$,#scope_value#=operationMode
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=operationMode,#criteria#==
+#verify				api_service		data_retrieval_ac_operationMode			#value#=$response$,#system_value#=$ecn_air_conditioner_01_operationMode$,#criteria#==
 
 ## Data retrieval target: Air conditioner
 ##	scope: temperatureSetting
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_air_conditioner_01_uuid$,#scope_value#=temperatureSetting
-$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
-verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
-verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
-verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=temperatureSetting,#criteria#==
-verify				api_service		data_retrieval_ac_temperatureSetting	#value#=$response$,#system_value#=$ecn_air_conditioner_01_temperatureSetting$,#criteria#==
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_air_conditioner_01_uuid$,#scope_value#=temperatureSetting
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=temperatureSetting,#criteria#==
+#verify				api_service		data_retrieval_ac_temperatureSetting	#value#=$response$,#system_value#=$ecn_air_conditioner_01_temperatureSetting$,#criteria#==
 
 ## Data retrieval target: Air conditioner
 ##	scope: airFlow
-$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_air_conditioner_01_uuid$,#scope_value#=airFlow
-$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
-verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
-verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
-verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
-verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
-verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
-verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=airFlow,#criteria#==
-verify				api_service		data_retrieval_ac_airFlow				#value#=$response$,#system_value#=$ecn_air_conditioner_01_airFlow$,#criteria#==
+#$body$=get			api_service		data_retrieval_single_scope				#uuid#=$ecn_air_conditioner_01_uuid$,#scope_value#=airFlow
+#$response$=get		api_service		HTTP_POST_response						#url#=$url$,#header#=$header$,#body#=$body$
+#verify				api_service		status_code								#value#=$response$,#system_value#=200,#criteria#==
+#verify				api_service		data_retrieval_pid						#value#=$response$,#system_value#=$gateway_pid$,#criteria#==
+#verify				api_service		data_retrieval_uuid						#value#=$response$,#system_value#=$ecn_air_conditioner_01_uuid$,#criteria#==
+#verify				api_service		data_retrieval_model					#value#=$response$,#system_value#=$ecn_air_conditioner_01_model$,#criteria#==
+#verify				api_service		data_retrieval_generatedTime			#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_uploadedTime				#value#=$response$,#criteria#==
+#verify				api_service		data_retrieval_scope					#value#=$response$,#system_value#=airFlow,#criteria#==
+#verify				api_service		data_retrieval_ac_airFlow				#value#=$response$,#system_value#=$ecn_air_conditioner_01_airFlow$,#criteria#==
+
+
+exec				File 			shellcmd								#command#=adb disconnect $gateway_ip_address$
 
 end

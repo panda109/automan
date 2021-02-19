@@ -42,7 +42,7 @@ start
 
 ##		Wrong header
 ##			Wrong environment: $testing_environment$ -> production
-$url$=get			api_service		nd_token_url						#environment#=production
+$url$=get			api_service		nd_token_url						#environment#=development
 $header$=get		api_service		nd_token_header						#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
 $body$=get			api_service		nd_token_body						#environment#=$testing_environment$,#scope#=Device Management
 $response$=get		api_service		HTTP_nd_token_POST_response			#url#=$url$,#header#=$header$,#body#=$body$

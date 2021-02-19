@@ -1,0 +1,135 @@
+###
+### Project			: API-Service
+### Category		: RAT
+###	Test case		:
+### 	Device Operation - Device Data Acquire
+###
+###	Pre-condition	:
+###		1. Associated with a ECN storage battery.
+###			Scopes: 
+###					operatingStatus
+###					acChargeableElectricEnergy
+###					acDischargeableElectricEnergy
+###					acChargeUpperLimitSetting
+###					acDischargeLowerLimitSetting
+###					acChargeAmountSetting
+###					acDischargeAmountSetting
+###					workingOperationStatus
+###					dischargeableElectricity
+###					chargeableElectricity
+###					operationMode
+###					chargingOrDischargingAmountSetting1
+###					chargingOrDischargingAmountSetting2
+###					storedElectricity
+###					storedElectricityAmpereHour
+###					storedElectricityPercent
+###					chargingAmountSetting1
+###					dischargingAmountSetting1
+###
+###					(Read Once)
+###					acEffectiveCapacityCharging
+###					minChargingElectricEnergy
+###					maxChargingElectricEnergy
+###					minDischargingElectricEnergy
+###					maxDischargingElectricEnergy
+###					ratedElectricEnergy
+###					chargingElectricEnergySetting
+###					dischargingElectricEnergySetting
+###
+###	Request			:
+###
+###	Response		:
+###
+
+# gateway management:
+# eyJraWQiOiIwV1hGZXRJdERwaW9VcjdaWXBvdGVxYmVndUd4ZitybEtwY09vbkE5SCtnPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3dDAybzVzdWhvNTZiZWZjN3J2aHBvbjgwbSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiaHR0cHM6XC9cL2lvZWFwaS1xYS5uZXh0ZHJpdmUuaW9cL2dhdGV3YXkucmVhZHdyaXRlIiwiYXV0aF90aW1lIjoxNjExMjAxMjc5LCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtbm9ydGhlYXN0LTEuYW1hem9uYXdzLmNvbVwvYXAtbm9ydGhlYXN0LTFfQnRLS0dqZjE5IiwiZXhwIjoxNjExMjA0ODc5LCJpYXQiOjE2MTEyMDEyNzksInZlcnNpb24iOjIsImp0aSI6ImNkNjFhMWIyLTYxMjgtNDBhOC04ZmI2LTNhZDcyY2I3NGU5MSIsImNsaWVudF9pZCI6Ijd0MDJvNXN1aG81NmJlZmM3cnZocG9uODBtIn0.GrGLxLcKov_eP2TQuG0iZKOSljhl1ZPg7iuQlhfEa8X1pzwggAnIXAKGqmxF9FlhcvBadhHDRbWRR7lP761VtUuMgPe5WVYvV_NvkR_g9WLZTrfNRLRFDr-iUxJzTIJn5pXBsbf9BdhMDCsKxbML87NlcNv3O3PUjkAHO1Qx1AG_gca2ix-NhbXIWU8_VO15-EfsjYIzz9LTQJ862vf0TaHodxnoGAeInLj7m-5LRaz8UWfQk5Z9EbxwLHyv4_GXRvnNNbWvZhmKrfTDs9ayQssbiicP_Kg4_I50FSXPGQRSLYi4tJX2AK1rpUEWyqcm_FTYdCHTCRDIH8MdrcA6zA
+
+# 7990:
+#	ecn_storage_battery_01_uuid=22233257-a31a-4455-a2ba-18588224988a
+
+# d346:
+#	ecn_storage_battery_01_uuid=907c85ce-1bcc-4338-af0a-f6a4cc5c99d0
+
+# 4644:
+#	ecn_storage_battery_01_uuid=1f2bfeb9-a4d1-41f4-81d9-832f3e2b8926
+
+# KK - 828e:
+#	ecn_storage_battery_01_uuid=6a363324-980c-4cda-85a3-807b70a16cf4
+
+# eyJraWQiOiIwV1hGZXRJdERwaW9VcjdaWXBvdGVxYmVndUd4ZitybEtwY09vbkE5SCtnPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3dDAybzVzdWhvNTZiZWZjN3J2aHBvbjgwbSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiaHR0cHM6XC9cL2lvZWFwaS1xYS5uZXh0ZHJpdmUuaW9cL2RldmljZS5yZWFkd3JpdGUiLCJhdXRoX3RpbWUiOjE2MTI3NTMxMjQsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1ub3J0aGVhc3QtMS5hbWF6b25hd3MuY29tXC9hcC1ub3J0aGVhc3QtMV9CdEtLR2pmMTkiLCJleHAiOjE2MTI3NTY3MjQsImlhdCI6MTYxMjc1MzEyNCwidmVyc2lvbiI6MiwianRpIjoiNGUyNDg2MTItODE3Mi00YjRiLTk2YWItZGYzYWE4MWNmODMxIiwiY2xpZW50X2lkIjoiN3QwMm81c3VobzU2YmVmYzdydmhwb244MG0ifQ.FdNftNZTk4QOcA_orxFEtx-zrG8tKoY4xf_EcyD5izqLb6mNe1VlJ6f8xLcgZKSrE0w8Kd3S-ybMzDCN0WMs6nqe7r2Jdi8f_YgPmkreDr-fTtzhGvv-IZ82BRsm2Q0zLO76IJ7X7zUQO2YasFaDqHwB8y5XaFhClXo21hYXNphqfQ0GkiXQ2NKJFsADB2mIBUDwoytX5InnB2mtyNCOK0dcZMhBAhGQqK3hK3GMcpQgJdDEXYrRYVUUCKZ39Hescn2lhlpuDdaRArllBeTHy9IxDK_88-sRLGvgAdozU9F0seLO7K0Rmp7inZnN3owJcDEcatk9uMYujnBiJ2BluA
+
+#{
+#  "scopes": [
+#	"operatingStatus",
+#	"acChargeableElectricEnergy",
+#	"acDischargeableElectricEnergy",
+#	"acChargeUpperLimitSetting",
+#	"acDischargeLowerLimitSetting",
+#	"acChargeAmountSetting",
+#	"acDischargeAmountSetting",
+#	"workingOperationStatus",
+#	"dischargeableElectricity",
+#	"chargeableElectricity",
+#	"operationMode",
+#	"chargingOrDischargingAmountSetting1",
+#	"chargingOrDischargingAmountSetting2",
+#	"storedElectricity",
+#	"storedElectricityAmpereHour",
+#	"storedElectricityPercent",
+#	"chargingAmountSetting1",
+#*	"dischargingAmountSetting1",
+#	"acEffectiveCapacityCharging",
+#*	"minChargingElectricEnergy",
+#	"maxChargingElectricEnergy",
+#*	"minDischargingElectricEnergy",
+#	"maxDischargingElectricEnergy",
+#	"ratedElectricEnergy",
+#	"chargingElectricEnergySetting",
+#	"dischargingElectricEnergySetting"
+#  ]
+#}
+
+
+ini					API_Service.ini
+start
+$nd_token$=get		api_service			nd_token							#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
+$header$=get		api_service			device_data_acquire_header			#token#=$nd_token$
+
+### Device Data Acquire target: Storage battery
+$url$=get			api_service			device_data_acquire_url				#uuid#=$ecn_storage_battery_01_uuid$
+
+### Scope list: operatingStatus;acChargeableElectricEnergy;acDischargeableElectricEnergy;acChargeUpperLimitSetting;acDischargeLowerLimitSetting;acChargeAmountSetting;acDischargeAmountSetting;workingOperationStatus;dischargeableElectricity;chargeableElectricity;operationMode;chargingOrDischargingAmountSetting1;chargingOrDischargingAmountSetting2;storedElectricity;storedElectricityAmpereHour;storedElectricityPercent;chargingAmountSetting1;dischargingAmountSetting1;acEffectiveCapacityCharging;minChargingElectricEnergy;maxChargingElectricEnergy;minDischargingElectricEnergy;maxDischargingElectricEnergy;ratedElectricEnergy;chargingElectricEnergySetting;dischargingElectricEnergySetting
+$body$=get			api_service			device_data_acquire_sb_body			#scope#=operatingStatus;acChargeableElectricEnergy;acDischargeableElectricEnergy;acChargeUpperLimitSetting;acDischargeLowerLimitSetting;acChargeAmountSetting;acDischargeAmountSetting;workingOperationStatus;dischargeableElectricity;chargeableElectricity;operationMode;chargingOrDischargingAmountSetting1;chargingOrDischargingAmountSetting2;storedElectricity;storedElectricityAmpereHour;storedElectricityPercent;chargingAmountSetting1;dischargingAmountSetting1;acEffectiveCapacityCharging;minChargingElectricEnergy;maxChargingElectricEnergy;minDischargingElectricEnergy;maxDischargingElectricEnergy;ratedElectricEnergy;chargingElectricEnergySetting;dischargingElectricEnergySetting
+$response$=get		api_service			HTTP_POST_response					#url#=$url$,#header#=$header$,#body#=$body$
+verify				api_service			status_code							#value#=$response$,#system_value#=200,#criteria#==
+#$requestId$=get		api_service			device_data_acquire_request_id		#value#=$response$
+
+###	Get config.json from gateway
+##$config$=get		api_service			gateway_data						#command#=adb -s $gateway_ip_address$ shell sed ':a;N;$!ba;s/[\t\n ]//g' data/cfg_mgmt/config.json
+#$config$=get		api_service			gateway_data						#command#=adb -s $gateway_name$ shell cat data/cfg_mgmt/config.json
+# Get all scope
+
+###	Get data from Webhook DB
+get					api_service			DBconnect
+$Webhook_DB$=get	api_service			query_data							#str_select_item_sql#=$select_item_sql$,#str_table_name#=$table_name$,#str_ordering_column#=$ordering_column$,#timeDelta#=$time_delta$
+###	Find data that contains "requestId", and match $requestId$
+#$receive_data$=get	api_service			device_data_acquire_request_data	#data#=$Webhook_DB$,#requestId#=fee44130-6792-11eb-a97b-0125fa7b9846
+
+
+# merge gateway's scope and scope that will not save in gateway
+#not save in gateway:
+#operationMode
+#acChargeUpperLimitSetting
+#acDischargeLowerLimitSetting
+#acChargeAmountSetting
+#acDischargeAmountSetting
+#chargingOrDischargingAmountSetting1
+#chargingOrDischargingAmountSetting2
+#chargingAmountSetting1
+#dischargingAmountSetting1
+
+
+
+
+#verify				api_service			device_data_acquire_scope					#data#=$receive_data$,#scope#=operatingStatus;acChargeableElectricEnergy;acDischargeableElectricEnergy;acChargeUpperLimitSetting;acDischargeLowerLimitSetting;acChargeAmountSetting;acDischargeAmountSetting;workingOperationStatus;dischargeableElectricity;chargeableElectricity;operationMode;chargingOrDischargingAmountSetting1;chargingOrDischargingAmountSetting2;storedElectricity;storedElectricityAmpereHour;storedElectricityPercent;chargingAmountSetting1;dischargingAmountSetting1;acEffectiveCapacityCharging;minChargingElectricEnergy;maxChargingElectricEnergy;minDischargingElectricEnergy;maxDischargingElectricEnergy;ratedElectricEnergy;chargingElectricEnergySetting;dischargingElectricEnergySetting
+

@@ -2,22 +2,30 @@
 ### Send result to Google chat room.
 ###	1. Get running test case from quick-scan.qas.
 ###	2. Get testing result from {workspace}\log\{test case}\{test case}.xml
-###	3. Merge all result and make them human readable.
-### 4. Send result.
+### 3. Get firmware version and APP version.
+###	4. Merge all result and make them human readable.
+### 5. Send result.
 ###
 
+ini									eg_plus_android.ini
 start
 
 ###	Step 1.
 $qa_list$=get						eg_plus_testbed				qa_list				#path#=qa\qas\quick-scan.qas
 
 ###	Step 2.
-$xml_list$=get						eg_plus_testbed				xml_list			#list#=$qa_list$
+$xml_list$=get						eg_plus_testbed				xml_list			#list#=$qa_list$,#path_prefix#=$log_path_prefix$
 
 ###	Step 3.
-$overall_result$=get				eg_plus_testbed				overall_result		#text#=$xml_list$
+$eg_plus_fw_version$=get 			eg_plus_testbed 			CMD_response		#command#=adb -s $gateway_name$ shell "getprop | grep ro.build.version.release"
+$eg_plus_app_device$=get			eg_plus_testbed 			INI_value			#ini#=\ini\system.ini,#scope#=app_device
+$eg_plus_app_package$=get			eg_plus_testbed 			INI_value			#ini#=\conf\$eg_plus_app_device$,#scope#=appPackage
+$eg_plus_app_version$=get			eg_plus_testbed 			app_version			#command#=adb -s $android_device_name$ shell "dumpsys package $eg_plus_app_package$ | grep versionName"
 
 ###	Step 4.
+$overall_result$=get				eg_plus_testbed				overall_result		#text#=$xml_list$,#fw_version#=$eg_plus_fw_version$,#app_version#=$eg_plus_app_version$,#testing_environment#=$testing_stage$
+
+###	Step 5.
 send								Fb							googlemessage		#message#=$overall_result$
 
 end

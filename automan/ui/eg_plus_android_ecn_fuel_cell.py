@@ -36,8 +36,17 @@ class eg_plus_android_ecn_fuel_cell(object):
 
             elem = browser.find_element_by_xpath(config.get('ECN_Fuel_Cell', valueDict['xpath_id']))
             elem.click()
+        except TimeoutException:
+            raise error.nonamevalue()
         except:
             raise error.nonamevalue()
+    
+    def ignore_exception_click(self, browser, valueDict):
+        try:
+            elem = browser.find_element_by_xpath(config.get('ECN_Fuel_Cell', valueDict['xpath_id']))
+            elem.click()
+        except:
+            pass
     
     def refresh_until_value_not_null_click(self, browser, valueDict):
         ### Swipe dwon until target value is not null or "--".

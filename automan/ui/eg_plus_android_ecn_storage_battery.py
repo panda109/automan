@@ -38,6 +38,13 @@ class eg_plus_android_ecn_storage_battery(object):
         except:
             raise error.nonamevalue()
     
+    def ignore_exception_click(self, browser, valueDict):
+        try:
+            elem = browser.find_element_by_xpath(config.get('ECN_Storage_Battery', valueDict['xpath_id']))
+            elem.click()
+        except:
+            pass
+    
     def refresh_until_value_not_null_click(self, browser, valueDict):
         ### Swipe dwon until target value is not null or "--".
         ###
@@ -95,9 +102,9 @@ class eg_plus_android_ecn_storage_battery(object):
             else:
                 raise error.nonamevalue()
         except TimeoutException:
-            raise error.nonamevalue()
+            pass
         except:
-            raise error.nonamevalue()
+            pass
     
     def element_text_verify(self, browser, valueDict):    
         try:

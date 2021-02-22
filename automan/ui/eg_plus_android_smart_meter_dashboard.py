@@ -31,6 +31,13 @@ class eg_plus_android_smart_meter_dashboard(object):
         except:
             raise error.nonamevalue()
     
+    def ignore_exception_click(self, browser, valueDict):
+        try:
+            elem = browser.find_element_by_xpath(config.get('Smart_Meter_Dashboard', valueDict['xpath_id']))
+            elem.click()
+        except:
+            pass
+    
     def instant_degree_text_get(self, browser, value_dict):
         ### 1. Swipe down to refresh page
         ### 2. Until instant degree is not null

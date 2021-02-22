@@ -38,6 +38,13 @@ class eg_plus_android_motion_pixi_dashboard(object):
         except:
             raise error.nonamevalue()
 
+    def ignore_exception_click(self, browser, valueDict):
+        try:
+            elem = browser.find_element_by_xpath(config.get('Motion_Pixi_Dashboard', valueDict['xpath_id']))
+            elem.click()
+        except:
+            pass
+
     def element_disappear_verify(self, browser, valueDict):
         try:
             elem_xpath = config.get('Motion_Pixi_Dashboard', valueDict['xpath_id'])

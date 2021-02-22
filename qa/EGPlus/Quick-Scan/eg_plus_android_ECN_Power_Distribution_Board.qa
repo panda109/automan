@@ -181,6 +181,7 @@ $sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#
 verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Power_Distribution_Board
 
 ##	verify dashboard device number
+swipe						browser.eg_plus_android										down
 verify						browser.eg_plus_android										dashboard_no_device				#xpath#=dashboard_device_list
 
 close						browser

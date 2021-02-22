@@ -83,7 +83,8 @@ verify						verify_pic											picture							#path#=$target_pic$,#source_path#
 take						browser.eg_plus_android								screen		
 $target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Motion_Pixi
 $source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Motion_Pixi\TC-4111_09_click_next.jpg
-verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Motion_Pixi
+##	Block verify image, because screen will be changed every time.
+#verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Motion_Pixi
 ##	Step 1. Pressed the button on pixi
 ##		Trigger Motion Pixi's bluetooth by relay on Pi via SSH
 run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
@@ -204,4 +205,14 @@ verify						browser.eg_plus_android_motion_pixi_dashboard		element_disappear				
 
 close						browser
 exec 						File 												shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
+
+###	Resotre
+##	1. If device card existed, remove it.
+init						browser												app
+click						browser.eg_plus_android_main						layout_btn						#xpath_id#=$device_btn$
+click						browser.eg_plus_android_motion_pixi_dashboard		ignore_exception				#xpath_id#=$settings_btn$
+click						browser.eg_plus_android_motion_pixi_dashboard		ignore_exception				#xpath_id#=$settings_remove_btn$
+click						browser.eg_plus_android_motion_pixi_dashboard		ignore_exception				#xpath_id#=$settings_remove_remove_btn$
+close						browser
+
 end

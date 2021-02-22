@@ -182,6 +182,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##	Step 1. Tap "Charge/Discharge/Standby" on Control sheet
 ##	Expected result 1. The control sheet will be dismissed successfully
 ##	(Need real battery) Expected result 2. Show Setting status on battery card and change the card according to the selection successfully
+click						browser.eg_plus_android_ecn_storage_battery		refresh_until_value_not_null	#xpath_id#=$battery_level_text$,#maximum#=60
 $7405_default_mode$=get		browser.eg_plus_android_ecn_storage_battery		element_text					#xpath_id#=$operation_mode_text$
 ##		Check action sheet
 ~click						browser.eg_plus_android_ecn_storage_battery		control_btn						#xpath_id#=$control_btn$
@@ -197,6 +198,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##		Operation mode: Charge
 ~click						browser.eg_plus_android_ecn_storage_battery		operation_charge_btn			#xpath_id#=$operation_charge_btn$
 verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$operation_actionsheets$
+verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$state_setting_img$
 #			Refresh page
 click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
 #			Operation mode must be changed
@@ -210,6 +212,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ~click						browser.eg_plus_android_ecn_storage_battery		control_btn						#xpath_id#=$control_btn$
 ~click						browser.eg_plus_android_ecn_storage_battery		operation_discharge_btn			#xpath_id#=$operation_discharge_btn$
 verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$operation_actionsheets$
+verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$state_setting_img$
 #			Refresh page
 click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
 #			Operation mode must be changed
@@ -223,6 +226,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ~click						browser.eg_plus_android_ecn_storage_battery		control_btn						#xpath_id#=$control_btn$
 ~click						browser.eg_plus_android_ecn_storage_battery		operation_idle_btn				#xpath_id#=$operation_idle_btn$
 verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$operation_actionsheets$
+verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$state_setting_img$
 #			Refresh page
 click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
 #			Operation mode must be changed
@@ -236,6 +240,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ~click						browser.eg_plus_android_ecn_storage_battery		control_btn						#xpath_id#=$control_btn$
 ~click						browser.eg_plus_android_ecn_storage_battery		operation_cancel_btn			#xpath_id#=$operation_cancel_btn$
 verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$operation_actionsheets$
+verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$state_setting_img$
 $7405_click_cancel$=get		browser.eg_plus_android_ecn_storage_battery		element_text					#xpath_id#=$operation_mode_text$
 #verify						browser.eg_plus_android_ecn_storage_battery		element_text					#value#=$7405_click_cancel$,#system_value#=$7405_click_idle$,#criteria#==
 take						browser.eg_plus_android							screen		
@@ -273,4 +278,14 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 
 close						browser
 exec 						File 											shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
+
+###	Resotre
+##	1. If ECN device card existed, remove it.
+init						browser											app
+click						browser.eg_plus_android_main					layout_btn						#xpath_id#=$device_btn$
+click						browser.eg_plus_android_ecn_storage_battery		ignore_exception				#xpath_id#=$settings_btn$
+click						browser.eg_plus_android_ecn_storage_battery		ignore_exception				#xpath_id#=$settings_remove_btn$
+click						browser.eg_plus_android_ecn_storage_battery		ignore_exception				#xpath_id#=$settings_remove_remove_btn$
+close						browser
+
 end

@@ -38,6 +38,13 @@ class eg_plus_android_ecn_air_conditioner(object):
         except:
             raise error.nonamevalue()
     
+    def ignore_exception_click(self, browser, valueDict):
+        try:
+            elem = browser.find_element_by_xpath(config.get('ECN_Air_Conditioner', valueDict['xpath_id']))
+            elem.click()
+        except:
+            pass
+    
     def refresh_until_value_not_null_click(self, browser, valueDict):
         ### Swipe dwon until target value is not null or "--".
         ###

@@ -178,6 +178,7 @@ $7434_mode_B$=get			browser.eg_plus_android_ecn_air_conditioner		element_text			
 ~click						browser.eg_plus_android_ecn_air_conditioner		power_saving_btn				#xpath_id#=$control_power_saving_btn$
 ##	Step 1. Tap "Send" on A/C Romote page
 ~click						browser.eg_plus_android_ecn_air_conditioner		save_btn						#xpath_id#=$control_save_btn$
+verify						browser.eg_plus_android_ecn_air_conditioner		element_disappear				#xpath_id#=$state_setting_img$
 ##		Refresh page
 click						browser.eg_plus_android_ecn_air_conditioner		refresh_until_value_not_null	#xpath_id#=$power_saving_status_text$,#maximum#=60
 click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
@@ -205,6 +206,7 @@ click						browser.eg_plus_android_ecn_air_conditioner		next_temperature				#xpa
 ~click						browser.eg_plus_android_ecn_air_conditioner		operation_previous_btn			#xpath_id#=$control_operation_previous_btn$
 ~click						browser.eg_plus_android_ecn_air_conditioner		power_saving_btn				#xpath_id#=$control_power_saving_btn$
 ~click						browser.eg_plus_android_ecn_air_conditioner		save_btn						#xpath_id#=$control_save_btn$
+verify						browser.eg_plus_android_ecn_air_conditioner		element_disappear				#xpath_id#=$state_setting_img$
 ##		Refresh page
 click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
 take						browser.eg_plus_android							screen		
@@ -241,5 +243,15 @@ $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$p
 verify						verify_pic										picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Air_Conditioner
 
 close						browser
-exec 						File 												shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
+exec 						File 											shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
+
+###	Resotre
+##	1. If ECN device card existed, remove it.
+init						browser											app
+click						browser.eg_plus_android_main					layout_btn						#xpath_id#=$device_btn$
+click						browser.eg_plus_android_ecn_air_conditioner		ignore_exception				#xpath_id#=$settings_btn$
+click						browser.eg_plus_android_ecn_air_conditioner		ignore_exception				#xpath_id#=$settings_remove_btn$
+click						browser.eg_plus_android_ecn_air_conditioner		ignore_exception				#xpath_id#=$settings_remove_remove_btn$
+close						browser
+
 end

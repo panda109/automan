@@ -295,4 +295,14 @@ verify					verify_pic											picture							#path#=$target_pic$,#source_path#=
 
 close					browser
 exec 					File 												shellcmd						#command#=taskkill /F /IM ADB_recorder.exe /T
+
+###	Resotre
+##	1. If device card existed, remove it.
+init					browser												app
+click					browser.eg_plus_android_main						layout_btn						#xpath_id#=$device_btn$
+click					browser.eg_plus_android_smart_meter_dashboard		ignore_exception				#xpath_id#=$settings_btn$
+click					browser.eg_plus_android_smart_meter_dashboard		ignore_exception				#xpath_id#=$settings_remove_btn$
+click					browser.eg_plus_android_smart_meter_dashboard		ignore_exception				#xpath_id#=$settings_remove_remove_btn$
+close					browser
+
 end

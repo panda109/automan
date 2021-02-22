@@ -12,7 +12,9 @@ import os
 import aircv as ac
 import subprocess
 import automan.util.tool as tool
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 config = configparser.ConfigParser()
 config.read(os.path.join(os.getcwd(), 'conf', "eg_plus_android.conf"), encoding="utf-8")
@@ -24,10 +26,21 @@ class eg_plus_android(object):
     
     
     def element_click(self, browser, dicValue):
-        dicParam = dict(dicValue)
-        objElement = browser.find_element_by_xpath(config.get("xpath", dicParam['xpath']))
-        objElement.click()
-        pass
+        ## Roger: Need to handle exception to prevent unexpected stop
+        try:
+            dicParam = dict(dicValue)
+            
+            ## Roger: Elements will not show on screen immediately
+            elem_xpath = config.get("xpath", dicParam['xpath'])
+            elem_loc = ("xpath", elem_xpath)
+            WebDriverWait(browser, 120, 1).until(EC.presence_of_element_located(elem_loc))
+    
+            objElement = browser.find_element_by_xpath(config.get("xpath", dicParam['xpath']))
+            objElement.click()
+        except TimeoutException:
+            raise error.nonamevalue()
+        except:
+            raise error.nonamevalue()
 
     def element_set(self, browser, dicValue):
         dicParam = dict(dicValue)

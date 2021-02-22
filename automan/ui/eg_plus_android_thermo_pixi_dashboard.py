@@ -38,6 +38,13 @@ class eg_plus_android_thermo_pixi_dashboard(object):
         except:
             raise error.nonamevalue()
     
+    def ignore_exception_click(self, browser, valueDict):
+        try:
+            elem = browser.find_element_by_xpath(config.get('Thermo_Pixi_Dashboard', valueDict['xpath_id']))
+            elem.click()
+        except:
+            pass
+    
     def thermo_temperature_text_get(self, browser, valueDict):
         ### 1. Swipe down to refresh page
         ### 2. Until thermo temperature is not null

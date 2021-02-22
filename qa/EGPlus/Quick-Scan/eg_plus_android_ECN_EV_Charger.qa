@@ -151,7 +151,8 @@ click						browser.eg_plus_android										element							#xpath#=ecn_ev_charger
 take						browser.eg_plus_android										screen
 $targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_ECN_EV_Charger
 $sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\ECN_EV_Charger\Dashboard_already_binding_pvSystem_evChargerChartPage.png
-verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_ECN_EV_Charger
+##	Block verify image, because screen will be changed every time.
+#verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_ECN_EV_Charger
 
 ## verify title string of pv system chart page
 verify						browser.eg_plus_android										element							#xpath#=ecn_ev_charger_chart_title_text
@@ -160,6 +161,7 @@ verify						browser.eg_plus_android										element							#xpath#=ecn_ev_charge
 click						browser.eg_plus_android										element							#xpath#=page_go_back_jp_btn
 ###	7448	[Phase 2][EG_3.0][Device_EV Charger] Control - 2.Mode Setting	
 ##	click control btn
+click						browser.eg_plus_android_main								refresh_page					#xpath_id#=$refresh_img$
 click						browser.eg_plus_android										element							#xpath#=ecn_ev_charger_control_btn
 
 ##	choose charging mode

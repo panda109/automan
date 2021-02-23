@@ -92,11 +92,6 @@ run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_us
 run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
 run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
 run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
-run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
-run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
-run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
-run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
-run							Tool												SSH_command						#ip#=$ssh_address$,#username#=$ssh_username$,#password#=$ssh_password$,#command#=$ssh_command$
 ##	Expected result 1. Start to run searching 60s and it will display the first found Thermo
 ##	Expected result 2. Including 2 animations - press the btn&scan
 ##	Expected result 3. Into Device Found page when a pixi is found
@@ -157,7 +152,7 @@ $target_pic$=get			browser.eg_plus_android								targetPic						#logFolderName#
 $source_pic$=get			browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Thermo_Pixi\TC-4240_01_refresh_page.jpg
 verify						verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Thermo_Pixi
 ##	Expected result 1. Display cloud latest Temperature and Humidity (round down to whole number) successfully and default unit is °C
-$4240_temperature$=get		browser.eg_plus_android_thermo_pixi_dashboard		thermo_temperature_text			#xpath_id#=$temperature_text$
+verify						browser.eg_plus_android_thermo_pixi_dashboard		element_located					#xpath_id#=$temperature_text$
 $4240_temperature_unit$=get	browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$temperature_unit_text$
 #$4240_humidity$=get			browser.eg_plus_android_thermo_pixi_dashboard		element_text					#xpath_id#=$humidity_text$
 ##	Expected result 2. Show pixi name successfully and default is Thermo Pixi

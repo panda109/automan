@@ -34,14 +34,15 @@ class qas_result(object):
                 list_qa_result.append(root.get("result"))
             print(list_qa_result)
             print(float_qa_runtime)
-            
+            int_run_time_mins = int(int(float_qa_runtime) / 60)
+            int_run_time_sec = int(int(float_qa_runtime) % 60)
             ##Verify qas result
             if "fail" in list_qa_result:
                 str_final_result = str_return_result + "Fail\n"
             else:
                 str_final_result = str_return_result + "Pass\n"
             str_final_result = str_final_result + "Total RunTime: "
-            str_final_result = str_final_result + "{} s\n".format(float_qa_runtime)
+            str_final_result = str_final_result + "{} mins: {} sec\n".format(int_run_time_mins, int_run_time_sec)
             return str_final_result
         except:
             raise error.notfind()

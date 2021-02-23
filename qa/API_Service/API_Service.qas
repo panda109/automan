@@ -1,0 +1,15 @@
+API_Service_fet_auth.qa
+API_Service_rat_gm_upload_interval.qa
+API_Service_fet_gm_upload_interval.qa
+API_Service_fet_da_data_retrieval.qa
+API_Service_fet_do_device_control.qa
+API_Service_fet_do_device_data_acquire.qa
+API_Service_fet_gm_device_list.qa
+API_Service_fet_gm_gateway_status.qa
+API_Service_rat_auth.qa
+API_Service_rat_do_device_control.qa
+API_Service_rat_da_data_retrieval.qa
+API_Service_rat_gm_gateway_status.qa
+API_Service_rat_gm_device_list.qa
+API_Service_rat_da_data_callback.qa
+API_Service_report.qa

@@ -2074,7 +2074,7 @@ class api_service(object):
         except Exception as e:
             print(e)
             raise error.onqaserror()  
-            
+    '''            
     def nd_token_header_get(self, valueDict):
         dicParamConf = self.configFileParser()
         dicParamIni = dict(valueDict)
@@ -2082,6 +2082,8 @@ class api_service(object):
         ##  Create HTTP request headers
         authValue = '%s:%s' % (dicParam['client_id'], dicParam['secret_key'])
         authValue = authValue.encode('utf-8')
+        print("before b64encode")
+        print(authValue)
         authValue = base64.b64encode(authValue)
         authValue = '%s %s' % ('Basic', authValue.decode('utf-8'))
         HTTPHeader = { \
@@ -2090,7 +2092,7 @@ class api_service(object):
             }
         
         return HTTPHeader
- 
+    '''
     def nd_token_body_get(self, valueDict):
         dicParamConf = self.configFileParser()
         dicParamIni = dict(valueDict)
@@ -2127,7 +2129,7 @@ class api_service(object):
         except Exception as e:
             print(e)
             raise error.onqaserror() 
-
+    '''
     def HTTP_nd_token_POST_response_get(self, valueDict):
         ##  HTTP request by POST method.
         ##      HTTP request timeout: 180 seconds.
@@ -2147,6 +2149,8 @@ class api_service(object):
 
         try:
             dicHeader = dicParam['header']
+            print(dicHeader)
+            print(type(dicHeader))
             dicHeader = eval(dicHeader)
             dicBody = dicParam['body']
             dicBody = eval(dicBody)
@@ -2161,6 +2165,68 @@ class api_service(object):
             raise error.notfind()
         except:
             raise error.onqaserror()
+    '''
+
+
+    def nd_token_header_get(self, valueDict):
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+        ##  Create HTTP request headers
+        authValue = '%s:%s' % (dicParam['client_id'], dicParam['secret_key'])        
+        HTTPHeader = { \
+            'authorization': "authValue", \
+            'content-type': 'application/x-www-form-urlencoded' \
+            }
+        
+        return HTTPHeader,authValue
+        
+    
+    def HTTP_nd_token_POST_response_get(self, valueDict):
+        ##  HTTP request by POST method.
+        ##      HTTP request timeout: 180 seconds.
+        ##
+        ##  Required parameters :
+        ##      url             - APP url
+        ##      header          - The header of HTTP request
+        ##      body            - HTTP request body
+        ##
+        ##  Return              :
+        ##      HTTP response including status code.
+        ##
+        requestTimeout = 180
+        dicParamConf = self.configFileParser()
+        dicParamIni = dict(valueDict)
+        dicParam = {**dicParamConf, **dicParamIni}
+
+        try:
+            dicHeaderInfo = dicParam['header']
+            dicHeaderInfo = eval(dicHeaderInfo)
+            dicHeader = dicHeaderInfo[0]
+            authValue = dicHeaderInfo[1]
+            authValue = authValue.encode('utf-8')
+            authValue = base64.b64encode(authValue)
+            authValue = '%s %s' % ('Basic', authValue.decode('utf-8'))
+            strHeader = str(dicHeader)
+            strHeader = strHeader.replace("authvalue", authValue)
+            dicHeader = eval(strHeader)
+            dicBody = dicParam['body']
+            dicBody = eval(dicBody)
+            HTTPResponse = requests.post(dicParam['url'], headers = dicHeader, data = dicBody, timeout = requestTimeout)
+            statusCode = HTTPResponse.status_code
+            HTTPResponse = HTTPResponse.json()
+            print("HTTP status code: ", statusCode)
+            print("HTTP response: ", HTTPResponse)
+            HTTPResponse['statusCode'] = statusCode
+            return HTTPResponse
+        except ValueError:
+            raise error.notfind()
+        except:
+            raise error.onqaserror()
+
+
+      
+       
     def data_retrieval_single_scope_get(self, valueDict):
         ##  Return the HTTP request body for - 
         ##      Data Acquirement - Data Retrieval - Smart meter

@@ -69,7 +69,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $wrong_nd_token$=get	api_service			string_replace				#value#=$nd_token$,#value_before#=a,#value_after#=A
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$wrong_nd_token$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
@@ -80,7 +80,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
 $wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=authorization,#value_after#=authorizatiom
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
@@ -91,7 +91,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
 $wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=Bearer,#value_after#=Bearerr
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
@@ -102,7 +102,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
 $wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=authorization,#value_after#=$header_long_authorization$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
@@ -113,7 +113,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
 $wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=Bearer,#value_after#=$header_long_bearer$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=401,#criteria#==
@@ -124,7 +124,7 @@ verify					api_service			status_code					#value#=$response$,#system_value#=401,#
 $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Device Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=403,#criteria#==
@@ -135,7 +135,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $wrong_url$=get			api_service			string_replace				#value#=$url$,#value_before#=/con,#value_after#=/cnn
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$wrong_url$,#header#=$header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=404,#criteria#==
@@ -145,7 +145,7 @@ verify					api_service			status_code					#value#=$response$,#system_value#=404,#
 $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
 $url$=get				api_service			upload_interval_url			#gateway_pid#=XXXXXXXYYYYYYZZZZ
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=404,#criteria#==
@@ -155,7 +155,7 @@ verify					api_service			status_code					#value#=$response$,#system_value#=404,#
 $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$long_gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=404,#criteria#==
@@ -169,7 +169,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
 $wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=application/json,#value_after#=application/jsonn
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=400,#criteria#==
@@ -180,7 +180,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
 $wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=application/json,#value_after#=$header_long_app_js$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=400,#criteria#==
@@ -190,7 +190,7 @@ verify					api_service			status_code					#value#=$response$,#system_value#=400,#
 $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $wrong_body$=get		api_service			string_replace				#value#=$body$,#value_before#=uploadInterval,#value_after#=upload_interval
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
@@ -201,7 +201,7 @@ verify					api_service			status_code					#value#=$response$,#system_value#=400,#
 $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,#scope#=Gateway Management,#client_id#=$nd_client_id$,#secret_key#=$nd_secret_key$
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $wrong_body$=get		api_service			string_replace				#value#=$body$,#value_before#=uploadInterval,#value_after#=$body_long_uploadInterval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$header$,#body#=$wrong_body$
@@ -243,7 +243,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
 $wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=accept,#value_after#=acceptt
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
@@ -254,7 +254,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
 $wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=content-type,#value_after#=content-typo
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
@@ -265,7 +265,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
 $wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=accept,#value_after#=$header_long_accept$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==
@@ -276,7 +276,7 @@ $nd_token$=get			api_service			nd_token					#environment#=$testing_environment$,
 $url$=get				api_service			upload_interval_url			#gateway_pid#=$gateway_pid$
 $header$=get			api_service			upload_interval_header		#token#=$nd_token$
 $wrong_header$=get		api_service			string_replace				#value#=$header$,#value_before#=content-type,#value_after#=$header_long_content_type$
-$interval$=get			api_service			random_integer				#minimum#=1,#maximum#=10,#except_number#=$gateway_upload_interval$
+$interval$=get			api_service			random_integer				#minimum#=2,#maximum#=10,#except_number#=$gateway_upload_interval$
 $body$=get				api_service			upload_interval_body		#interval#=$interval$
 $response$=get			api_service			HTTP_PUT_response			#url#=$url$,#header#=$wrong_header$,#body#=$body$
 verify					api_service			status_code					#value#=$response$,#system_value#=200,#criteria#==

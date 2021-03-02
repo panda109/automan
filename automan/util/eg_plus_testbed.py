@@ -176,9 +176,16 @@ class eg_plus_testbed(object):
                 ## Get each value
                 result = re.findall("'([^']+)'", result)
                 for i in range(len(result)):
-                    returnText = returnText + result[i] + marksList[i]
+                    eachTime = re.search("([0-9]+).0( sec){0,1}", result[i])
+                    eachResult = re.search("(pass|fail)", result[i])
+                    if eachTime:
+                        returnText = returnText + time.strftime('%H:%M:%S', time.gmtime(int(eachTime.group(1)))) + marksList[i]
+                    elif eachResult:
+                        returnText = returnText + (result[i]).upper() + marksList[i]
+                    else:
+                        returnText = returnText + result[i] + marksList[i]
                 returnText = returnText + "\n"
-    
+        
             returnText = "--------------------------------------------------\n" + returnText
             totalTime = time.strftime('%H:%M:%S', time.gmtime(int(totalTime)))
             returnText = "Execution time: " + str(totalTime) + "\n" + returnText

@@ -12,7 +12,7 @@ strURLTemplate = 'https://download.nextdrive.io/%s/%s/%s'
 if __name__ == '__main__':
     listArgv = sys.argv[1:]
     strProject = listArgv[0]
-    trVersion = listArgv[1]
+    strVersion = listArgv[1]
     #strSubset = listArgv[1]
     strTargetPath = listArgv[2]
     #strProject = 'cube-plus'

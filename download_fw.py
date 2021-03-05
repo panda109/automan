@@ -19,7 +19,7 @@ if __name__ == '__main__':
     strTargetPath = os.path.join(strTargetPath,strProject)
     strTargetPath = os.path.join(strTargetPath,strVersion)
     if not os.path.exists(strTargetPath):
-        os.mkdir(path)
+        os.mkdir(strTargetPath)
     
     strFWImgURL = strURLTemplate % (strProject,strVersion,strImg)
     objGetObject = requests.get(strFWImgURL)

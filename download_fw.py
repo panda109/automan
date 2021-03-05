@@ -15,7 +15,12 @@ if __name__ == '__main__':
     strVersion = listArgv[1]
     #strSubset = listArgv[1]
     strTargetPath = listArgv[2]
-
+    
+    strTargetPath = os.path.join(strTargetPath,strProject)
+    strTargetPath = os.path.join(strTargetPath,strVersion)
+    if not os.path.exists(strTargetPath):
+        os.mkdir(path)
+    
     strFWImgURL = strURLTemplate % (strProject,strVersion,strImg)
     objGetObject = requests.get(strFWImgURL)
 

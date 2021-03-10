@@ -130,7 +130,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##		ECN Fuel Cell dashboard must show on "Device" page	
 ~click						browser.eg_plus_android_add_device				back_btn						#xpath_id#=$back_btn$
 #		Refresh page	
-click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
+verify						browser.eg_plus_android_main					element_located					#xpath_id#=$the_1st_dashboard_view$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Fuel_Cell
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\ECN_Fuel_Cell\TC-7400_04_click_back.jpg
@@ -139,7 +139,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 
 ###	TC-7491
 ##	Step 1. Check Fuel Cell current info
-click						browser.eg_plus_android_ecn_fuel_cell			refresh_until_value_not_null	#xpath_id#=$operation_mode_text$,#maximum#=180
+verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_Fuel_Cell,#elements_xpath#=operation_mode_text;now_value_text;update_time_text,#times#=90
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Fuel_Cell
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\ECN_Fuel_Cell\TC-7491_01_check_dashboard.jpg

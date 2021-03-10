@@ -129,7 +129,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##		ECN Battery dashboard must show on "Device" page	
 ~click						browser.eg_plus_android_add_device				back_btn						#xpath_id#=$back_btn$
 #		Refresh page	
-click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
+verify						browser.eg_plus_android_main					element_located					#xpath_id#=$the_1st_dashboard_view$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_ECN_EcoCute
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\ECN_EcoCute\TC-7384_04_click_back.jpg
@@ -139,7 +139,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ###	TC-7474
 ##	Step 1. Check EcoCute current info
 ##	Expected result 1. The panel includes last data time which is based on cloud latest time (not the last phone or cloud update time)
-click						browser.eg_plus_android_ecn_ecocute				refresh_until_value_not_null	#xpath_id#=$operation_status_text$,#maximum#=60
+verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_EcoCute,#elements_xpath#=operation_status_text;water_heater_status;update_time_text,#times#=180
 $7474_latest_time$=get		browser.eg_plus_android_ecn_ecocute				element_text					#xpath_id#=$update_time_text$
 verify						browser.eg_plus_android_ecn_ecocute				element_text					#value#=--,#system_value#=$7474_latest_time$,#criteria#=!
 take						browser.eg_plus_android							screen		

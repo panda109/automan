@@ -24,6 +24,15 @@ exec 						File 											shellcmd						#command#=adb connect $gateway_name$
 $directory$=get				File											shellcmd						#command#=echo %CD%\temp
 exec 						File 											shellcmd						#command#=START /MIN ADB_recorder.exe /D $android_device_name$ /TZ TW /T -1 /L $directory$		
 exec 						File 											shellcmd						#command#=START /MIN ADB_recorder.exe /D $gateway_name$ /TZ UTC /T -1 /L $directory$		
+
+###	Initial device settings via simulator API
+##	Operation mode > Cooling
+exec 						File 											shellcmd						#command#=python simulator_API.py 0x0130 0x$air_conditioner_instance_number$ 0xB0 0x42 $air_conditioner_ip_address$:8880 1
+##	Temperature value > 18
+exec 						File 											shellcmd						#command#=python simulator_API.py 0x0130 0x$air_conditioner_instance_number$ 0xB3 0x12 $air_conditioner_ip_address$:8880 1
+##	Power-saving operation setting  > ON
+exec 						File 											shellcmd						#command#=python simulator_API.py 0x0130 0x$air_conditioner_instance_number$ 0x8F 0x41 $air_conditioner_ip_address$:8880 1
+
 init						browser											app
 
 ###	TC-7350
@@ -133,7 +142,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##		ECN Air Conditioner dashboard must show on "Device" page	
 ~click						browser.eg_plus_android_add_device				back_btn						#xpath_id#=$back_btn$
 #		Refresh page	
-click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
+verify						browser.eg_plus_android_main					element_located					#xpath_id#=$the_1st_dashboard_view$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Air_Conditioner
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\ECN_Air_Conditioner\TC-7352_04_click_back.jpg
@@ -142,7 +151,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 
 ###	TC-7426
 ##	Step 1. Check Air Conditioner current info
-click						browser.eg_plus_android_ecn_air_conditioner		refresh_until_value_not_null	#xpath_id#=$power_saving_status_text$,#maximum#=60
+verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_Air_Conditioner,#elements_xpath#=operation_mode_text;temperature_text;temperature_unit_text;update_time_text;power_saving_status_text,#times#=90
 verify						browser.eg_plus_android_ecn_air_conditioner		element_located					#xpath_id#=$control_btn$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Air_Conditioner
@@ -180,7 +189,7 @@ $7434_mode_B$=get			browser.eg_plus_android_ecn_air_conditioner		element_text			
 ~click						browser.eg_plus_android_ecn_air_conditioner		save_btn						#xpath_id#=$control_save_btn$
 verify						browser.eg_plus_android_ecn_air_conditioner		element_disappear				#xpath_id#=$state_setting_img$
 ##		Refresh page
-click						browser.eg_plus_android_ecn_air_conditioner		refresh_until_value_not_null	#xpath_id#=$power_saving_status_text$,#maximum#=60
+verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_Air_Conditioner,#elements_xpath#=operation_mode_text;temperature_text;temperature_unit_text;update_time_text,#times#=90
 click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Air_Conditioner

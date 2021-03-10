@@ -130,7 +130,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##		ECN Battery dashboard must show on "Device" page	
 ~click						browser.eg_plus_android_add_device				back_btn						#xpath_id#=$back_btn$
 #		Refresh page	
-click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
+verify						browser.eg_plus_android_main					element_located					#xpath_id#=$the_1st_dashboard_view$
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Storage_Battery
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\ECN_Storage_Battery\TC-4158_04_click_back.jpg
@@ -140,7 +140,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ###	TC-4326
 ##	Step 1. Check Battery current info
 ##	Expected result 1. Show cloud latest battery volume in % & kWh and mode successfully
-click						browser.eg_plus_android_ecn_storage_battery		refresh_until_value_not_null	#xpath_id#=$operation_mode_text$,#maximum#=60
+verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_Storage_Battery,#elements_xpath#=operation_title_text;battery_level_text;battery_level_unit_text;update_time_text,#times#=90
 $4326_battery_level$=get	browser.eg_plus_android_ecn_storage_battery		element_text					#xpath_id#=$battery_level_text$
 $4326_operation_mode$=get	browser.eg_plus_android_ecn_storage_battery		element_text					#xpath_id#=$operation_mode_text$
 verify						browser.eg_plus_android_ecn_storage_battery		element_text					#value#=--,#system_value#=$4326_operation_mode$,#criteria#=!
@@ -182,7 +182,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 ##	Step 1. Tap "Charge/Discharge/Standby" on Control sheet
 ##	Expected result 1. The control sheet will be dismissed successfully
 ##	(Need real battery) Expected result 2. Show Setting status on battery card and change the card according to the selection successfully
-click						browser.eg_plus_android_ecn_storage_battery		refresh_until_value_not_null	#xpath_id#=$battery_level_text$,#maximum#=60
+verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_Storage_Battery,#elements_xpath#=operation_title_text;battery_level_text;battery_level_unit_text;update_time_text,#times#=90
 $7405_default_mode$=get		browser.eg_plus_android_ecn_storage_battery		element_text					#xpath_id#=$operation_mode_text$
 ##		Check action sheet
 ~click						browser.eg_plus_android_ecn_storage_battery		control_btn						#xpath_id#=$control_btn$
@@ -200,7 +200,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$operation_actionsheets$
 verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$state_setting_img$
 #			Refresh page
-click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
+verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_Storage_Battery,#elements_xpath#=operation_title_text;battery_level_text;battery_level_unit_text;update_time_text,#times#=90
 #			Operation mode must be changed
 $7405_click_charge$=get		browser.eg_plus_android_ecn_storage_battery		element_text					#xpath_id#=$operation_mode_text$
 #verify						browser.eg_plus_android_ecn_storage_battery		element_text					#value#=$7405_click_charge$,#system_value#=$7405_default_mode$,#criteria#=!
@@ -214,7 +214,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$operation_actionsheets$
 verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$state_setting_img$
 #			Refresh page
-click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
+verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_Storage_Battery,#elements_xpath#=operation_title_text;battery_level_text;battery_level_unit_text;update_time_text,#times#=90
 #			Operation mode must be changed
 $7405_click_discharge$=get	browser.eg_plus_android_ecn_storage_battery		element_text					#xpath_id#=$operation_mode_text$
 #verify						browser.eg_plus_android_ecn_storage_battery		element_text					#value#=$7405_click_discharge$,#system_value#=$7405_click_charge$,#criteria#=!
@@ -228,7 +228,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$operation_actionsheets$
 verify						browser.eg_plus_android_ecn_storage_battery		element_disappear				#xpath_id#=$state_setting_img$
 #			Refresh page
-click						browser.eg_plus_android_main					refresh_page					#xpath_id#=$refresh_img$
+verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_Storage_Battery,#elements_xpath#=operation_title_text;battery_level_text;battery_level_unit_text;update_time_text,#times#=90
 #			Operation mode must be changed
 $7405_click_idle$=get		browser.eg_plus_android_ecn_storage_battery		element_text					#xpath_id#=$operation_mode_text$
 #verify						browser.eg_plus_android_ecn_storage_battery		element_text					#value#=$7405_click_idle$,#system_value#=$7405_click_discharge$,#criteria#=!

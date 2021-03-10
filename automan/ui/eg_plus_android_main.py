@@ -9,9 +9,13 @@ import automan.tool.error as error
 import configparser
 import os
 import aircv as ac
-import re
+import re, time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import automan.tool.log as log
+import automan.tool.execute_qa as Execute_qa
+from selenium.common.exceptions import TimeoutException
+#from automan.tool.execute_qa import Execute_qa
 
 config = configparser.ConfigParser()
 config.read(os.path.join(os.getcwd(), 'conf', "eg_plus_android.conf"), encoding="utf-8")
@@ -96,6 +100,7 @@ class eg_plus_android_main(object):
             
             if value_dict['value_loc'] == "ja-JP":
                 value_dict['value_mc'] = config.get('Manufacture_code', value_dict['value_mc'])
+                
             return value_dict['value_mc'] + "-" + value_dict['value_in']
         except:
             raise error.nonamevalue()
@@ -103,6 +108,117 @@ class eg_plus_android_main(object):
     def keyboard_hide(self, browser):
         browser.hide_keyboard()
 
+    def final_status_get(self, browser):
+        #status = self.log.finall_status()
+        #if status == False:
+        #    print ("[qVP] = " + 'FAIL\n\n')
+        #else:
+        #    print ("[qVP] = " + 'PASS\n\n')
+        print(Execute_qa.each_session)
+        return 100
+
+    def element_located_verify(self, browser, valueDict):
+        ### Swipe down(refresh page) until element appear on page.
+        ###
+        ### Required parameters:
+        ###     xpath_id        : Target element.
+        ###     times           : Maximum swipe times.
+        ###         default: 60
+        ###     
+        try:
+            valueDict['times'] in locals().keys()
+            retryTimes = int(valueDict['times'])
+        except:
+            retryTimes = 60
+        
+        try:
+            elem_xpath = config.get('main', valueDict['xpath_id'])
+            elem_loc = ("xpath", elem_xpath)
+            window_bounds = browser.get_window_size()
+            x1 = int(window_bounds["width"]) * 0.5
+            y1 = int(window_bounds["height"]) * 0.4
+            x2 = int(window_bounds["width"]) * 0.5
+            y2 = int(window_bounds["height"]) * 0.8
+        except:
+            raise error.nonamevalue()
+            
+        for i in range(retryTimes):
+            try:
+                e = None
+                e = WebDriverWait(browser, 5, 1).until(EC.presence_of_element_located(elem_loc))
+                if e is not None:
+                    #print("existed")
+                    break                
+            except TimeoutException:
+                #print("not existed")
+                if i == retryTimes:
+                    raise error.nonamevalue()
+                else:
+                    browser.swipe(x1, y1, x2, y2, 1000)
+                    time.sleep(1)
+
+    def device_card_ready_verify(self, browser, valueDict):
+        ### Swipe dwon until all elements on device card are not null or "--".
+        ###     Each round takes 5 minutes.
+        ###
+        ### Required parameters:
+        ###     conf_category   : Category of config file.
+        ###     xpath_id        : XPath of device card.
+        ###     elements_xpath  : XPath of elements to check.
+        ###         Example: XPath1;XPath2;...
+        ###     times           : Maximum swipe times.
+        ###         default: 60
+        ###
+        try:
+            valueDict['times'] in locals().keys()
+            retryTimes = int(valueDict['times'])
+        except:
+            retryTimes = 60
+
+        try:
+            confCategory = valueDict['conf_category']
+            #deviceCard = browser.find_element_by_xpath(config.get('main', valueDict['xpath_id']))
+            checkElements = (valueDict['elements_xpath']).split(";")
+            window_bounds = browser.get_window_size()
+            x1 = int(window_bounds["width"]) * 0.5
+            y1 = int(window_bounds["height"]) * 0.4
+            x2 = int(window_bounds["width"]) * 0.5
+            y2 = int(window_bounds["height"]) * 0.8
+        except:
+            raise error.nonamevalue()
+            
+        result = True
+        for i in range(retryTimes):
+            result = True
+            for element in checkElements:
+                #print(element)
+                #print(config.get(confCategory, element))
+                try:
+                    elem = browser.find_element_by_xpath(config.get(confCategory, element))
+                    if elem.text and elem.text != "--":
+                        print(element + ": " + elem.text)
+                        continue
+                    else:
+                        result &= False
+                        break
+                except:
+                    print(element + " not dound.")
+                    result &= False
+                    break
+            if result == True:
+                print("All elements is not null.")
+                break
+            else:
+                print("Not all elements is not null.")
+                browser.swipe(x1, y1, x2, y2, 2000)
+                time.sleep(3)
+        if result == False:
+            print("Can NOT make all elements not null in " + str(retryTimes) + " times.")
+            raise error.nonamevalue()
+
+    
+    
+    
     #def element_focus_click(self, browser, value_dict):
     #    elem = browser.find_element_by_xpath('android:id/statusBarBackground')
     #    elem = browser.switch_to.active_element

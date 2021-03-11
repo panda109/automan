@@ -32,6 +32,7 @@ class Swagger(object):
     def ioe_health_get(self,dict_value):
         response = requests.get(dict_value['url'])
         ret = response.json()
+        print(ret)
         if ret['status'] != dict_value['result']:
             raise error.notequalerror()
         return("PASS")

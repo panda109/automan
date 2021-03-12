@@ -138,6 +138,8 @@ $source_pic$=get		browser.eg_plus_android								sourcePic						#imgFileName#=$p
 verify					verify_pic											picture							#path#=$target_pic$,#source_path#=$source_pic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_Smart_Meter
 ##	Smart Meter dashboard must show on "Device" page
 ~click					browser.eg_plus_android_add_device					back_btn						#xpath_id#=$back_btn$
+#		Refresh page
+verify					browser.eg_plus_android_main						element_located					#xpath_id#=$the_1st_dashboard_view$
 take					browser.eg_plus_android								screen		
 $target_pic$=get		browser.eg_plus_android								targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_Smart_Meter
 $source_pic$=get		browser.eg_plus_android								sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\Smart_Meter\TC-4143_04_click_back.jpg
@@ -146,8 +148,7 @@ verify					verify_pic											picture							#path#=$target_pic$,#source_path#=
 
 ###	TC-4287
 ##	Step 1. Check Smart Meter current info
-#	Refresh page
-click					browser.eg_plus_android_main						refresh_page					#xpath_id#=$refresh_img$
+verify					browser.eg_plus_android_main						device_card_ready				#conf_category#=Smart_Meter_Dashboard,#elements_xpath#=instant_degree_text;time_text;rssi_text,#times#=180
 ##	Expected result 3. Use radio buttons to switch views on the card
 ##		(1) Now shows cloud latest Usage 0–9999 W (round down to whole number)
 #$degree$=get			browser.eg_plus_android_smart_meter_dashboard		instant_degree_text				#xpath_id#=$instant_degree_text$

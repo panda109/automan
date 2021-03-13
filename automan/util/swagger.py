@@ -24,6 +24,8 @@ class Swagger(object):
     def eis_health_get(self,dict_value):
         response = requests.get(dict_value['url'])
         ret = response.json()
+        #print(['status'])
+        #print(dict_value['result'])
         if ret['status'] != dict_value['result']:
             raise error.notequalerror()
         return("PASS")

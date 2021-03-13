@@ -2,7 +2,7 @@ ini		swagger.ini
 
 start
 
-$FAIL$=get		Swagger		eis_health	#result#=$eis$1,#url#=$eis_url$
+$FAIL$=get		Swagger		eis_health	#result#=$eis$,#url#=$eis_url$
 
 send			Fb			googlemessage	#message#=EIS health test finished : $FAIL$
 

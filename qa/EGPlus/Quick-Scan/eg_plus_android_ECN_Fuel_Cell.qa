@@ -139,7 +139,7 @@ verify						verify_pic										picture							#path#=$target_pic$,#source_path#=
 
 ###	TC-7491
 ##	Step 1. Check Fuel Cell current info
-verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_Fuel_Cell,#elements_xpath#=operation_mode_text;now_value_text;update_time_text,#times#=90
+verify						browser.eg_plus_android_main					device_card_ready				#conf_category#=ECN_Fuel_Cell,#elements_xpath#=now_value_text;update_time_text,#times#=90
 take						browser.eg_plus_android							screen		
 $target_pic$=get			browser.eg_plus_android							targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Fuel_Cell
 $source_pic$=get			browser.eg_plus_android							sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\ECN_Fuel_Cell\TC-7491_01_check_dashboard.jpg
@@ -150,7 +150,7 @@ verify						browser.eg_plus_android_ecn_fuel_cell			element_text					#value#=--,
 ##	Expected result 2. Show device name successfully and default is Fuel Cell
 $7491_device_name$=get		browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$title_text$
 ##	Expected result 3. Show status(Generating, Idling, Stopping, Starting, Stop)above the radio buttons successfully
-verify						browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$operation_mode_text$,#value#=--,#criteria#=!
+#verify						browser.eg_plus_android_ecn_fuel_cell			element_text					#xpath_id#=$operation_mode_text$,#value#=--,#criteria#=!
 ##	Expected result 4. Use radio buttons to switch views on the card
 ##	Expected result 4-1. Now shows cloud latest Real-time power generation 0–9999 W (Round to whole number)
 ~click						browser.eg_plus_android_ecn_fuel_cell			now_btn							#xpath_id#=$now_btn$

@@ -93,7 +93,7 @@ sleep						5
 take						browser.eg_plus_android										screen
 $targetPic$=get				browser.eg_plus_android										targetPic						#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Power_Distribution_Board
 $sourcePic$=get				browser.eg_plus_android										sourcePic						#imgFileName#=$project_name$_$testing_stage$\Quick-Scan\ECN_Power_Distribution_Board\ECNSetup_PrepareForSetup_ChooseGW_ecnDeviceList.png
-verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Power_Distribution_Board
+#verify						verify_pic													picture							#path#=$targetPic$,#source_path#=$sourcePic$,#lessthan#=3,#logFolderName#=$log_path_prefix$eg_plus_android_ECN_Power_Distribution_Board
 
 ###	7334	[Phase 2][EG_3.0][Setup_Distribution Board] Choose the Device - 3.Choose the Device	
 ## choose ecn device

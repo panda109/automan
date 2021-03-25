@@ -56,9 +56,9 @@ class eg_plus_testbed(object):
                     fileContent = hFile.read() 
                     hFile.close()
                     #print(fileContent)
-                    xmlName = re.search("\sname=\"([^\r\n\s=]+)\"\s", fileContent)
-                    xmlResult = re.search("\sresult=\"(pass|fail)\"\s", fileContent)
-                    xmlTime = re.search("\stime=\"([^\r\n\"]+)\"/", fileContent)
+                    xmlName = re.search("\sname=\"([^\r\n\s=\"]+)\"", fileContent)
+                    xmlResult = re.search("\sresult=\"(pass|fail)\"", fileContent)
+                    xmlTime = re.search("\stime=\"([^\r\n\"]+)\"", fileContent)
                     resultList = resultList + "['" + xmlName.group(1) + "', '" + xmlResult.group(1) + "', '" + xmlTime.group(1) + "'];"
                 except:
                     print(filePath + " not found.")

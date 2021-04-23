@@ -1,7 +1,7 @@
 start
 
 
-$result$=get				qas_result		result				#testcase_name#=ioe_api,#title#=IoE API test finished: 
+$result$=get				qas_result		result				#testcase_name#=ioe_api,#title#=IoE API test finished:,#environment#=QA
 
 get							qas_result		xxx					#xxx#=$result$
 		

@@ -114,7 +114,9 @@ class api_verification(object):
             raise error.equalerror()
         #json_response = json.loads(str_response)
         
-
+    def path_get(self):
+        str_path = os.getcwd()
+        return str_path
         
     def cmd_path_set(self, dic_value):
         dic_param = dict(dic_value)
@@ -126,7 +128,10 @@ class api_verification(object):
         
     def file_list_get(self, dic_value):
         dic_param = dict(dic_value)
-        str_path = dic_param["folder_path"]
+        #str_path =  dic_param["folder_path"]
+        print(os.getcwd())
+        str_path = os.path.join(os.getcwd(), dic_param["folder_path"])
+        print(str_path)
         list_file_name = os.listdir(str_path)
         str_target_file_name = list_file_name[-1]
         print(list_file_name)

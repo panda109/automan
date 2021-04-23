@@ -1,7 +1,9 @@
 start
 
+$original_path$=get			api_verification	path
+
 ## set
-set											api_verification		cmd_path			#environment_path#=ini\postman_integration
+set							api_verification		cmd_path			#environment_path#=ini\postman_integration
 
 
 #expected_result_get
@@ -12,7 +14,7 @@ $ioe_login_result$=get						api_verification	expected_result			#expected_result#
 exec										api_verification		cmd					#command#=newman run IoE.postman_collection.json -e IoE.postman_environment.json -r csv --reporter-csv-export		
 
 ## get file location and get the folder list
-$csv_file_name$=get							api_verification		file_list			#folder_path#=C:\Users\automan\git\automan_local_stage2\ini\postman_integration\newman
+$csv_file_name$=get							api_verification		file_list			#folder_path#=newman
 
 sleep	1	
 
@@ -45,6 +47,6 @@ verify										api_verification		dict_keys			#expected_result#=$team_profile_re
 verify										api_verification		dict_content		#expected_result#=$team_profile_result$,#actual_result#=$team_profile_response_body$
 
 
-set											api_verification		cmd_path			#environment_path#=C:\Users\automan\git\automan_local_stage2
+set											api_verification		cmd_path			#environment_path#=$original_path$
 
 end

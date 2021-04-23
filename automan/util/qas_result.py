@@ -24,7 +24,8 @@ class qas_result(object):
             list_qa_result = []
             float_qa_runtime = 0
             #str_return_result = "API Service(3rd party) test finished: "
-            str_return_result = dic_Param["title"]
+            str_return_title = dic_Param["title"]
+            print(str_return_title)
             str_final_result = ""
             ##To get each testcase result, time 
             for i in range(len(list_all_file)):
@@ -38,12 +39,24 @@ class qas_result(object):
             int_run_time_mins = int(int(float_qa_runtime) / 60)
             int_run_time_sec = int(int(float_qa_runtime) % 60)
             ##Verify qas result
+            #print("=====")
+            #print(str_final_result)
+            str_final_result = str_return_title + "\n"
+            #print(str_final_result)
+            str_final_result = str_final_result + "Testing environment: " + dic_Param["environment"] + "\n"
+            #print(str_final_result)
+            str_final_result = str_final_result + "------------------------------\n"
+            #print(str_final_result)
+            str_final_result = str_final_result + "Final result: "
+            #print(str_final_result)
             if "fail" in list_qa_result:
-                str_final_result = str_return_result + "Fail\n"
+                str_final_result = str_final_result + "Fail\n"
             else:
-                str_final_result = str_return_result + "Pass\n"
+                str_final_result = str_final_result + " Pass\n"
             str_final_result = str_final_result + "Total RunTime: "
             str_final_result = str_final_result + "{} mins: {} sec\n".format(int_run_time_mins, int_run_time_sec)
+            #print("=+++++++++++++++++++++++++++++++++++++++++++")
+            #print(str_final_result)
             return str_final_result
         except:
             raise error.notfind()

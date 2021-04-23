@@ -23,7 +23,8 @@ class qas_result(object):
             list_all_file = os.listdir(folder_path)
             list_qa_result = []
             float_qa_runtime = 0
-            str_return_result = "API Service(3rd party) test finished: "
+            #str_return_result = "API Service(3rd party) test finished: "
+            str_return_result = dic_Param["title"]
             str_final_result = ""
             ##To get each testcase result, time 
             for i in range(len(list_all_file)):

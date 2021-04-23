@@ -1,0 +1,3 @@
+iteration,collectionName,requestName,method,url,status,code,responseTime,responseSize,executed,failed,skipped
+"1","EG+","Get token","POST","https://api-eg3-qa.nextdrive.io/api/v1/oauth2/tokens/exchange","Unauthorized","401","121","30","Response Body{""message"":""Token is expired""}"
+"1","EG+","Get single gateway info by UUID","GET","https://api-eg3-qa.nextdrive.io/api/v1/gateways/f7f44617-4ede-4577-bec8-a41c890e3119","OK","200","227","243","Response Body{""uuid"":""f7f44617-4ede-4577-bec8-a41c890e3119"",""name"":""CubeJ-5dd346"",""model"":""Cube"",""onlineStatus"":1,""pid"":""JAB3410D07A5DD346"",""profileId"":""10d07a5d-d346-011a-2830-0006d1289522"",""firmwareVersion"":""Cube-PLUS-4.0.16027"",""wifiSsid"":""NextDriveQA""}"

@@ -1,0 +1,4 @@
+iteration,collectionName,requestName,method,url,status,code,responseTime,responseSize,executed,failed,skipped
+"1","EG+","Get token","POST","https://api-eg3-qa.nextdrive.io/api/v1/oauth2/tokens/exchange","Unauthorized","401","84","30","Response Body{""message"":""Token is expired""}"
+"1","EG+","Beep get brand list","GET","https://api-eg3-qa.nextdrive.io/api/v1/aircon/brands","Unauthorized","401","77","26","Response Body{""message"":""Unauthorized""}"
+"1","EG+","Get single gateway info by UUID","GET","https://api-eg3-qa.nextdrive.io/api/v1/gateways/f7f44617-4ede-4577-bec8-a41c890e3119","Unauthorized","401","67","26","Response Body{""message"":""Unauthorized""}"

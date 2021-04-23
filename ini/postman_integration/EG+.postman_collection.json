@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "fdff11a2-bd60-4447-8f45-9a0ef21a4457",
+		"name": "EG+",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://api-eg3-qa.nextdrive.io/api/v1/oauth2/tokens/exchange',\r",
+							"    method:'POST',\r",
+							"    header:{\r",
+							"        'accept': 'application/json',\r",
+							"        'Content-Type': 'application/json'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify(\r",
+							"                            {type: \"cognito\",\r",
+							"                             token: \"eyJraWQiOiJoYUdDNmNPTFwvU3pqc015ZndUTGh6Y0NJS240WGhNMjRNN3YwZ3lFb1A0bz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI4YmY2NjY4MS02Yjc0LTQ2MjQtODNkNi1jYTQyNWI5ODE1OWYiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicHJvZmlsZSI6Im5leHRkcml2ZSIsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1ub3J0aGVhc3QtMS5hbWF6b25hd3MuY29tXC9hcC1ub3J0aGVhc3QtMV82ZzNwakh2SG8iLCJjb2duaXRvOnVzZXJuYW1lIjoiZDdhYmZhZTMtODZiNy00Y2Y4LThkN2YtNTUzMmJjMTE0OWZkIiwibG9jYWxlIjoiemhfVFciLCJhdWQiOiI0bG12a3JwZmJwdXJhc3M1M2h2MHZnbHIwciIsImV2ZW50X2lkIjoiMGYyZWZlN2MtODQ4Zi00NmQ2LWExYzctZWYyZWNiZTNkZDQ1IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MTkwNTY5NDUsImV4cCI6MTYxOTA2MDU0NSwiaWF0IjoxNjE5MDU2OTQ1LCJlbWFpbCI6ImR1c3Rpbi5saW5AbmV4dGRyaXZlLmlvIn0.NJT3nuJzDLWTtCgKIJgm8ls-4eFBHYf-83kYRaLjixzzrIrCehgPvCGU_fYrrEZo6l5YaVyVplsW4uTrkcDZN5Ba_ygH5pq3hGraFmZcLcL-WOejaJWtWRoB_dOlOZmCY59sFq84OE9Sq3NxNgVZianEw1xAoEcAyaxRGDQIRFVekdbcN6BRHZQPCRhGgoe2HgQ1EX-3iqncBFc_q1Pu8hiQyHi2U2nu4Nxx7WgZcMmxduKxQujcxh6_9vxtwpwzskkblapo8rHEXLc7ruWLrMcGqwgI4Xh6bT3U3h0HWJjHwjcT_mDlLv4s_IdBnRsTl5uYVhhELGVPQ6L5PvYrbA\",\r",
+							"                            appUuid: \"3213211236666420dab6369\"}\r",
+							"                            )\r",
+							"    }\r",
+							"}, function(err, response){\r",
+							"    const jsonParse = response.json();\r",
+							"    pm.environment.set(\"nd_token\", jsonParse.accessToken)\r",
+							"}\r",
+							");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var body = JSON.parse(responseBody); \r",
+							"var content = responseBody;\r",
+							"tests[\"Response Body\"+content]= body.length != 0"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                    \"type\": \"cognito\",\r\n                    \"token\": \"{{cognito_token}}\",\r\n                    \"appUuid\": \"3213211236666420dab6369\"\r\n                }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{qa_end_point}}/api/v1/oauth2/tokens/exchange",
+					"host": [
+						"{{qa_end_point}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"oauth2",
+						"tokens",
+						"exchange"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get single gateway info by UUID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var body = JSON.parse(responseBody); \r",
+							"var content = responseBody;\r",
+							"tests[\"Response Body\"+content]= body.length != 0"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{nd_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{qa_end_point}}/api/v1/gateways/{{CubeJ-5dd346_uuid}}",
+					"host": [
+						"{{qa_end_point}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"gateways",
+						"{{CubeJ-5dd346_uuid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

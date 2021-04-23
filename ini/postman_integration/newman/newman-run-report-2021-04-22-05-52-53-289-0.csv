@@ -1,0 +1,3 @@
+iteration,collectionName,requestName,method,url,status,code,responseTime,responseSize,executed,failed,skipped
+"1","IoE","Login","POST","https://ioe-suite-api-qa.nextdrive.io/auth/login","OK","200","166","946"
+"1","IoE","Get_team_profile","GET",""

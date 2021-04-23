@@ -1,0 +1,10 @@
+start
+
+
+$result$=get				qas_result		result				#testcase_name#=ioe_api
+
+get							qas_result		xxx					#xxx#=$result$
+		
+send						Fb				googlemessage		#message#=$result$
+		
+end

@@ -201,7 +201,11 @@ class api_verification(object):
             print("***********************************************")
             for i in range(len(list_expected_keys)):
                 if dic_expected_result[list_expected_keys[i]] == dic_actual_result[list_expected_keys[i]]:
-                    print("Expected result: {}  || Actual result: {} ==> EQUAL ".format(dic_expected_result[list_expected_keys[i]], dic_actual_result[list_expected_keys[i]]))
+                    #print("Expected result: {}  || Actual result: {} ==> EQUAL ".format(dic_expected_result[list_expected_keys[i]], dic_actual_result[list_expected_keys[i]]))
+                    #print("Expected result: {}".format(dic_expected_result[list_expected_keys[i]]).ljust(30)) 
+                    #print("Actual result: {}".format(dic_actual_result[list_expected_keys[i]]).rjust(30))
+                    print("Expected result: {}".format(dic_expected_result[list_expected_keys[i]]).ljust(50) + "||" + "Actual result: {}".format(dic_actual_result[list_expected_keys[i]]).rjust(50))
+                    
                 else:
                     raise error.equalerror()
             print("***********************************************")

@@ -2,7 +2,7 @@
 """
 Created on 2021/04/15
 @author     : Dustin Lin
-Project     : API-Service
+Project     : Postman Automan Integration
 """
 import automan.tool.error as error  
 from automan.tool.verify import Verify
@@ -103,6 +103,7 @@ class api_verification(object):
         ## Verify status code from api response
         ## Parameters:
         ##     - api_response
+        ##
         dic_param = dict(dic_value)
         #Loading response and transfer to json format:
         str_response = dic_param["api_response"]
@@ -115,20 +116,32 @@ class api_verification(object):
         #json_response = json.loads(str_response)
         
     def path_get(self):
+        ## Get executed location
         str_path = os.getcwd()
         return str_path
         
     def cmd_path_set(self, dic_value):
+        ## Set location
+        ## Parameters:
+        ##    - environment_path
+        ##
         dic_param = dict(dic_value)
         os.chdir(dic_param["environment_path"])
         
     def cmd_exec(self, dic_value):
+        ## Executes command
+        ## Parameters:
+        ##     - command
+        ##
         dic_param = dict(dic_value)
         os.system(dic_param["command"])
         
     def file_list_get(self, dic_value):
+        ## Get file list in folder which stored response csv file
+        ## Parameters:
+        ##     - folder_path
+        ##
         dic_param = dict(dic_value)
-        #str_path =  dic_param["folder_path"]
         print(os.getcwd())
         str_path = os.path.join(os.getcwd(), dic_param["folder_path"])
         print(str_path)
@@ -140,6 +153,10 @@ class api_verification(object):
     
     
     def expected_result_get(self, dic_value):
+        ## Get expected result
+        ## Parameters:
+        ##     - expected_result
+        ##
         dic_param = dict(dic_value)
         str_file_path = os.path.join(os.getcwd(), dic_param["expected_result"])
 
@@ -153,6 +170,11 @@ class api_verification(object):
         return str_expected_result
         
     def dict_keys_verify(self, dic_value):
+        ## Verify dictionary keys
+        ## Parameters:
+        ##     - expected_result
+        ##     - actual_result
+        ##
         try:
             dic_param = dict(dic_value)
             dic_expected_result = json.loads(dic_param["expected_result"])
@@ -168,7 +190,6 @@ class api_verification(object):
             print("***********************************************")
             print("***********************************************")
             print("***********************************************")
-            print("***********************************************")
             print("Expected keys")
             print(list_expected_keys)
             print("Actual keys")
@@ -178,7 +199,6 @@ class api_verification(object):
             for i in range(len(list_expected_keys)):
                 if list_expected_keys[i] in list_actual_keys:
                     print("Key \"{}\"".format(list_expected_keys[i]).ljust(25) + "exists")
-                    #print("pass")
                 else:
                     print("missing key: ", list_expected_keys[i])
                     raise error.equalerror()
@@ -189,23 +209,21 @@ class api_verification(object):
         pass
 
     def dict_content_verify(self, dic_value):
+        ## Verify dictionary values
+        ## Parameters:
+        ##     - expected_result
+        ##     - actual_result
         try:
             dic_param = dict(dic_value)
             dic_expected_result = json.loads(dic_param["expected_result"])
             dic_actual_result = json.loads(dic_param["actual_result"])
             list_expected_keys = list(dic_expected_result.keys())
             list_actual_keys = list(dic_actual_result.keys())
-            #list_expected_value = list(dic_expected_result.value())
-            #list_actual_value = list(dic_actual_result.value())
             print("***********************************************")
             print("***********************************************")
             for i in range(len(list_expected_keys)):
                 if dic_expected_result[list_expected_keys[i]] == dic_actual_result[list_expected_keys[i]]:
-                    #print("Expected result: {}  || Actual result: {} ==> EQUAL ".format(dic_expected_result[list_expected_keys[i]], dic_actual_result[list_expected_keys[i]]))
-                    #print("Expected result: {}".format(dic_expected_result[list_expected_keys[i]]).ljust(30)) 
-                    #print("Actual result: {}".format(dic_actual_result[list_expected_keys[i]]).rjust(30))
                     print("Expected result: {}".format(dic_expected_result[list_expected_keys[i]]).ljust(50) + "||" + "Actual result: {}".format(dic_actual_result[list_expected_keys[i]]).rjust(50))
-                    
                 else:
                     raise error.equalerror()
             print("***********************************************")

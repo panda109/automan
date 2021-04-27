@@ -1,13 +1,13 @@
 start
 
-$original_path$=get			api_verification	path
+$original_path$=get							api_verification		path
 
 ## set
-set							api_verification		cmd_path			#environment_path#=ini\postman_integration
+set											api_verification		cmd_path			#environment_path#=ini\postman_integration
 
 
 #expected_result_get
-$ioe_login_result$=get						api_verification	expected_result			#expected_result#=IoE_login.json
+$ioe_login_result$=get						api_verification		expected_result			#expected_result#=expected_result\IoE\IoE_login.json
 
 
 ## execute cmd
@@ -32,7 +32,7 @@ verify										api_verification		dict_keys			#expected_result#=$ioe_login_resul
 
 ## API: get team profile verify
 
-$team_profile_result$=get					api_verification		expected_result		#expected_result#=get_team_profile.json
+$team_profile_result$=get					api_verification		expected_result		#expected_result#=expected_result\IoE\get_team_profile.json
 
 $team_profile_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_team_profile
 

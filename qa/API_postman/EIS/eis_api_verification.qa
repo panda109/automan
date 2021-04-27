@@ -7,7 +7,7 @@ set							api_verification		cmd_path			#environment_path#=ini\postman_integratio
 
 
 #expected_result_get
-$ioe_login_result$=get						api_verification	expected_result			#expected_result#=EIS_login.json
+$ioe_login_result$=get						api_verification	expected_result			#expected_result#=expected_result\EIS\EIS_login.json
 
 
 ## execute cmd
@@ -32,7 +32,7 @@ verify										api_verification		dict_keys			#expected_result#=$ioe_login_resul
 
 ## API: get team profile verify
 
-$team_profile_result$=get					api_verification		expected_result		#expected_result#=EIS_get_profile.json
+$team_profile_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_profile.json
 
 $team_profile_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=User_profile
 

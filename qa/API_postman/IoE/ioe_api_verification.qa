@@ -1,52 +1,66 @@
 start
-
+##=====Execute postman command line =====
+## Get execution path
 $original_path$=get							api_verification		path
 
-## set
+## Set newman execution path
 set											api_verification		cmd_path			#environment_path#=ini\postman_integration
 
 
-#expected_result_get
+## Load expected result file
 $ioe_login_result$=get						api_verification		expected_result			#expected_result#=expected_result\IoE\IoE_login.json
 
 
-## execute cmd
+## Execute cmd of newman
 exec										api_verification		cmd					#command#=newman run IoE.postman_collection.json -e IoE.postman_environment.json -r csv --reporter-csv-export		
+##===== END =====
 
-## get file location and get the folder list
+##=====Test case: Login API =====
+## Get file location and get the file list of result
 $csv_file_name$=get							api_verification		file_list			#folder_path#=newman
 
 sleep	1	
 
-##read csv
+## Read csv and target file
 $get_token_status_code_response$=get 		api_verification 		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Login
 
+## Get status code of result
 $get_token_status_code$=get					api_verification		status_code			#api_response#=$get_token_status_code_response$
 
+## Get response body of result
 $get_token_response_body$=get				api_verification		response_body		#api_response#=$get_token_status_code_response$
 
+## Verify status code
 verify										api_verification		status_code			#api_response#=$get_token_status_code$,#expected_status_code#=200
 
+## Verify keys of response body
 verify										api_verification		dict_keys			#expected_result#=$ioe_login_result$,#actual_result#=$get_token_response_body$
+##===== END =====
 
-
-## API: get team profile verify
-
+##===== Get team profile API =====
+## Load expected result file
 $team_profile_result$=get					api_verification		expected_result		#expected_result#=expected_result\IoE\get_team_profile.json
 
+## Read csv and target file
 $team_profile_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_team_profile
 
+## Get status code of result
 $team_profile_status_code$=get				api_verification		status_code			#api_response#=$team_profile_response$
 
+## Get response body of result
 $team_profile_response_body$=get			api_verification		response_body		#api_response#=$team_profile_response$
 
+## Verify status code
 verify										api_verification		status_code			#api_response#=$team_profile_status_code$,#expected_status_code#=200
 
+## Verify keys of response body
 verify										api_verification		dict_keys			#expected_result#=$team_profile_result$,#actual_result#=$team_profile_response_body$
 
+## Verify values of response body
 verify										api_verification		dict_content		#expected_result#=$team_profile_result$,#actual_result#=$team_profile_response_body$
+##===== END =====
 
-
+## Set to original path
 set											api_verification		cmd_path			#environment_path#=$original_path$
 
 end

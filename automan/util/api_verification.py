@@ -166,7 +166,7 @@ class api_verification(object):
         str_file_path = os.path.join(os.getcwd(), dic_param["expected_result"])
 
         
-        obj_expected_result = open(str_file_path, "r")
+        obj_expected_result = open(str_file_path, "r", encoding = 'utf-8')
         str_expected_result = obj_expected_result.read()
         print(str_expected_result)
         obj_expected_result.close()
@@ -304,6 +304,7 @@ class api_verification(object):
         file1.close()
         
     def id_token_get(self): 
+        ## will modify, move parameter to ini file
         strAWSRegion = 'ap-northeast-1'
         str_ID_token = ""
         try:

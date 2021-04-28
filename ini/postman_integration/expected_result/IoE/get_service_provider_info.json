@@ -1,0 +1,11 @@
+{
+    "services": [
+        {
+            "name": "foo",
+            "status": "PRIVATE",
+            "access": "LAUNCHED",
+            "totalUserCount": 100,
+            "activeUserCount": 80
+        }
+    ]
+}

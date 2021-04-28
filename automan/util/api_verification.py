@@ -8,9 +8,14 @@ import automan.tool.error as error
 from automan.tool.verify import Verify
 import configparser
 import subprocess
+import botocore
+from botocore import UNSIGNED
+from warrant.aws_srp import AWSSRP
+import boto3
 import json
 import csv
 import os
+import re
 
 class api_verification(object):
     def __init__(self):  
@@ -233,3 +238,92 @@ class api_verification(object):
             print(exceptError)
             raise error.equalerror()         
         pass        
+
+    def environment_token_set(self, dic_value):
+        ## To change cognito token in environment.json file
+        ##
+        dic_param = dict(dic_value)
+        file_name = dic_param["environment_name"]
+        file_path = os.path.join(os.getcwd(), file_name)
+        print(file_path)
+        f = open(file_path, "r+")
+        file = f.read()
+        f.close()
+        dic_file = json.loads(file)
+        for i in range(len(dic_file["values"])):
+            if dic_file["values"][i]["key"] == "cognito_token":
+                dic_file["values"][i]["value"] = dic_param["new_token"]
+                break
+            else:
+                pass
+        
+        new_file = open(file_path, "w")
+        new_file.write(json.dumps(dic_file))
+        new_file.close()
+        
+    def collection_token_set(self, dic_value):
+        ## To change cognito token in collection.json file
+        ##
+        dic_param = dict(dic_value)
+        file_name = dic_param["collection_name"]
+        file_path = os.path.join(os.getcwd(), file_name)
+        target = ""
+        target2 = ""
+        target3 = ""
+        print(file_path)
+        f = open(file_path, "r")
+        file = f.read()
+        f.close()
+        
+        dic_file = json.loads(file)
+        print(dic_file["item"][0]["name"])
+        if dic_file["item"][0]["name"] == dic_param["testcase_name"]:
+            target = dic_file["item"][0]["event"][0]["script"]["exec"][12]
+            target2 = re.sub(r"^\s+", "", target)
+            print(target)
+            print("target2")
+            print(target2)
+        else:
+            print("error 1")
+        
+        if "token" in target2:
+            target3 = target2[0:7]
+            print("target3")
+            print(target3)
+        else:
+            print("error 2")
+        final_target = target3 + "\"" + dic_param["new_token"] + "\","
+        dic_file["item"][0]["event"][0]["script"]["exec"][12] = final_target
+        print(dic_file)
+        json_file = json.dumps(dic_file)
+        print("========================================================")
+        print(json_file)
+        
+        file1 = open(file_path, "w")
+        file1.write(json_file)
+        file1.close()
+        
+    def id_token_get(self): 
+        strAWSRegion = 'ap-northeast-1'
+        str_ID_token = ""
+        try:
+            client = boto3.client('cognito-idp', region_name=strAWSRegion, config = botocore.client.Config(signature_version = UNSIGNED))
+            objAWS = AWSSRP(
+                    username = 'dustin.lin@nextdrive.io', 
+                    password = 'link4581', 
+                    pool_id = 'ap-northeast-1_6g3pjHvHo', 
+                    client_id = '4lmvkrpfbpurass53hv0vglr0r', 
+                    client = client
+                )
+            dicToken = objAWS.authenticate_user()
+            str_ID_token = dicToken['AuthenticationResult']['IdToken']
+            #print(dicToken)
+            print("Cognito token")
+            print(str_ID_token)
+        except Exception as exceptionError:
+            #raise error.equalerror()
+            print("Exception---->")
+            print(exceptionError)
+            #raise error.equalerror()
+            #raise error.equalerror() 
+        return str_ID_token

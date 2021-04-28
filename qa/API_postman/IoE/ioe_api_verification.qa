@@ -15,6 +15,9 @@ $ioe_login_result$=get						api_verification		expected_result			#expected_result
 exec										api_verification		cmd					#command#=newman run IoE.postman_collection.json -e IoE.postman_environment.json -r csv --reporter-csv-export		
 ##===== END =====
 
+
+
+
 ##=====Test case: Login API =====
 ## Get file location and get the file list of result
 $csv_file_name$=get							api_verification		file_list			#folder_path#=newman
@@ -37,6 +40,9 @@ verify										api_verification		status_code			#api_response#=$get_token_status
 verify										api_verification		dict_keys			#expected_result#=$ioe_login_result$,#actual_result#=$get_token_response_body$
 ##===== END =====
 
+
+
+
 ##===== Get team profile API =====
 ## Load expected result file
 $team_profile_result$=get					api_verification		expected_result		#expected_result#=expected_result\IoE\get_team_profile.json
@@ -58,6 +64,186 @@ verify										api_verification		dict_keys			#expected_result#=$team_profile_re
 
 ## Verify values of response body
 verify										api_verification		dict_content		#expected_result#=$team_profile_result$,#actual_result#=$team_profile_response_body$
+##===== END =====
+
+
+
+
+##===== Testcase: Get access modules =====
+## Load expected result file
+$access_modules_result$=get					api_verification		expected_result		#expected_result#=expected_result\IoE\get_access_modules.json
+
+## Read csv and target file
+$access_modules_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_Access_Modules
+
+## Get status code of result
+$access_modules_status_code$=get			api_verification		status_code			#api_response#=$access_modules_response$
+
+## Get response body of result
+$access_modules_response_body$=get			api_verification		response_body		#api_response#=$access_modules_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$access_modules_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$access_modules_result$,#actual_result#=$access_modules_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$access_modules_result$,#actual_result#=$access_modules_response_body$
+##===== END =====
+
+
+
+##=====Testcase: Get post detail =====
+## Load expected result file
+$post_detail_result$=get					api_verification		expected_result		#expected_result#=expected_result\IoE\get_post_detail.json
+
+## Read csv and target file
+$post_detail_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_Post_Detail
+
+## Get status code of result
+$post_detail_status_code$=get				api_verification		status_code			#api_response#=$post_detail_response$
+
+## Get response body of result
+$post_detail_response_body$=get				api_verification		response_body		#api_response#=$post_detail_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$post_detail_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$post_detail_result$,#actual_result#=$post_detail_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$post_detail_result$,#actual_result#=$post_detail_response_body$
+##===== END =====
+
+
+
+##=====Testcase: Get post performance =====
+## Load expected result file
+$post_performance_result$=get				api_verification		expected_result		#expected_result#=expected_result\IoE\get_post_performance.json
+
+## Read csv and target file
+$post_performance_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_Post_Performance
+
+## Get status code of result
+$post_performance_status_code$=get			api_verification		status_code			#api_response#=$post_performance_response$
+
+## Get response body of result
+$post_performance_response_body$=get		api_verification		response_body		#api_response#=$post_performance_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$post_performance_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$post_performance_result$,#actual_result#=$post_performance_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$post_performance_result$,#actual_result#=$post_performance_response_body$
+##===== END =====
+
+
+
+
+##=====Testcase: Get customer account =====
+## Load expected result file
+$customer_account_result$=get				api_verification		expected_result		#expected_result#=expected_result\IoE\get_customer_account.json
+
+## Read csv and target file
+$customer_account_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_Customer_Account
+
+## Get status code of result
+$customer_account_status_code$=get			api_verification		status_code			#api_response#=$customer_account_response$
+
+## Get response body of result
+$customer_account_response_body$=get		api_verification		response_body		#api_response#=$customer_account_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$customer_account_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$customer_account_result$,#actual_result#=$customer_account_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$customer_account_result$,#actual_result#=$customer_account_response_body$
+##===== END =====
+
+
+
+
+
+##=====Testcase: Get default welcome post =====
+## Load expected result file
+$defalut_welcome_post_result$=get			api_verification		expected_result		#expected_result#=expected_result\IoE\get_default_welcome_post.json
+
+## Read csv and target file
+$defalut_welcome_post_response$=get			api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_Default_Welcome_Post
+
+## Get status code of result
+$defalut_welcome_post_status_code$=get		api_verification		status_code			#api_response#=$defalut_welcome_post_response$
+
+## Get response body of result
+$defalut_welcome_post_response_body$=get	api_verification		response_body		#api_response#=$defalut_welcome_post_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$defalut_welcome_post_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$defalut_welcome_post_result$,#actual_result#=$defalut_welcome_post_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$defalut_welcome_post_result$,#actual_result#=$defalut_welcome_post_response_body$
+##===== END =====
+
+
+
+##=====Testcase: Update or create service provider =====
+## Load expected result file
+$service_provider_result$=get				api_verification		expected_result		#expected_result#=expected_result\IoE\get_service_provider_info.json
+
+## Read csv and target file
+$service_provider_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Update_or_Create_Service_Provider
+
+## Get status code of result
+$service_provider_status_code$=get			api_verification		status_code			#api_response#=$service_provider_response$
+
+## Get response body of result
+$service_provider_response_body$=get		api_verification		response_body		#api_response#=$service_provider_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$service_provider_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$service_provider_result$,#actual_result#=$service_provider_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$service_provider_result$,#actual_result#=$service_provider_response_body$
+##===== END =====
+
+
+
+
+##=====Testcase: Get account profile =====
+## Load expected result file
+$account_profile_result$=get				api_verification		expected_result		#expected_result#=expected_result\IoE\get_account_profile.json
+
+## Read csv and target file
+$account_profile_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_Account_Profile
+
+## Get status code of result
+$account_profile_status_code$=get			api_verification		status_code			#api_response#=$account_profile_response$
+
+## Get response body of result
+$account_profile_response_body$=get			api_verification		response_body		#api_response#=$account_profile_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$account_profile_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$account_profile_result$,#actual_result#=$account_profile_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$account_profile_result$,#actual_result#=$account_profile_response_body$
 ##===== END =====
 
 ## Set to original path

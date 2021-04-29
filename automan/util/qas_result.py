@@ -34,6 +34,7 @@ class qas_result(object):
                 print(root.get("name"), root.get("time"), root.get("result"))
                 float_qa_runtime = float_qa_runtime + float(root.get("time"))
                 list_qa_result.append(root.get("result"))
+
             print(list_qa_result)
             print(float_qa_runtime)
             int_run_time_mins = int(int(float_qa_runtime) / 60)
@@ -47,7 +48,8 @@ class qas_result(object):
             #print(str_final_result)
             str_final_result = str_final_result + "------------------------------\n"
             #print(str_final_result)
-            str_final_result = str_final_result + "Final result: "
+            str_final_result = str_final_result + "Final result "
+            str_final_result = str_final_result + dic_Param["api_count"] + " API(s):"
             #print(str_final_result)
             if "fail" in list_qa_result:
                 str_final_result = str_final_result + "Fail\n"

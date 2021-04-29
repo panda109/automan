@@ -19,6 +19,7 @@ import re
 
 class api_verification(object):
     def __init__(self):  
+        self.total = 0
         pass
 
     def read_csv_get(self, dic_value): 
@@ -334,3 +335,10 @@ class api_verification(object):
             #raise error.equalerror()
             #raise error.equalerror() 
         return str_ID_token
+    
+    def api_count_get(self):
+        self.total = self.total + 1
+
+        final_result = self.total - 1
+        
+        return final_result

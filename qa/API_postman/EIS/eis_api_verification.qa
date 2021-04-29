@@ -15,6 +15,9 @@ exec										api_verification		cmd					#command#=newman run EIS.postman_collect
 ##===== END =====
 
 ##=====Test case: Login API =====
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Get file location and get the file list of result
 $csv_file_name$=get							api_verification		file_list			#folder_path#=newman
 
@@ -37,6 +40,9 @@ verify										api_verification		dict_keys			#expected_result#=$ioe_login_resul
 ##===== END =====
 
 ##===== Get user profile API =====
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Load expected result file
 $team_profile_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_profile.json
 

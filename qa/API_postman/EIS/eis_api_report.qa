@@ -1,10 +1,11 @@
 start
 
+$run_api_amount$=get		api_verification		api_count
 
-$result$=get				qas_result		result				#testcase_name#=eis_api,#title#=EIS API test finished:,#environment#=QA Staging
+$result$=get				qas_result				result				#testcase_name#=eis_api,#title#=EIS API test finished:,#environment#=QA Staging,#api_count#=$run_api_amount$
 
-get							qas_result		xxx					#xxx#=$result$
+get							qas_result				xxx					#xxx#=$result$
 		
-send						Fb				googlemessage		#message#=$result$
+send						Fb						googlemessage		#message#=$result$
 		
 end

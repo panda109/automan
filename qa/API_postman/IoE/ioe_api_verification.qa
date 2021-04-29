@@ -19,6 +19,9 @@ exec										api_verification		cmd					#command#=newman run IoE.postman_collect
 
 
 ##=====Test case: Login API =====
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Get file location and get the file list of result
 $csv_file_name$=get							api_verification		file_list			#folder_path#=newman
 
@@ -44,6 +47,9 @@ verify										api_verification		dict_keys			#expected_result#=$ioe_login_resul
 
 
 ##===== Get team profile API =====
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Load expected result file
 $team_profile_result$=get					api_verification		expected_result		#expected_result#=expected_result\IoE\get_team_profile.json
 
@@ -70,6 +76,9 @@ verify										api_verification		dict_content		#expected_result#=$team_profile_
 
 
 ##===== Testcase: Get access modules =====
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Load expected result file
 $access_modules_result$=get					api_verification		expected_result		#expected_result#=expected_result\IoE\get_access_modules.json
 
@@ -95,6 +104,9 @@ verify										api_verification		dict_content		#expected_result#=$access_module
 
 
 ##=====Testcase: Get post detail =====
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Load expected result file
 $post_detail_result$=get					api_verification		expected_result		#expected_result#=expected_result\IoE\get_post_detail.json
 
@@ -123,6 +135,9 @@ verify										api_verification		dict_content		#expected_result#=$post_detail_r
 ##
 ## The value will change, need to modify verification.
 ##
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
 ## Load expected result file
 #$post_performance_result$=get				api_verification		expected_result		#expected_result#=expected_result\IoE\get_post_performance.json
 
@@ -149,6 +164,9 @@ verify										api_verification		dict_content		#expected_result#=$post_detail_r
 
 
 ##=====Testcase: Get customer account =====
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Load expected result file
 $customer_account_result$=get				api_verification		expected_result		#expected_result#=expected_result\IoE\get_customer_account.json
 
@@ -176,31 +194,37 @@ verify										api_verification		dict_content		#expected_result#=$customer_acco
 
 
 ##=====Testcase: Get default welcome post =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
 ## Load expected result file
-$defalut_welcome_post_result$=get			api_verification		expected_result		#expected_result#=expected_result\IoE\get_default_welcome_post.json
+#$defalut_welcome_post_result$=get			api_verification		expected_result		#expected_result#=expected_result\IoE\get_default_welcome_post.json
 
 ## Read csv and target file
-$defalut_welcome_post_response$=get			api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_Default_Welcome_Post
+#$defalut_welcome_post_response$=get			api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_Default_Welcome_Post
 
 ## Get status code of result
-$defalut_welcome_post_status_code$=get		api_verification		status_code			#api_response#=$defalut_welcome_post_response$
+#$defalut_welcome_post_status_code$=get		api_verification		status_code			#api_response#=$defalut_welcome_post_response$
 
 ## Get response body of result
-$defalut_welcome_post_response_body$=get	api_verification		response_body		#api_response#=$defalut_welcome_post_response$
+#$defalut_welcome_post_response_body$=get	api_verification		response_body		#api_response#=$defalut_welcome_post_response$
 
 ## Verify status code
-verify										api_verification		status_code			#api_response#=$defalut_welcome_post_status_code$,#expected_status_code#=200
+#verify										api_verification		status_code			#api_response#=$defalut_welcome_post_status_code$,#expected_status_code#=200
 
 ## Verify keys of response body
-verify										api_verification		dict_keys			#expected_result#=$defalut_welcome_post_result$,#actual_result#=$defalut_welcome_post_response_body$
+#verify										api_verification		dict_keys			#expected_result#=$defalut_welcome_post_result$,#actual_result#=$defalut_welcome_post_response_body$
 
 ## Verify values of response body
-verify										api_verification		dict_content		#expected_result#=$defalut_welcome_post_result$,#actual_result#=$defalut_welcome_post_response_body$
+#verify										api_verification		dict_content		#expected_result#=$defalut_welcome_post_result$,#actual_result#=$defalut_welcome_post_response_body$
 ##===== END =====
 
 
 
 ##=====Testcase: Update or create service provider =====
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Load expected result file
 $service_provider_result$=get				api_verification		expected_result		#expected_result#=expected_result\IoE\get_service_provider_info.json
 
@@ -227,6 +251,9 @@ verify										api_verification		dict_content		#expected_result#=$service_provi
 
 
 ##=====Testcase: Get account profile =====
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Load expected result file
 $account_profile_result$=get				api_verification		expected_result		#expected_result#=expected_result\IoE\get_account_profile.json
 

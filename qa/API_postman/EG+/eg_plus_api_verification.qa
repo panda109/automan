@@ -20,6 +20,9 @@ exec										api_verification		cmd						#command#=newman run EG+.postman_collec
 ##===== END =====
 
 ##===== Test case: Login API ======
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Get file location and get the file list of result
 $csv_file_name$=get							api_verification		file_list			#folder_path#=newman
 
@@ -45,6 +48,9 @@ verify										api_verification		dict_keys			#expected_result#=$eg_plus_login_r
 ##===== END =====
 
 ##===== Test case: Get single gw info by uuid =====
+## To count amount of api executed
+$final_result$=get							api_verification		api_count
+
 ## Read csv and target file
 $get_gw_info_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_single_gateway_info_by_UUID
 

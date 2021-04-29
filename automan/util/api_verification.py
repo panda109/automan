@@ -227,6 +227,12 @@ class api_verification(object):
             print("***********************************************")
             print("***********************************************")
             for i in range(len(list_expected_keys)):
+                print("EXPECTED RESULT")
+                print(dic_expected_result[list_expected_keys[i]])
+                print("=====")
+                print("ACTUAL RESULT")
+                print(dic_actual_result[list_expected_keys[i]])
+                print("=====")
                 if dic_expected_result[list_expected_keys[i]] == dic_actual_result[list_expected_keys[i]]:
                     print("Expected result: {}".format(dic_expected_result[list_expected_keys[i]]).ljust(50) + "||" + "Actual result: {}".format(dic_actual_result[list_expected_keys[i]]).rjust(50))
                 else:

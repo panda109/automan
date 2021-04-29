@@ -120,26 +120,29 @@ verify										api_verification		dict_content		#expected_result#=$post_detail_r
 
 
 ##=====Testcase: Get post performance =====
+##
+## The value will change, need to modify verification.
+##
 ## Load expected result file
-$post_performance_result$=get				api_verification		expected_result		#expected_result#=expected_result\IoE\get_post_performance.json
+#$post_performance_result$=get				api_verification		expected_result		#expected_result#=expected_result\IoE\get_post_performance.json
 
 ## Read csv and target file
-$post_performance_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_Post_Performance
+#$post_performance_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_Post_Performance
 
 ## Get status code of result
-$post_performance_status_code$=get			api_verification		status_code			#api_response#=$post_performance_response$
+#$post_performance_status_code$=get			api_verification		status_code			#api_response#=$post_performance_response$
 
 ## Get response body of result
-$post_performance_response_body$=get		api_verification		response_body		#api_response#=$post_performance_response$
+#$post_performance_response_body$=get		api_verification		response_body		#api_response#=$post_performance_response$
 
 ## Verify status code
-verify										api_verification		status_code			#api_response#=$post_performance_status_code$,#expected_status_code#=200
+#verify										api_verification		status_code			#api_response#=$post_performance_status_code$,#expected_status_code#=200
 
 ## Verify keys of response body
-verify										api_verification		dict_keys			#expected_result#=$post_performance_result$,#actual_result#=$post_performance_response_body$
+#verify										api_verification		dict_keys			#expected_result#=$post_performance_result$,#actual_result#=$post_performance_response_body$
 
 ## Verify values of response body
-verify										api_verification		dict_content		#expected_result#=$post_performance_result$,#actual_result#=$post_performance_response_body$
+#verify										api_verification		dict_content		#expected_result#=$post_performance_result$,#actual_result#=$post_performance_response_body$
 ##===== END =====
 
 

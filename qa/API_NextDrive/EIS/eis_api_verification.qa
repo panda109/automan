@@ -12,7 +12,7 @@ exec										api_verification		cmd					#original_path#=$original_path$,#run_env
 
 ##=====Test case: Login API =====
 ## To count amount of api executed
-$final_result$=get							api_verification		api_count
+#$final_result$=get							api_verification		api_count
 
 ## Get file location and get the file list of result
 $csv_file_name$=get							api_verification		file_list			#folder_path#=newman

@@ -1,0 +1,36 @@
+{
+    "title": "QA_Postman_test",
+    "format": 1,
+    "audienceConditions": "androidVersion=1.3.0002%20%28staging%29&cubeFwVersion=4.0.16030&cubeLocation=Taiwan&cubeStatus=online&iosVersion=1.3.0003",
+    "publishedAt": "2021-04-28T02:32:07.587Z",
+    "reachCount": "8",
+    "audits": [
+        {
+            "title": "QA_Postman_test",
+            "viewCount": null,
+            "latestUpdatedAt": null,
+            "linkClickedCounts": [],
+            "detail": {
+                "title": "Postman test",
+                "contents": [
+                    {
+                        "text": null,
+                        "previewImageUrl": "https://nxd-dev-egplus.s3-ap-northeast-1.amazonaws.com/postImages/0daaa595-0224-4c4f-ab06-2a32a7ff7b0a-thumbnail.jpg",
+                        "originalContentUrl": "https://nxd-dev-egplus.s3-ap-northeast-1.amazonaws.com/postImages/0daaa595-0224-4c4f-ab06-2a32a7ff7b0a.jpg",
+                        "label": null,
+                        "url": null,
+                        "type": "image"
+                    },
+                    {
+                        "text": "Eco",
+                        "previewImageUrl": null,
+                        "originalContentUrl": null,
+                        "label": null,
+                        "url": null,
+                        "type": "text"
+                    }
+                ]
+            }
+        }
+    ]
+}

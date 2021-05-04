@@ -1,0 +1,11 @@
+start
+
+$run_api_amount$=get		api_verification		api_count
+
+$result$=get				api_qas_result			result				#testcase_name#=eg_plus_api,#filename#=eg_plus_api_verification,#title#=EG+ API test finished:,#environment#=QA Staging,#api_count#=4
+
+get							api_qas_result			xxx					#xxx#=$result$
+		
+#send						Fb						googlemessage		#message#=$result$
+		
+end

@@ -1,0 +1,45 @@
+{
+    "teamId": "741cac9d-4115-4860-8d5f-5b3feab3806c",
+    "authorEmail": "benny.hsu+99@nextdrive.io",
+    "status": "published",
+    "format": 1,
+    "audienceConditions": "androidVersion=1.3.0002%20%28staging%29&cubeFwVersion=4.0.16030&cubeLocation=Taiwan&cubeStatus=online&iosVersion=1.3.0003",
+    "grandTitle": null,
+    "post": [
+        {
+            "title": "QA_Postman_test",
+            "description": "Post Detail",
+            "urls": [
+                {
+                    "label": "swagger",
+                    "url": "https://ioe-suite-api-qa.nextdrive.io/webjars/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/Hems/getUsersAccounts"
+                }
+            ],
+            "images": []
+        }
+    ],
+    "detail": [
+        {
+            "title": "Postman test",
+            "contents": [
+                {
+                    "text": null,
+                    "previewImageUrl": "https://nxd-dev-egplus.s3-ap-northeast-1.amazonaws.com/postImages/0daaa595-0224-4c4f-ab06-2a32a7ff7b0a-thumbnail.jpg",
+                    "originalContentUrl": "https://nxd-dev-egplus.s3-ap-northeast-1.amazonaws.com/postImages/0daaa595-0224-4c4f-ab06-2a32a7ff7b0a.jpg",
+                    "label": null,
+                    "url": null,
+                    "type": "image"
+                },
+                {
+                    "text": "Eco",
+                    "previewImageUrl": null,
+                    "originalContentUrl": null,
+                    "label": null,
+                    "url": null,
+                    "type": "text"
+                }
+            ]
+        }
+    ],
+    "publishedAt": "2021-04-28T02:32:07.587Z"
+}

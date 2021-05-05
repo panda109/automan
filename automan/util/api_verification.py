@@ -359,3 +359,204 @@ class api_verification(object):
         final_result = self.total - 1
         
         return final_result
+        
+        
+        
+    #Update 050521 *Get_programs_gateways_download Verify
+    def program_gw_download_pid_get(self, dic_value):
+        ## Get pid in response body and store in list
+        ## Parameters:
+        ##      - response_body: input response body
+        dic_param = dict(dic_value)
+        json_file = json.loads(dic_param["response_body"])
+        list_pid = []
+        for i in range(len(json_file["data"])):
+            list_pid.append(json_file["data"][i]["pid"])
+        print(list_pid)
+        return list_pid
+        
+    def program_gw_download_uuid_get(self, dic_value):
+        ## Get uuid in response body and store in list
+        ## Parameters:
+        ##      - response_body: input response body
+        dic_param = dict(dic_value)
+        json_file = json.loads(dic_param["response_body"])
+        list_uuid = []
+        for i in range(len(json_file["data"])):
+            list_uuid.append(json_file["data"][i]["uuid"])
+        print(list_uuid)
+        return list_uuid
+        
+    def program_gw_download_fw_sku_get(self, dic_value):
+        ## Get uuid in response body and store in list
+        ## Parameters:
+        ##      - response_body: input response body
+        dic_param = dict(dic_value)
+        json_file = json.loads(dic_param["response_body"])
+        list_fw_sku = []
+        for i in range(len(json_file["data"])):
+            list_fw_sku.append(json_file["data"][i]["firmwareSku"])
+        print(list_fw_sku)
+        return list_fw_sku
+    
+    def program_gw_download_createDt_get(self, dic_value):
+        ## Get createDt in response body and store in list
+        ## Parameters:
+        ##      - response body: input response body
+        dic_param = dict(dic_value)
+        json_file = json.loads(dic_param["response_body"])
+        list_create_time = []
+        for i in range(len(json_file["data"])):
+            list_create_time.append(json_file["data"][i]["createDt"])
+        print(list_create_time)
+        return list_create_time
+        
+    def program_gw_download_syncDt_get(self, dic_value):
+        ## Get syncDt in response body and store in list
+        ## Parameters:
+        ##      - response body: input response body
+        dic_param = dict(dic_value)
+        json_file = json.loads(dic_param["response_body"])
+        list_sync_time = []
+        for i in range(len(json_file["data"])):
+            list_sync_time.append(json_file["data"][i]["syncDt"])
+        print(list_sync_time)
+        return list_sync_time    
+        
+    def program_gw_download_free_get(self, dic_value):
+        ## Get free in response body and store in list
+        ## Parameters:
+        ##      - response body: input response body
+        dic_param = dict(dic_value)
+        json_file = json.loads(dic_param["response_body"])
+        list_free = []
+        for i in range(len(json_file["data"])):
+            list_free.append(json_file["data"][i]["free"])
+        print(list_free)
+        return list_free         
+        
+    def pid_verify(self, dic_value):
+        ## PID format verification
+        ## Parameters:
+        ##      - pid_actual_result: input pid
+        dic_param = dict(dic_value)
+        list_pid = eval(dic_param["pid_actual_result"])
+        for i in range(len(list_pid)):
+            pid_pattern = re.compile(r'\w')
+            list_pid_alphabet = re.findall(pid_pattern, list_pid[i])
+            int_current_pid_len = len(list_pid[i])
+            int_compare_result_pid_len = len(list_pid_alphabet)
+            if int_compare_result_pid_len == int_current_pid_len:
+                pass
+            else:
+                raise error.equalerror()
+        print("\nPID compare result: PASS\n")
+        
+    def uuid_verify(self, dic_value):
+        ## Uuid format verification
+        ## Parameters:
+        ##      - uuid_actual_result: input uuid
+        dic_param = dict(dic_value)
+        list_uuid = eval(dic_param["uuid_actual_result"])
+        for i in range(len(list_uuid)):
+            uuid_pattern = re.compile(r'[0-9a-zA-Z-]')
+            list_uuid_alphabet = re.findall(uuid_pattern, list_uuid[i])
+            int_current_uuid_len = len(list_uuid[i])
+            int_compare_result_uuid_len = len(list_uuid_alphabet)
+            if int_compare_result_uuid_len == int_current_uuid_len:
+                pass
+            else:
+                raise error.equalerror()
+        print("\nUUID compare result: PASS\n")
+        
+    def fw_sku_verify(self, dic_value):
+        ## fw sku format verification
+        ## Parameters:
+        ##      - fw_sku_actual_result: input fw sku
+        dic_param = dict(dic_value)
+        list_fw_sku = eval(dic_param["fw_sku_actual_result"])
+        for i in range(len(list_fw_sku)):
+            fw_sku_pattern = re.compile(r'[A-Za-z0-9-]')
+            list_fw_sku_alphabet = re.findall(fw_sku_pattern, list_fw_sku[i])
+            int_current_fw_sku_len = len(list_fw_sku[i])
+            int_compare_result_fw_sku_len = len(list_fw_sku_alphabet)
+            if int_compare_result_fw_sku_len == int_current_fw_sku_len:
+                pass
+            else:
+                raise error.equalerror()
+        print("\nFW sku compare result: PASS\n")    
+           
+    def free_sample_verify(self, dic_value):
+        ## free sample format verification
+        ## Parameters:
+        ##      - free_sample_actual_result: input free sample
+        dic_param = dict(dic_value)
+        list_free_sample = eval(dic_param["free_sample_actual_result"])
+        for i in range(len(list_free_sample)):
+            free_sample_pattern = re.compile(r'[A-Z]')
+            list_free_sample_alphabet = re.findall(free_sample_pattern, list_free_sample[i])
+            int_current_free_sample_len = len(list_free_sample[i])
+            int_compare_result_free_sample_len = len(list_free_sample_alphabet)
+            if int_compare_result_free_sample_len == int_current_free_sample_len:
+                pass
+            else:
+                raise error.equalerror()
+        print("\nFree sample compare result: PASS\n")          
+        
+    def create_time_verify(self, dic_value):
+        ## create time format verification
+        ## Parameters:
+        ##      - create_time_actual_result: input create time
+        dic_param = dict(dic_value)
+        list_create_time = eval(dic_param["create_time_actual_result"])
+        for i in range(len(list_create_time)):
+            create_time_pattern = re.compile(r'[-TZ:.0-9]')
+            list_create_time_alphabet = re.findall(create_time_pattern, list_create_time[i])
+            int_current_create_time_len = len(list_create_time[i])
+            int_compare_result_create_time_len = len(list_create_time_alphabet)
+            if int_compare_result_create_time_len == int_current_create_time_len:
+                pass
+            else:
+                raise error.equalerror()
+        print("\nCreate time compare result: PASS\n")              
+        
+    def sync_time_verify(self, dic_value):
+        ## sync time format verification
+        ## Parameters:
+        ##      - sync_time_actual_result: input sync time
+        dic_param = dict(dic_value)
+        list_sync_time = eval(dic_param["sync_time_actual_result"])
+        for i in range(len(list_sync_time)):
+            try: 
+                sync_time_pattern = re.compile(r'[-TZ:.0-9]')
+                list_sync_time_alphabet = re.findall(sync_time_pattern, list_sync_time[i])
+                int_current_sync_time_len = len(list_sync_time[i])
+                int_compare_result_sync_time_len = len(list_sync_time_alphabet)
+                if int_compare_result_sync_time_len == int_current_sync_time_len:
+                    pass
+                else:
+                    raise error.equalerror()
+                         
+            except:
+                if list_sync_time[i] == None:
+                    pass
+                else:
+                    raise error.equalerror()
+        print("\nSync time compare result: PASS\n")
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    

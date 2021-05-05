@@ -535,7 +535,7 @@
 			"response": []
 		},
 		{
-			"name": "*Get_programs_gateways_download",
+			"name": "Get_programs_gateways_download",
 			"event": [
 				{
 					"listen": "test",
@@ -584,7 +584,7 @@
 			"response": []
 		},
 		{
-			"name": "*Get_programs_gateways_free-sample",
+			"name": "*Get_programs_gateways_free_sample",
 			"event": [
 				{
 					"listen": "test",
@@ -634,7 +634,7 @@
 			"response": []
 		},
 		{
-			"name": "*Gateway_information_gateways_results",
+			"name": "*Get_gateway_information_gateways_results",
 			"event": [
 				{
 					"listen": "test",
@@ -690,7 +690,7 @@
 			"response": []
 		},
 		{
-			"name": "*Gateway_information_gateway_options_SKU",
+			"name": "*Get_gateway_information_gateway_options_SKU",
 			"event": [
 				{
 					"listen": "test",

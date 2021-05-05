@@ -8,6 +8,11 @@ $ioe_login_result$=get						api_verification	expected_result			#expected_result#
 
 ## Execute cmd of newman
 exec										api_verification		cmd					#original_path#=$original_path$,#run_environment_path#=ini\API_NextDrive,#command#=newman run EIS.postman_collection.json -e EIS.postman_environment.json -r csv --reporter-csv-export		
+
+## Get file location and get the file list of result
+$csv_file_name$=get							api_verification		file_list			#folder_path#=newman
+
+sleep	1	
 ##===== END =====
 
 
@@ -17,11 +22,6 @@ exec										api_verification		cmd					#original_path#=$original_path$,#run_env
 ##=====Test case: Login API =====
 ## To count amount of api executed
 #$final_result$=get							api_verification		api_count
-
-## Get file location and get the file list of result
-$csv_file_name$=get							api_verification		file_list			#folder_path#=newman
-
-sleep	1	
 
 ## Read csv and target file
 $get_token_status_code_response$=get 		api_verification 		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Login
@@ -524,6 +524,90 @@ verify										api_verification		dict_keys			#expected_result#=$health_check_re
 ## Verify values of response body
 verify										api_verification		dict_content		#expected_result#=$health_check_result$,#actual_result#=$health_check_response_body$
 ##===== END =====
+
+
+
+
+
+
+
+##===== Get programs gateways download =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+$program_gw_download_result$=get			api_verification		expected_result							#expected_result#=expected_result\EIS\EIS_get_programs_gateways_download.json
+
+## Read csv and target file
+$program_gw_download_response$=get			api_verification		read_csv								#csv_filename#=$csv_file_name$,#testcase_name#=Get_programs_gateways_download
+
+## Get status code of result
+$program_gw_download_status_code$=get		api_verification		status_code								#api_response#=$program_gw_download_response$
+
+## Get response body of result
+$program_gw_download_response_body$=get		api_verification		response_body							#api_response#=$program_gw_download_response$
+
+## Verify status code
+verify										api_verification		status_code								#api_response#=$program_gw_download_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys								#expected_result#=$program_gw_download_result$,#actual_result#=$program_gw_download_response_body$
+
+## Get pid in response body
+$program_gw_download_pid_list$=get			api_verification		program_gw_download_pid					#response_body#=$program_gw_download_response_body$
+
+## Get uuid in response body
+$program_gw_download_uuid_list$=get			api_verification		program_gw_download_uuid				#response_body#=$program_gw_download_response_body$
+
+## Get free in response body
+$program_gw_download_free_list$=get			api_verification		program_gw_download_free				#response_body#=$program_gw_download_response_body$
+	
+## Get fw sku in response body
+$program_gw_download_fw_sku_list$=get		api_verification		program_gw_download_fw_sku				#response_body#=$program_gw_download_response_body$
+
+## Get create time in response body
+$program_gw_download_createDt_list$=get		api_verification		program_gw_download_createDt			#response_body#=$program_gw_download_response_body$
+	
+## Get sync time in response body
+$program_gw_download_syncDt_list$=get		api_verification		program_gw_download_syncDt				#response_body#=$program_gw_download_response_body$
+
+## Verify pid format
+verify										api_verification		pid										#pid_actual_result#=$program_gw_download_pid_list$
+
+## Verify uuid format
+verify										api_verification		uuid									#uuid_actual_result#=$program_gw_download_uuid_list$
+
+## Verify free format
+verify										api_verification		free_sample								#free_sample_actual_result#=$program_gw_download_free_list$
+
+## Verify fw sku format
+verify										api_verification		fw_sku									#fw_sku_actual_result#=$program_gw_download_fw_sku_list$
+
+## Verify createDt format
+verify										api_verification		create_time								#create_time_actual_result#=$program_gw_download_createDt_list$
+
+## Verify syncDt format
+verify										api_verification		sync_time								#sync_time_actual_result#=$program_gw_download_syncDt_list$
+##===== END =====
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

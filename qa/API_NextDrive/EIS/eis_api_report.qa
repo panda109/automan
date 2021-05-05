@@ -2,7 +2,7 @@ start
 
 $run_api_amount$=get		api_verification		api_count
 
-$result$=get				api_qas_result			result				#testcase_name#=eis_api,#filename#=eis_api_verification,#title#=EIS API test finished:,#environment#=QA Staging,#api_count#=10
+$result$=get				api_qas_result			result				#testcase_name#=eis_api,#filename#=eis_api_verification,#title#=EIS API test finished:,#environment#=QA Staging,#api_count#=11
 
 get							api_qas_result			xxx					#xxx#=$result$
 		

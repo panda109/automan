@@ -94,7 +94,7 @@ class api_qas_result(object):
         str_final_result = str_final_result + "------------------------------\n"
         #print(str_final_result)
         str_final_result = str_final_result + "Final result "
-        str_final_result = str_final_result + dic_Param["api_count"] + " API(s):"
+        str_final_result = str_final_result + "( " + dic_Param["api_count"] + " APIs): "
         #print(str_final_result)
         if "fail" in list_qa_result:
             str_final_result = str_final_result + "Fail\n"

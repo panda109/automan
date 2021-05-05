@@ -10,6 +10,10 @@ $ioe_login_result$=get						api_verification	expected_result			#expected_result#
 exec										api_verification		cmd					#original_path#=$original_path$,#run_environment_path#=ini\API_NextDrive,#command#=newman run EIS.postman_collection.json -e EIS.postman_environment.json -r csv --reporter-csv-export		
 ##===== END =====
 
+
+
+
+
 ##=====Test case: Login API =====
 ## To count amount of api executed
 #$final_result$=get							api_verification		api_count
@@ -37,41 +41,490 @@ verify										api_verification		dict_keys			#expected_result#=$ioe_login_resul
 
 
 
-
-
-
-
-
 ##===== Get user profile API =====
 ## To count amount of api executed
 #$final_result$=get							api_verification		api_count
 
 ## Load expected result file
-#$team_profile_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_profile.json
+$team_profile_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_profile.json
 
 ## Read csv and target file
-#$team_profile_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=User_profile
+$team_profile_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_user_profile
 
 ## Get status code of result
-#$team_profile_status_code$=get				api_verification		status_code			#api_response#=$team_profile_response$
+$team_profile_status_code$=get				api_verification		status_code			#api_response#=$team_profile_response$
 
 ## Get response body of result
-#$team_profile_response_body$=get			api_verification		response_body		#api_response#=$team_profile_response$
+$team_profile_response_body$=get			api_verification		response_body		#api_response#=$team_profile_response$
 
 ## Verify status code
-#verify										api_verification		status_code			#api_response#=$team_profile_status_code$,#expected_status_code#=200
+verify										api_verification		status_code			#api_response#=$team_profile_status_code$,#expected_status_code#=200
 
 ## Verify keys of response body
-#verify										api_verification		dict_keys			#expected_result#=$team_profile_result$,#actual_result#=$team_profile_response_body$
+verify										api_verification		dict_keys			#expected_result#=$team_profile_result$,#actual_result#=$team_profile_response_body$
 
 ## Verify values of response body
-#verify										api_verification		dict_content		#expected_result#=$team_profile_result$,#actual_result#=$team_profile_response_body$
+verify										api_verification		dict_content		#expected_result#=$team_profile_result$,#actual_result#=$team_profile_response_body$
 ##===== END =====
 
 
 
 
-## Set to original path
-set											api_verification		cmd_path			#environment_path#=$original_path$
+##===== Get organization =====
+##
+## Have a problem when input exists "="
+##
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+#$org_list_result$=get						api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_orgs.json
+
+## Read csv and target file
+#$org_list_response$=get						api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_orgs
+
+## Get status code of result
+#$org_list_status_code$=get					api_verification		status_code			#api_response#=$org_list_response$
+
+## Get response body of result
+#$org_list_response_body$=get				api_verification		response_body		#api_response#=$org_list_response$
+
+## Verify status code
+#verify										api_verification		status_code			#api_response#=$org_list_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+#verify										api_verification		dict_keys			#expected_result#=$org_list_result$,#actual_result#=$org_list_response_body$
+
+## Verify values of response body
+#verify										api_verification		dict_content		#expected_result#=$org_list_result$,#actual_result#=$org_list_response_body$
+##===== END =====
+
+
+
+
+##===== Get organization id=====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+$org_id_info_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_org_id.json
+
+## Read csv and target file
+$org_id_info_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_org_id
+
+## Get status code of result
+$org_id_info_status_code$=get				api_verification		status_code			#api_response#=$org_id_info_response$
+
+## Get response body of result
+$org_id_info_response_body$=get				api_verification		response_body		#api_response#=$org_id_info_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$org_id_info_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$org_id_info_result$,#actual_result#=$org_id_info_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$org_id_info_result$,#actual_result#=$org_id_info_response_body$
+##===== END =====
+
+
+
+
+
+##===== Get clients =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+#$client_info_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_clients.json
+
+## Read csv and target file
+#$client_info_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_clients
+
+## Get status code of result
+#$client_info_status_code$=get				api_verification		status_code			#api_response#=$client_info_response$
+
+## Get response body of result
+#$client_info_response_body$=get			api_verification		response_body		#api_response#=$client_info_response$
+
+## Verify status code
+#verify										api_verification		status_code			#api_response#=$client_info_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+#verify										api_verification		dict_keys			#expected_result#=$client_info_result$,#actual_result#=$client_info_response_body$
+
+## Verify values of response body
+#verify										api_verification		dict_content		#expected_result#=$client_info_result$,#actual_result#=$client_info_response_body$
+##===== END =====
+
+
+
+
+##===== Get clients id =====
+##
+## Have a problem when input exists "="
+##
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+#$client_id_info_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_client_id.json
+
+## Read csv and target file
+#$client_id_info_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_clients_id
+
+## Get status code of result
+#$client_id_info_status_code$=get			api_verification		status_code			#api_response#=$client_id_info_response$
+
+## Get response body of result
+#$client_id_info_response_body$=get			api_verification		response_body		#api_response#=$client_id_info_response$
+
+## Verify status code
+#verify										api_verification		status_code			#api_response#=$client_id_info_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+#verify										api_verification		dict_keys			#expected_result#=$client_id_info_result$,#actual_result#=$client_id_info_response_body$
+
+## Verify values of response body
+#verify										api_verification		dict_content		#expected_result#=$client_id_info_result$,#actual_result#=$client_id_info_response_body$
+##===== END =====
+
+
+
+##===== Get program id =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+$program_id_info_result$=get				api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_progarm_id.json
+
+## Read csv and target file
+$program_id_info_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_program_id
+
+## Get status code of result
+$program_id_info_status_code$=get			api_verification		status_code			#api_response#=$program_id_info_response$
+
+## Get response body of result
+$program_id_info_response_body$=get		api_verification		response_body		#api_response#=$program_id_info_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$program_id_info_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$program_id_info_result$,#actual_result#=$program_id_info_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$program_id_info_result$,#actual_result#=$program_id_info_response_body$
+##===== END =====
+
+
+
+
+
+##===== Get account id =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+$account_id_info_result$=get				api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_accounts_id.json
+
+## Read csv and target file
+$account_id_info_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_accounts_id
+
+## Get status code of result
+$account_id_info_status_code$=get			api_verification		status_code			#api_response#=$account_id_info_response$
+
+## Get response body of result
+$account_id_info_response_body$=get			api_verification		response_body		#api_response#=$account_id_info_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$account_id_info_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$account_id_info_result$,#actual_result#=$account_id_info_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$account_id_info_result$,#actual_result#=$account_id_info_response_body$
+##===== END =====
+
+
+
+
+
+##===== Get org options =====
+##
+## The expected result will change
+##
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+#$org_option_result$=get						api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_org_options.json
+
+## Read csv and target file
+#$org_option_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_org_options
+
+## Get status code of result
+#$org_option_status_code$=get				api_verification		status_code			#api_response#=$org_option_response$
+
+## Get response body of result
+#$org_option_response_body$=get				api_verification		response_body		#api_response#=$org_option_response$
+
+## Verify status code
+#verify										api_verification		status_code			#api_response#=$org_option_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+#verify										api_verification		dict_keys			#expected_result#=$org_option_result$,#actual_result#=$org_option_response_body$
+
+## Verify values of response body
+#verify										api_verification		dict_content		#expected_result#=$org_option_result$,#actual_result#=$org_option_response_body$
+##===== END =====
+
+
+
+##===== Get client options =====
+##
+## The expected result will change
+##
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+#$client_option_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_client_options.json
+
+## Read csv and target file
+#$client_option_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_clients_options
+
+## Get status code of result
+#$client_option_status_code$=get				api_verification		status_code			#api_response#=$client_option_response$
+
+## Get response body of result
+#$client_option_response_body$=get			api_verification		response_body		#api_response#=$client_option_response$
+
+## Verify status code
+#verify										api_verification		status_code			#api_response#=$client_option_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+#verify										api_verification		dict_keys			#expected_result#=$client_option_result$,#actual_result#=$client_option_response_body$
+
+## Verify values of response body
+#verify										api_verification		dict_content		#expected_result#=$client_option_result$,#actual_result#=$client_option_response_body$
+##===== END =====
+
+
+
+
+##===== Get program options =====
+##
+## The expected result will change
+##
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+#$program_option_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_program_options.json
+
+## Read csv and target file
+#$program_option_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_programs_options
+
+## Get status code of result
+#$program_option_status_code$=get			api_verification		status_code			#api_response#=$program_option_response$
+
+## Get response body of result
+#$program_option_response_body$=get			api_verification		response_body		#api_response#=$program_option_response$
+
+## Verify status code
+#verify										api_verification		status_code			#api_response#=$program_option_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+#verify										api_verification		dict_keys			#expected_result#=$program_option_result$,#actual_result#=$program_option_response_body$
+
+## Verify values of response body
+#verify										api_verification		dict_content		#expected_result#=$program_option_result$,#actual_result#=$program_option_response_body$
+##===== END =====
+
+
+
+
+##===== Get account options =====
+##
+## The expected result will change
+##
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+#$account_option_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_account_options.json
+
+## Read csv and target file
+#$account_option_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_account_options
+
+## Get status code of result
+#$account_option_status_code$=get			api_verification		status_code			#api_response#=$account_option_response$
+
+## Get response body of result
+#$account_option_response_body$=get			api_verification		response_body		#api_response#=$account_option_response$
+
+## Verify status code
+#verify										api_verification		status_code			#api_response#=$account_option_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+#verify										api_verification		dict_keys			#expected_result#=$account_option_result$,#actual_result#=$account_option_response_body$
+
+## Verify values of response body
+#verify										api_verification		dict_content		#expected_result#=$account_option_result$,#actual_result#=$account_option_response_body$
+##===== END =====
+
+
+
+
+
+##===== Get clients status =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+$clients_status_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_clients_stauts.json
+
+## Read csv and target file
+$clients_status_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_clients_status
+
+## Get status code of result
+$clients_status_status_code$=get			api_verification		status_code			#api_response#=$clients_status_response$
+
+## Get response body of result
+$clients_status_response_body$=get			api_verification		response_body		#api_response#=$clients_status_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$clients_status_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$clients_status_result$,#actual_result#=$clients_status_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$clients_status_result$,#actual_result#=$clients_status_response_body$
+##===== END =====
+
+
+
+
+
+##===== Get clients type =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+$clients_type_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_clients_type.json
+
+## Read csv and target file
+$clients_type_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_clients_type
+
+## Get status code of result
+$clients_type_status_code$=get				api_verification		status_code			#api_response#=$clients_type_response$
+
+## Get response body of result
+$clients_type_response_body$=get			api_verification		response_body		#api_response#=$clients_type_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$clients_type_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$clients_type_result$,#actual_result#=$clients_type_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$clients_type_result$,#actual_result#=$clients_type_response_body$
+##===== END =====
+
+
+
+
+
+##===== Get org countries =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+$org_countries_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_org_countries.json
+
+## Read csv and target file
+$org_countries_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_org_countries
+
+## Get status code of result
+$org_countries_status_code$=get				api_verification		status_code			#api_response#=$org_countries_response$
+
+## Get response body of result
+$org_countries_response_body$=get			api_verification		response_body		#api_response#=$org_countries_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$org_countries_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$org_countries_result$,#actual_result#=$org_countries_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$org_countries_result$,#actual_result#=$org_countries_response_body$
+##===== END =====
+
+
+
+
+
+
+##===== Get gateway model =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+$gateway_model_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_gateway_model.json
+
+## Read csv and target file
+$gateway_model_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_gateway_model
+
+## Get status code of result
+$gateway_model_status_code$=get				api_verification		status_code			#api_response#=$gateway_model_response$
+
+## Get response body of result
+$gateway_model_response_body$=get			api_verification		response_body		#api_response#=$gateway_model_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$gateway_model_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$gateway_model_result$,#actual_result#=$gateway_model_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$gateway_model_result$,#actual_result#=$gateway_model_response_body$
+##===== END =====
+
+
+
+##===== Get health_check =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Load expected result file
+$health_check_result$=get					api_verification		expected_result		#expected_result#=expected_result\EIS\EIS_get_health_check.json
+
+## Read csv and target file
+$health_check_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_health_check
+
+## Get status code of result
+$health_check_status_code$=get				api_verification		status_code			#api_response#=$health_check_response$
+
+## Get response body of result
+$health_check_response_body$=get			api_verification		response_body		#api_response#=$health_check_response$
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$health_check_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$health_check_result$,#actual_result#=$health_check_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$health_check_result$,#actual_result#=$health_check_response_body$
+##===== END =====
+
+
 
 end

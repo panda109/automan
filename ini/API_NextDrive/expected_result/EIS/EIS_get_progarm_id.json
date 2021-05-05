@@ -1,0 +1,48 @@
+{
+    "id": "7bda1ab6-6d91-4281-9eaa-7ce136e38fc5",
+    "title": "test_program_eg3",
+    "type": "Official Service",
+    "status": "Active",
+    "displayId": "P-200917003",
+    "countingDate": "1",
+    "manager": {
+        "name": "ann.fu",
+        "email": "ann.fu@nextdrive.io"
+    },
+    "period": "2020/09/18-2023/09/18",
+    "productTypes": [
+        {
+            "type": "HEMS",
+            "plan": "Standard",
+            "licenseLimit": 10,
+            "gatewayCount": 58
+        },
+        {
+            "type": "APP",
+            "plan": "Ecogenie",
+            "licenseLimit": 0,
+            "gatewayCount": 58
+        },
+        {
+            "type": "Gateway",
+            "plan": "0-10000",
+            "licenseLimit": 0,
+            "gatewayCount": 58
+        }
+    ],
+    "organization": {
+        "name": "Olaolaolaola",
+        "displayId": "O-200917001"
+    },
+    "client": {
+        "name": "ola_Client",
+        "displayId": "C-200917001"
+    },
+    "appLabel": {
+        "id": "4b3b79cb-5b6f-44d4-b30a-84c60df2a2b1",
+        "appName": "Ecogenie-qa",
+        "pkgName": "io.nextdrive.ecogenie.stg",
+        "program": "test_program_eg3",
+        "createdDt": "2020-09-07T04:05:42.000Z"
+    }
+}

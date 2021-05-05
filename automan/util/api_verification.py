@@ -14,6 +14,7 @@ from warrant.aws_srp import AWSSRP
 import boto3
 import json
 import csv
+import sys
 import os
 import re
 
@@ -30,6 +31,18 @@ class api_verification(object):
         ##    - testcase_name
         ##
         dic_param = dict(dic_value)
+        
+        maxInt = sys.maxsize
+         
+        while True:
+            # decrease the maxInt value by factor 10 
+            # as long as the OverflowError occurs.
+            try:
+                csv.field_size_limit(maxInt)
+                break
+            except OverflowError:
+                maxInt = int(maxInt/10)
+
         try:
             #define csv file:
             str_file_path = os.path.join(os.getcwd(), "ini", "API_NextDrive", "newman", dic_param["csv_filename"])
@@ -67,10 +80,10 @@ class api_verification(object):
         ##
         dic_param = dict(dic_value)
         str_response = dic_param["api_response"]
-        #print(str_response)
+        print(str_response)
         #print(type(str_response))
         list_response = eval(str_response)
-        #print(list_response)
+        print(list_response)
         for i in range(len(list_response)):
             if "http" in list_response[i]:
                 #print(list_response[i + 2])
@@ -173,7 +186,7 @@ class api_verification(object):
         
         obj_expected_result = open(str_file_path, "r", encoding = 'utf-8')
         str_expected_result = obj_expected_result.read()
-        print(str_expected_result)
+        #print(str_expected_result)
         obj_expected_result.close()
         
         

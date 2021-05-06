@@ -554,22 +554,22 @@ verify										api_verification		status_code								#api_response#=$program_gw_
 verify										api_verification		dict_keys								#expected_result#=$program_gw_download_result$,#actual_result#=$program_gw_download_response_body$
 
 ## Get pid in response body
-$program_gw_download_pid_list$=get			api_verification		program_gw_download_pid					#response_body#=$program_gw_download_response_body$
+$program_gw_download_pid_list$=get			api_eis					program_gw_download_pid					#response_body#=$program_gw_download_response_body$
 
 ## Get uuid in response body
-$program_gw_download_uuid_list$=get			api_verification		program_gw_download_uuid				#response_body#=$program_gw_download_response_body$
+$program_gw_download_uuid_list$=get			api_eis					program_gw_download_uuid				#response_body#=$program_gw_download_response_body$
 
 ## Get free in response body
-$program_gw_download_free_list$=get			api_verification		program_gw_download_free				#response_body#=$program_gw_download_response_body$
+$program_gw_download_free_list$=get			api_eis					program_gw_download_free				#response_body#=$program_gw_download_response_body$
 	
 ## Get fw sku in response body
-$program_gw_download_fw_sku_list$=get		api_verification		program_gw_download_fw_sku				#response_body#=$program_gw_download_response_body$
+$program_gw_download_fw_sku_list$=get		api_eis					program_gw_download_fw_sku				#response_body#=$program_gw_download_response_body$
 
 ## Get create time in response body
-$program_gw_download_createDt_list$=get		api_verification		program_gw_download_createDt			#response_body#=$program_gw_download_response_body$
+$program_gw_download_createDt_list$=get		api_eis					program_gw_download_createDt			#response_body#=$program_gw_download_response_body$
 	
 ## Get sync time in response body
-$program_gw_download_syncDt_list$=get		api_verification		program_gw_download_syncDt				#response_body#=$program_gw_download_response_body$
+$program_gw_download_syncDt_list$=get		api_eis					program_gw_download_syncDt				#response_body#=$program_gw_download_response_body$
 
 ## Verify pid format
 verify										api_verification		pid										#pid_actual_result#=$program_gw_download_pid_list$

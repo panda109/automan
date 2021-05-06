@@ -327,17 +327,18 @@ class api_verification(object):
         file1.write(json_file)
         file1.close()
         
-    def id_token_get(self): 
+    def id_token_get(self, dic_value): 
         ## will modify, move parameter to ini file
-        strAWSRegion = 'ap-northeast-1'
+        dic_param = dict(dic_value)
+        strAWSRegion = dic_param["pool_id"].split("_")[0]
         str_ID_token = ""
         try:
             client = boto3.client('cognito-idp', region_name=strAWSRegion, config = botocore.client.Config(signature_version = UNSIGNED))
             objAWS = AWSSRP(
-                    username = 'automan+99@nextdrive.io', 
-                    password = 'link4581', 
-                    pool_id = 'ap-northeast-1_6g3pjHvHo', 
-                    client_id = '4lmvkrpfbpurass53hv0vglr0r', 
+                    username = dic_param["username"], 
+                    password = dic_param["password"], 
+                    pool_id = dic_param["pool_id"], 
+                    client_id = dic_param["client_id"], 
                     client = client
                 )
             dicToken = objAWS.authenticate_user()
@@ -363,77 +364,7 @@ class api_verification(object):
         
         
     #Update 050521 *Get_programs_gateways_download Verify
-    def program_gw_download_pid_get(self, dic_value):
-        ## Get pid in response body and store in list
-        ## Parameters:
-        ##      - response_body: input response body
-        dic_param = dict(dic_value)
-        json_file = json.loads(dic_param["response_body"])
-        list_pid = []
-        for i in range(len(json_file["data"])):
-            list_pid.append(json_file["data"][i]["pid"])
-        print(list_pid)
-        return list_pid
         
-    def program_gw_download_uuid_get(self, dic_value):
-        ## Get uuid in response body and store in list
-        ## Parameters:
-        ##      - response_body: input response body
-        dic_param = dict(dic_value)
-        json_file = json.loads(dic_param["response_body"])
-        list_uuid = []
-        for i in range(len(json_file["data"])):
-            list_uuid.append(json_file["data"][i]["uuid"])
-        print(list_uuid)
-        return list_uuid
-        
-    def program_gw_download_fw_sku_get(self, dic_value):
-        ## Get uuid in response body and store in list
-        ## Parameters:
-        ##      - response_body: input response body
-        dic_param = dict(dic_value)
-        json_file = json.loads(dic_param["response_body"])
-        list_fw_sku = []
-        for i in range(len(json_file["data"])):
-            list_fw_sku.append(json_file["data"][i]["firmwareSku"])
-        print(list_fw_sku)
-        return list_fw_sku
-    
-    def program_gw_download_createDt_get(self, dic_value):
-        ## Get createDt in response body and store in list
-        ## Parameters:
-        ##      - response body: input response body
-        dic_param = dict(dic_value)
-        json_file = json.loads(dic_param["response_body"])
-        list_create_time = []
-        for i in range(len(json_file["data"])):
-            list_create_time.append(json_file["data"][i]["createDt"])
-        print(list_create_time)
-        return list_create_time
-        
-    def program_gw_download_syncDt_get(self, dic_value):
-        ## Get syncDt in response body and store in list
-        ## Parameters:
-        ##      - response body: input response body
-        dic_param = dict(dic_value)
-        json_file = json.loads(dic_param["response_body"])
-        list_sync_time = []
-        for i in range(len(json_file["data"])):
-            list_sync_time.append(json_file["data"][i]["syncDt"])
-        print(list_sync_time)
-        return list_sync_time    
-        
-    def program_gw_download_free_get(self, dic_value):
-        ## Get free in response body and store in list
-        ## Parameters:
-        ##      - response body: input response body
-        dic_param = dict(dic_value)
-        json_file = json.loads(dic_param["response_body"])
-        list_free = []
-        for i in range(len(json_file["data"])):
-            list_free.append(json_file["data"][i]["free"])
-        print(list_free)
-        return list_free         
         
     def pid_verify(self, dic_value):
         ## PID format verification
@@ -544,9 +475,41 @@ class api_verification(object):
                     raise error.equalerror()
         print("\nSync time compare result: PASS\n")
         
+
         
+    def online_status_verify(self, dic_value):
+        ## online status verification
+        ## Expected result: Integer(0, 1, 2)
+        ## Parameters:
+        ##      - online_status_result
+        dic_param = dict(dic_value)
+        list_online_status = eval(dic_param["online_status_result"])
+
+        for i in range(len(list_online_status)):
+            online_status_pattern = re.compile(r'[0-2]')
+            list_online_status_alphabet = re.findall(online_status_pattern, str(list_online_status[i]))
+            int_current_online_status_len = len(list_online_status)
+            int_compare_result_online_status_len = len(list_online_status_alphabet)
+            if int_compare_result_online_status_len == int_current_online_status_len:
+                pass
+            else:
+                raise error.equalerror()
+        print("\nOnline status compare result: PASS\n")
         
+    def value_verify(self, dic_value):
+        ## Compare two value if equal
+        ## Parameters:
+        ##      -
+        dic_param = dict(dic_value)
+        list_actual_result = eval(dic_param["actual_result"])
+        print("\nExpected result: {}   Actual result: {}".format(dic_param["expected_result"], list_actual_result[0]))
+        if dic_param["expected_result"] == list_actual_result[0]:
+            print("\nTwo value Compare result: Equal\n")
+            pass
+        else:
+            raise error.equalerror()
         
+
         
         
         

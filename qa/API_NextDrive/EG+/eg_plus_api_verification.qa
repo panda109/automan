@@ -24,6 +24,188 @@ sleep										1
 
 
 
+
+##===== Test case: Login API ======
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+
+## Read csv and target file
+$get_token_status_code_response$=get 		api_verification 		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_token
+
+## Get status code of result
+$get_token_status_code$=get					api_verification		status_code			#api_response#=$get_token_status_code_response$
+
+## Get response body of result
+$get_token_response_body$=get				api_verification		response_body		#api_response#=$get_token_status_code_response$
+
+## Load expected result file
+$eg_plus_login_result$=get					api_verification		expected_result		#expected_result#=expected_result\EG+\EG_plus_login.json
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$get_token_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$eg_plus_login_result$,#actual_result#=$get_token_response_body$
+##===== END =====
+
+
+
+
+
+##===== Test case: Get single gw info by uuid =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Read csv and target file
+$get_gw_info_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_single_gateway_info_by_UUID
+
+## Get status code of result
+$get_gw_info_status_code$=get				api_verification		status_code			#api_response#=$get_gw_info_response$
+
+## Get response body of result
+$get_gw_info_response_body$=get				api_verification		response_body		#api_response#=$get_gw_info_response$	
+
+## Load expected result file
+$eg_plus_gw_info_result$=get				api_verification		expected_result		#expected_result#=expected_result\EG+\EG_plus_get_single_gw_info_by_uuid.json
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$get_gw_info_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$eg_plus_gw_info_result$,#actual_result#=$get_gw_info_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$eg_plus_gw_info_result$,#actual_result#=$get_gw_info_response_body$
+
+
+
+
+
+##===== Test case:  Get beep brand, model list =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Read csv and target file
+$get_beep_info_list_response$=get			api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_beep_brand_model_list
+
+## Get status code of result
+$get_beep_info_list_status_code$=get		api_verification		status_code			#api_response#=$get_beep_info_list_response$
+
+## Get response body of result
+$get_beep_info_list_response_body$=get		api_verification		response_body		#api_response#=$get_beep_info_list_response$	
+
+## Load expected result file
+$get_beep_info_list_result$=get				api_verification		expected_result		#expected_result#=expected_result\EG+\EG_plus_get_beep_brand_model_list.json
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$get_beep_info_list_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$get_beep_info_list_result$,#actual_result#=$get_beep_info_list_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$get_beep_info_list_result$,#actual_result#=$get_beep_info_list_response_body$
+##===== END =====
+
+
+
+
+
+##===== Test case: Get user name =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Read csv and target file
+$get_user_name_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_user_name
+
+## Get status code of result
+$get_user_name_status_code$=get				api_verification		status_code			#api_response#=$get_user_name_response$
+
+## Get response body of result
+$get_user_name_response_body$=get			api_verification		response_body		#api_response#=$get_user_name_response$	
+
+## Load expected result file
+$get_user_name_result$=get					api_verification		expected_result		#expected_result#=expected_result\EG+\EG_plus_get_user_name.json
+
+## Verify status code
+verify										api_verification		status_code			#api_response#=$get_user_name_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys			#expected_result#=$get_user_name_result$,#actual_result#=$get_user_name_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content		#expected_result#=$get_user_name_result$,#actual_result#=$get_user_name_response_body$
+##===== END =====
+
+
+
+
+
+
+
+
+
+
+##===== Test case: Get notification threshold =====
+## To count amount of api executed
+#$final_result$=get							api_verification		api_count
+
+## Read csv and target file
+$get_noti_threshold_response$=get			api_verification		read_csv										#csv_filename#=$csv_file_name$,#testcase_name#=Get_notification_threshold
+
+## Get status code of result
+$get_noti_threshold_status_code$=get		api_verification		status_code										#api_response#=$get_noti_threshold_response$
+
+## Get response body of result
+$get_noti_threshold_response_body$=get		api_verification		response_body									#api_response#=$get_noti_threshold_response$	
+
+## Load expected result file
+$get_noti_threshold_result$=get				api_verification		expected_result									#expected_result#=expected_result\EG+\EG_plus_get_notification_threshold.json
+
+## Verify status code
+verify										api_verification		status_code										#api_response#=$get_noti_threshold_status_code$,#expected_status_code#=200
+
+## Verify keys of response body
+verify										api_verification		dict_keys										#expected_result#=$get_noti_threshold_result$,#actual_result#=$get_noti_threshold_response_body$
+
+## Verify values of response body
+verify										api_verification		dict_content									#expected_result#=$get_noti_threshold_result$,#actual_result#=$get_noti_threshold_response_body$
+
+## Get motion uuid
+$notif_threshold_uuid$=get					api_egplus_app			notification_threshold_uuid						#response_body#=$get_noti_threshold_response_body$
+
+## Get motion name
+$notif_threshold_name$=get					api_egplus_app			notification_threshold_name						#response_body#=$get_noti_threshold_response_body$
+
+## Get motion model
+$notif_threshold_model$=get					api_egplus_app			notification_threshold_model					#response_body#=$get_noti_threshold_response_body$
+
+## Get motion online status
+$notif_threshold_status$=get				api_egplus_app			notification_threshold_status					#response_body#=$get_noti_threshold_response_body$
+
+## Get motion MAC
+$notif_threshold_mac$=get					api_egplus_app			notification_threshold_mac						#response_body#=$get_noti_threshold_response_body$
+
+## verify uuid 
+verify										api_verification		value											#expected_result#=$motion_uuid$,#actual_result#=$notif_threshold_uuid$
+
+## verify name
+verify										api_verification		value											#expected_result#=$motion_name$,#actual_result#=$notif_threshold_name$
+
+## verify model
+verify										api_verification		value											#expected_result#=$motion_model$,#actual_result#=$notif_threshold_model$
+
+## verify mac
+verify										api_verification		value											#expected_result#=$motion_mac$,#actual_result#=$notif_threshold_mac$
+
+## verify online_status
+verify										api_verification		online_status									#online_status_result#=$notif_threshold_status$
+##===== END =====
+
+
+
+
 ##===== Test case: Get device info by uuid for dashboard =====
 ## To count amount of api executed
 #$final_result$=get								api_verification		api_count
@@ -90,5 +272,4 @@ verify											api_verification		timestamp										#timestamp_result#=$device
 
 
 ##===== END =====
-
-en
+end

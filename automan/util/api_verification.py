@@ -488,7 +488,7 @@ class api_verification(object):
         for i in range(len(list_online_status)):
             online_status_pattern = re.compile(r'[0-2]')
             list_online_status_alphabet = re.findall(online_status_pattern, str(list_online_status[i]))
-            int_current_online_status_len = len(list_online_status)
+            int_current_online_status_len = len(str(list_online_status[i]))
             int_compare_result_online_status_len = len(list_online_status_alphabet)
             if int_compare_result_online_status_len == int_current_online_status_len:
                 pass
@@ -509,11 +509,97 @@ class api_verification(object):
         else:
             raise error.equalerror()
         
+    def timestamp_verify(self, dic_value):
+        ## timestamp verification
+        ## Expected result: only include integer
+        ## Parameters:
+        ##      - timestamp_result
+        dic_param = dict(dic_value)
+        list_timestamp = eval(dic_param["timestamp_result"])
 
+        for i in range(len(list_timestamp)):
+            timestamp_pattern = re.compile(r'[0-9]')
+            list_timestamp_alphabet = re.findall(timestamp_pattern, str(list_timestamp[i]))
+            int_current_timestamp_len = len(str(list_timestamp[i]))
+            int_compare_result_timestamp_len = len(list_timestamp_alphabet)
+            if int_compare_result_timestamp_len == int_current_timestamp_len:
+                pass
+            else:
+                print("\n")
+                print(str(list_timestamp[i]))
+                print(list_timestamp_alphabet)
+                print("\n")
+                raise error.equalerror()
+        print("\nTimestamp compare result: PASS\n")        
         
+    def name_verify(self, dic_value):
+        ## name verification
+        ## Expected result: not null
+        ## Parameters:
+        ##      - name_result
+        dic_param = dict(dic_value)
+        list_name = eval(dic_param["name_result"])
         
+        for i in range(len(list_name)):
+            name_pattern = re.compile(r'.')
+            list_name_alphabet = re.findall(name_pattern, list_name[i])
+            int_current_name_len = len(list_name[i])
+            int_compare_result_name_len = len(list_name_alphabet)
+            if int_compare_result_name_len == int_current_name_len:
+                pass
+            else:
+                print("\n")
+                print(list_name[i])
+                print(list_name_alphabet)
+                print("\n")
+                raise error.equalerror()
+        print("\nName compare result: PASS\n")         
         
+    def battery_verify(self, dic_value):
+        ## battery verification
+        ## Expected result: Only integer
+        ## Parameters:
+        ##      - battery_result
+        dic_param = dict(dic_value)
+        list_battery = eval(dic_param["battery_result"])
+
+        for i in range(len(list_battery)):
+            battery_pattern = re.compile(r'[0-9]')
+            list_battery_alphabet = re.findall(battery_pattern, list_battery[i])
+            int_current_battery_len = len(list_battery[i])
+            int_compare_result_battery_len = len(list_battery_alphabet)
+            if int_compare_result_battery_len == int_current_battery_len:
+                pass
+            else:
+                print("\n")
+                print(list_battery[i])
+                print(list_battery_alphabet)
+                print("\n")
+                raise error.equalerror()
+        print("\nBattery compare result: PASS\n")      
         
+    def model_verify(self, dic_value):
+        ## model verification
+        ## Expected result: char, integer, dash mark
+        ## Parameters:
+        ##      - model_result
+        dic_param = dict(dic_value)
+        list_model = eval(dic_param["model_result"])
+
+        for i in range(len(list_model)):
+            model_pattern = re.compile(r'[0-9A-Za-z-]')
+            list_model_alphabet = re.findall(model_pattern, list_model[i])
+            int_current_model_len = len(list_model[i])
+            int_compare_result_model_len = len(list_model_alphabet)
+            if int_compare_result_model_len == int_current_model_len:
+                pass
+            else:
+                print("\n")
+                print(list_model[i])
+                print(list_model_alphabet)
+                print("\n")
+                raise error.equalerror()
+        print("\nModel compare result: PASS\n")        
         
         
         

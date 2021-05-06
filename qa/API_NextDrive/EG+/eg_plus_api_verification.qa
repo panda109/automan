@@ -15,191 +15,80 @@ set											api_verification		collection_token		#collection_name#=EG+.postman_
 
 ## Execute cmd of newman
 exec										api_verification		cmd						#original_path#=$original_path$,#run_environment_path#=ini\API_NextDrive,#command#=newman run EG+.postman_collection.json -e EG+.postman_environment.json -r csv --reporter-csv-export
-##===== END =====
-
-
-
-
-##===== Test case: Login API ======
-## To count amount of api executed
-#$final_result$=get							api_verification		api_count
 
 ## Get file location and get the file list of result
 $csv_file_name$=get							api_verification		file_list			#folder_path#=newman
 
 sleep										1
-
-## Read csv and target file
-$get_token_status_code_response$=get 		api_verification 		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_token
-
-## Get status code of result
-$get_token_status_code$=get					api_verification		status_code			#api_response#=$get_token_status_code_response$
-
-## Get response body of result
-$get_token_response_body$=get				api_verification		response_body		#api_response#=$get_token_status_code_response$
-
-## Load expected result file
-$eg_plus_login_result$=get					api_verification		expected_result		#expected_result#=expected_result\EG+\EG_plus_login.json
-
-## Verify status code
-verify										api_verification		status_code			#api_response#=$get_token_status_code$,#expected_status_code#=200
-
-## Verify keys of response body
-verify										api_verification		dict_keys			#expected_result#=$eg_plus_login_result$,#actual_result#=$get_token_response_body$
 ##===== END =====
 
 
 
-
-
-##===== Test case: Get single gw info by uuid =====
+##===== Test case: Get device info by uuid for dashboard =====
 ## To count amount of api executed
-#$final_result$=get							api_verification		api_count
+#$final_result$=get								api_verification		api_count
 
 ## Read csv and target file
-$get_gw_info_response$=get					api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_single_gateway_info_by_UUID
+$get_device_info_by_uuid_response$=get			api_verification		read_csv										#csv_filename#=$csv_file_name$,#testcase_name#=Get _device_info_by_UUID_for_dashboard
 
 ## Get status code of result
-$get_gw_info_status_code$=get				api_verification		status_code			#api_response#=$get_gw_info_response$
+$get_device_info_by_uuid_status_code$=get		api_verification		status_code										#api_response#=$get_device_info_by_uuid_response$
 
 ## Get response body of result
-$get_gw_info_response_body$=get				api_verification		response_body		#api_response#=$get_gw_info_response$	
+$get_device_info_by_uuid_response_body$=get		api_verification		response_body									#api_response#=$get_device_info_by_uuid_response$	
 
 ## Load expected result file
-$eg_plus_gw_info_result$=get				api_verification		expected_result		#expected_result#=expected_result\EG+\EG_plus_get_single_gw_info_by_uuid.json
+$get_device_info_by_uuid_result$=get			api_verification		expected_result									#expected_result#=expected_result\EG+\EG_plus_get_device_info_by_uuid_for_dashboard.json
 
 ## Verify status code
-verify										api_verification		status_code			#api_response#=$get_gw_info_status_code$,#expected_status_code#=200
+verify											api_verification		status_code										#api_response#=$get_device_info_by_uuid_status_code$,#expected_status_code#=200
 
 ## Verify keys of response body
-verify										api_verification		dict_keys			#expected_result#=$eg_plus_gw_info_result$,#actual_result#=$get_gw_info_response_body$
+verify											api_verification		dict_keys										#expected_result#=$get_device_info_by_uuid_result$,#actual_result#=$get_device_info_by_uuid_response_body$
 
-## Verify values of response body
-verify										api_verification		dict_content		#expected_result#=$eg_plus_gw_info_result$,#actual_result#=$get_gw_info_response_body$
+## Get  uuid
+$device_info_by_uuid_uuid$=get					api_egplus_app			device_info_by_uuid_uuid						#response_body#=$get_device_info_by_uuid_response_body$
 
+## Get  name
+$device_info_by_uuid_name$=get					api_egplus_app			device_info_by_uuid_name						#response_body#=$get_device_info_by_uuid_response_body$
 
-
-
-
-##===== Test case:  Get beep brand, model list =====
-## To count amount of api executed
-#$final_result$=get							api_verification		api_count
-
-## Read csv and target file
-$get_beep_info_list_response$=get			api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_beep_brand_model_list
-
-## Get status code of result
-$get_beep_info_list_status_code$=get		api_verification		status_code			#api_response#=$get_beep_info_list_response$
-
-## Get response body of result
-$get_beep_info_list_response_body$=get		api_verification		response_body		#api_response#=$get_beep_info_list_response$	
-
-## Load expected result file
-$get_beep_info_list_result$=get				api_verification		expected_result		#expected_result#=expected_result\EG+\EG_plus_get_beep_brand_model_list.json
-
-## Verify status code
-verify										api_verification		status_code			#api_response#=$get_beep_info_list_status_code$,#expected_status_code#=200
-
-## Verify keys of response body
-verify										api_verification		dict_keys			#expected_result#=$get_beep_info_list_result$,#actual_result#=$get_beep_info_list_response_body$
-
-## Verify values of response body
-verify										api_verification		dict_content		#expected_result#=$get_beep_info_list_result$,#actual_result#=$get_beep_info_list_response_body$
-##===== END =====
-
-
-
-
-
-##===== Test case: Get user name =====
-## To count amount of api executed
-#$final_result$=get							api_verification		api_count
-
-## Read csv and target file
-$get_user_name_response$=get				api_verification		read_csv			#csv_filename#=$csv_file_name$,#testcase_name#=Get_user_name
-
-## Get status code of result
-$get_user_name_status_code$=get				api_verification		status_code			#api_response#=$get_user_name_response$
-
-## Get response body of result
-$get_user_name_response_body$=get			api_verification		response_body		#api_response#=$get_user_name_response$	
-
-## Load expected result file
-$get_user_name_result$=get					api_verification		expected_result		#expected_result#=expected_result\EG+\EG_plus_get_user_name.json
-
-## Verify status code
-verify										api_verification		status_code			#api_response#=$get_user_name_status_code$,#expected_status_code#=200
-
-## Verify keys of response body
-verify										api_verification		dict_keys			#expected_result#=$get_user_name_result$,#actual_result#=$get_user_name_response_body$
-
-## Verify values of response body
-verify										api_verification		dict_content		#expected_result#=$get_user_name_result$,#actual_result#=$get_user_name_response_body$
-##===== END =====
-
-
-
-
-
-
-
-
-
-
-##===== Test case: Get notification threshold =====
-## To count amount of api executed
-#$final_result$=get							api_verification		api_count
-
-## Read csv and target file
-$get_noti_threshold_response$=get			api_verification		read_csv										#csv_filename#=$csv_file_name$,#testcase_name#=Get_notification_threshold
-
-## Get status code of result
-$get_noti_threshold_status_code$=get		api_verification		status_code										#api_response#=$get_noti_threshold_response$
-
-## Get response body of result
-$get_noti_threshold_response_body$=get		api_verification		response_body									#api_response#=$get_noti_threshold_response$	
-
-## Load expected result file
-$get_noti_threshold_result$=get				api_verification		expected_result									#expected_result#=expected_result\EG+\EG_plus_get_notification_threshold.json
-
-## Verify status code
-verify										api_verification		status_code										#api_response#=$get_noti_threshold_status_code$,#expected_status_code#=200
-
-## Verify keys of response body
-verify										api_verification		dict_keys										#expected_result#=$get_noti_threshold_result$,#actual_result#=$get_noti_threshold_response_body$
-
-## Verify values of response body
-verify										api_verification		dict_content									#expected_result#=$get_noti_threshold_result$,#actual_result#=$get_noti_threshold_response_body$
-
-## Get motion uuid
-$notif_threshold_uuid$=get					api_egplus_app			notification_threshold_uuid						#response_body#=$get_noti_threshold_response_body$
-
-## Get motion name
-$notif_threshold_name$=get					api_egplus_app			notification_threshold_name						#response_body#=$get_noti_threshold_response_body$
-
-## Get motion model
-$notif_threshold_model$=get					api_egplus_app			notification_threshold_model					#response_body#=$get_noti_threshold_response_body$
+## Get  model
+$device_info_by_uuid_model$=get					api_egplus_app			device_info_by_uuid_model						#response_body#=$get_device_info_by_uuid_response_body$
 
 ## Get motion online status
-$notif_threshold_status$=get				api_egplus_app			notification_threshold_status					#response_body#=$get_noti_threshold_response_body$
+$device_info_by_uuid_status$=get				api_egplus_app			device_info_by_uuid_status						#response_body#=$get_device_info_by_uuid_response_body$
 
-## Get motion MAC
-$notif_threshold_mac$=get					api_egplus_app			notification_threshold_mac						#response_body#=$get_noti_threshold_response_body$
+## Get battery precentage
+$device_info_by_uuid_battery$=get				api_egplus_app			device_info_by_uuid_battery						#response_body#=$get_device_info_by_uuid_response_body$
 
-## verify uuid 
-verify										api_verification		value											#expected_result#=$motion_uuid$,#actual_result#=$notif_threshold_uuid$
+## Get motion info
+$device_info_by_uuid_motion$=get				api_egplus_app			device_info_by_uuid_motion						#response_body#=$get_device_info_by_uuid_response_body$
 
-## verify name
-verify										api_verification		value											#expected_result#=$motion_name$,#actual_result#=$notif_threshold_name$
+## Get generatedAt 
+$device_info_by_uuid_generatedAt$=get			api_egplus_app			device_info_by_uuid_generated_time				#response_body#=$get_device_info_by_uuid_response_body$
 
-## verify model
-verify										api_verification		value											#expected_result#=$motion_model$,#actual_result#=$notif_threshold_model$
+## Verify uuid
+verify											api_verification		uuid											#uuid_actual_result#=$device_info_by_uuid_uuid$
 
-## verify mac
-verify										api_verification		value											#expected_result#=$motion_mac$,#actual_result#=$notif_threshold_mac$
+## Verify name
+verify											api_verification		name											#name_result#=$device_info_by_uuid_name$
 
-## verify online_status
-verify										api_verification		online_status									#online_status_result#=$notif_threshold_status$
+## Verify model
+verify											api_verification		model											#model_result#=$device_info_by_uuid_model$
+
+## Verify status
+verify											api_verification		online_status									#online_status_result#=$device_info_by_uuid_status$
+
+## Verify battery
+verify											api_verification		battery											#battery_result#=$device_info_by_uuid_battery$
+
+## Verify motion
+verify											api_verification		timestamp										#timestamp_result#=$device_info_by_uuid_motion$
+
+## Verify generatedAt
+verify											api_verification		timestamp										#timestamp_result#=$device_info_by_uuid_generatedAt$
+
+
 ##===== END =====
 
-end
+en

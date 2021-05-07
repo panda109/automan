@@ -354,7 +354,7 @@
 			"response": []
 		},
 		{
-			"name": "*Get_User_Detail",
+			"name": "Get_User_Detail",
 			"event": [
 				{
 					"listen": "test",
@@ -382,14 +382,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{qa_end_point}}/hems/user-accounts/189",
+					"raw": "{{qa_end_point}}/hems/user-accounts/75109",
 					"host": [
 						"{{qa_end_point}}"
 					],
 					"path": [
 						"hems",
 						"user-accounts",
-						"189"
+						"75109"
 					]
 				}
 			},

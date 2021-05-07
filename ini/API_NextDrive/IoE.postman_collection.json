@@ -1083,14 +1083,13 @@
 					}
 				],
 				"url": {
-					"raw": "{{qa_end_point}}/developer/provider/services",
+					"raw": "{{qa_end_point}}/developer/provider",
 					"host": [
 						"{{qa_end_point}}"
 					],
 					"path": [
 						"developer",
-						"provider",
-						"services"
+						"provider"
 					]
 				}
 			},
